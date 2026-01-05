@@ -1,5 +1,5 @@
 {{-- resources/views/pmb/daftar.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.pmb')
 
 @section('title', 'Formulir Pendaftaran PMB')
 

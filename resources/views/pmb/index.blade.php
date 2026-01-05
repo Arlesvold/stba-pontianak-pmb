@@ -1,4 +1,4 @@
-    @extends('layouts.app')
+    @extends('layouts.pmb')
 
     @section('title', 'Penerimaan Mahasiswa Baru')
 
@@ -96,66 +96,77 @@
                     <div class="row g-4">
                         {{-- Card D3 --}}
                         <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
-                                style="background-color:#ffffff;">
-                                <div class="mb-3">
-                                    <div class="d-inline-flex align-items-center justify-content-center rounded-3"
-                                        style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
-                                        <i class="bi bi-mortarboard text-white fs-1"></i>
+                            <a href="{{ route('prodi.d3') }}" class="text-decoration-none text-reset">
+                                <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
+                                    style="background-color:#ffffff; cursor:pointer;">
+                                    <div class="mb-3">
+                                        <div class="d-inline-flex align-items-center justify-content-center rounded-3"
+                                            style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
+                                            <i class="bi bi-mortarboard text-white fs-1"></i>
+                                        </div>
                                     </div>
+                                    <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
+                                        Diploma (D3)
+                                    </h4>
+                                    <p class="text-muted small mb-0">
+                                        Mempersiapkan lulusan dengan kompetensi bahasa, penelitian, dan soft skill untuk
+                                        karier
+                                        di pendidikan, media, bisnis internasional, serta lembaga pemerintahan.
+                                    </p>
+                                    <span class="stretched-link"></span>
                                 </div>
-                                <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
-                                    Diploma (D3)
-                                </h4>
-                                <p class="text-muted small mb-0">
-                                    Mempersiapkan lulusan dengan kompetensi bahasa, penelitian, dan soft skill untuk karier
-                                    di
-                                    pendidikan, media, bisnis internasional, serta lembaga pemerintahan.
-                                </p>
-                            </div>
+                            </a>
                         </div>
 
                         {{-- Card S1 --}}
                         <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
-                                style="background-color:#ffffff;">
-                                <div class="mb-3">
-                                    <div class="d-inline-flex align-items-center justify-content-center rounded-3"
-                                        style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
-                                        <i class="bi bi-briefcase text-white fs-1"></i>
+                            <a href="{{ route('prodi.s1') }}" class="text-decoration-none text-reset">
+                                <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
+                                    style="background-color:#ffffff; cursor:pointer;">
+                                    <div class="mb-3">
+                                        <div class="d-inline-flex align-items-center justify-content-center rounded-3"
+                                            style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
+                                            <i class="bi bi-briefcase text-white fs-1"></i>
+                                        </div>
                                     </div>
+                                    <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
+                                        Sarjana (S1)
+                                    </h4>
+                                    <p class="text-muted small mb-0">
+                                        Fokus pada keterampilan praktis untuk dunia kerja: administrasi perkantoran,
+                                        hospitality,
+                                        front office, dan layanan pelanggan dengan kemampuan bahasa asing yang kuat.
+                                    </p>
+                                    <span class="stretched-link"></span>
                                 </div>
-                                <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
-                                    Sarjana (S1)
-                                </h4>
-                                <p class="text-muted small mb-0">
-                                    Fokus pada keterampilan praktis untuk dunia kerja: administrasi perkantoran,
-                                    hospitality,
-                                    front office, dan layanan pelanggan dengan kemampuan bahasa asing yang kuat.
-                                </p>
-                            </div>
+                            </a>
                         </div>
 
                         {{-- Card Sastra Inggris --}}
                         <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
-                                style="background-color:#ffffff;">
-                                <div class="mb-3">
-                                    <div class="d-inline-flex align-items-center justify-content-center rounded-3"
-                                        style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
-                                        <i class="bi bi-journal-text text-white fs-1"></i>
+                            <a href="{{ route('prodi.sastra') }}" class="text-decoration-none text-reset">
+                                <div class="card h-100 border-0 shadow-sm text-center px-4 py-5 hover-shadow-sm"
+                                    style="background-color:#ffffff; cursor:pointer;">
+                                    <div class="mb-3">
+                                        <div class="d-inline-flex align-items-center justify-content-center rounded-3"
+                                            style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
+                                            <i class="bi bi-journal-text text-white fs-1"></i>
+                                        </div>
                                     </div>
+                                    <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
+                                        Sarjana Sastra Inggris
+                                    </h4>
+                                    <p class="text-muted small mb-0">
+                                        Pendalaman bahasa, sastra, dan budaya Inggris untuk karier di penerjemahan,
+                                        pendidikan,
+                                        media, riset, dan berbagai bidang internasional lainnya.
+                                    </p>
+                                    <span class="stretched-link"></span>
                                 </div>
-                                <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
-                                    Sarjana Sastra Inggris
-                                </h4>
-                                <p class="text-muted small mb-0">
-                                    Pendalaman bahasa, sastra, dan budaya Inggris untuk karier di penerjemahan, pendidikan,
-                                    media, riset, dan berbagai bidang internasional lainnya.
-                                </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
+
 
                 </div>
             </section>
@@ -176,62 +187,68 @@
                     </div>
 
                     <div class="row g-4">
-                        {{-- Card Berita 1 --}}
-                        <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow-sm"
-                                style="transition: transform .18s ease, box-shadow .18s ease;">
-                                <img src="{{ asset('images/berita-1.jpg') }}" class="card-img-top rounded-top-4"
-                                    alt="Lokakarya Pengembangan Visi Misi">
-                                <div class="card-body">
-                                    <h5 class="card-title fw-semibold mb-2" style="font-size: 1rem;">
-                                        Lokakarya Pengembangan Visi Misi
-                                    </h5>
-                                    <p class="card-text small text-muted mb-2">
-                                        STBA Pontianak
-                                    </p>
-                                    <div class="small text-muted">2025</div>
-                                </div>
-                            </div>
-                        </div>
+                        @forelse ($beritaTerbaru as $berita)
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow-sm"
+                                    style="transition: transform .18s ease, box-shadow .18s ease;">
+                                    {{-- Gambar --}}
+                                    @if ($berita->gambar)
+                                        <img src="{{ asset('storage/' . $berita->gambar) }}"
+                                            class="card-img-top rounded-top-4" alt="{{ $berita->judul }}"
+                                            style="height: 210px; object-fit: cover;">
+                                    @else
+                                        <div class="card-img-top rounded-top-4 bg-light d-flex align-items-center justify-content-center"
+                                            style="height: 210px;">
+                                            <span class="text-muted small">Tidak ada gambar</span>
+                                        </div>
+                                    @endif
 
-                        {{-- Card Berita 2 --}}
-                        <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow-sm"
-                                style="transition: transform .18s ease, box-shadow .18s ease;">
-                                <img src="{{ asset('images/berita-2.jpg') }}" class="card-img-top rounded-top-4"
-                                    alt="Lokakarya Pengembangan Kurikulum">
-                                <div class="card-body">
-                                    <h5 class="card-title fw-semibold mb-2" style="font-size: 1rem;">
-                                        Lokakarya Pengembangan Kurikulum
-                                    </h5>
-                                    <p class="card-text small text-muted mb-2">
-                                        STBA Pontianak
-                                    </p>
-                                    <div class="small text-muted">2025</div>
-                                </div>
-                            </div>
-                        </div>
+                                    {{-- Isi --}}
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-semibold mb-2"
+                                            style="font-size: 1rem; color: var(--primary-maroon);">
+                                            {{ $berita->judul }}
+                                        </h5>
 
-                        {{-- Card Berita 3 --}}
-                        <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 hover-shadow-sm"
-                                style="transition: transform .18s ease, box-shadow .18s ease;">
-                                <img src="{{ asset('images/berita-3.jpg') }}" class="card-img-top rounded-top-4"
-                                    alt="Lokakarya Pengembangan Kompetensi Dosen">
-                                <div class="card-body">
-                                    <h5 class="card-title fw-semibold mb-2" style="font-size: 1rem;">
-                                        Lokakarya Pengembangan Kompetensi Dosen
-                                    </h5>
-                                    <p class="card-text small text-muted mb-2">
-                                        STBA Pontianak
-                                    </p>
-                                    <div class="small text-muted">2025</div>
+                                        <p class="card-text small text-muted mb-1">
+                                            STBA Pontianak • {{ $berita->tanggal->format('Y') }}
+                                        </p>
+
+                                        @php
+                                            $preview = \Illuminate\Support\Str::limit(strip_tags($berita->isi), 60);
+                                        @endphp
+                                        <p class="card-text small text-muted mb-2" style="min-height: 48px;">
+                                            {{ $preview }}
+                                        </p>
+
+                                        <a href="{{ route('berita.index') }}" class="small text-decoration-none"
+                                            style="color: var(--primary-maroon);">
+                                            Read more →
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            <div class="col-12">
+                                <p class="text-center text-muted small mb-0">
+                                    Belum ada berita kampus.
+                                </p>
+                            </div>
+                        @endforelse
+                    </div>
+
+                    {{-- Link ke halaman semua berita --}}
+                    <div class="text-center mt-4">
+                        <a href="{{ route('berita.index') }}" class="small text-decoration-none"
+                            style="color: var(--primary-maroon);">
+                            Lihat semua berita kampus →
+                        </a>
                     </div>
                 </div>
             </section>
+
+
 
 
             {{-- SECTION: Agenda --}}
@@ -250,59 +267,44 @@
                     <div class="card border-0 shadow-sm rounded-4">
                         <div class="card-body">
 
-                            {{-- Agenda 1 --}}
-                            <div class="row mb-3">
-                                <div class="col-md-2 col-3 text-center">
-                                    <div class="badge bg-light text-muted small">1 Feb – 30 Apr</div>
-                                    <div class="small text-muted">2025</div>
-                                </div>
-                                <div class="col-md-10 col-9">
-                                    <div class="fw-semibold">
-                                        Pendaftaran PMB Gelombang 1
+                            @forelse ($agendas as $agenda)
+                                <div class="row mb-3 {{ $loop->last ? 'mb-0' : '' }}">
+                                    {{-- Kolom tanggal --}}
+                                    <div class="col-md-2 col-3 text-center">
+                                        <div class="badge bg-light text-muted small">
+                                            @if ($agenda->tanggal_selesai)
+                                                {{ $agenda->tanggal_mulai->format('d M') }}
+                                                – {{ $agenda->tanggal_selesai->format('d M') }}
+                                            @else
+                                                {{ $agenda->tanggal_mulai->format('d M') }}
+                                            @endif
+                                        </div>
+                                        <div class="small text-muted">
+                                            {{ $agenda->tanggal_mulai->format('Y') }}
+                                        </div>
                                     </div>
-                                    <div class="small text-muted">
-                                        Pendaftaran online untuk seluruh jalur masuk.
-                                    </div>
-                                </div>
-                            </div>
 
-                            {{-- Agenda 2 --}}
-                            <div class="row mb-3">
-                                <div class="col-md-2 col-3 text-center">
-                                    <div class="badge bg-light text-muted small">10 Mei</div>
-                                    <div class="small text-muted">2025</div>
-                                </div>
-                                <div class="col-md-10 col-9">
-                                    <div class="fw-semibold">
-                                        Tes Seleksi & Wawancara
-                                    </div>
-                                    <div class="small text-muted">
-                                        Pelaksanaan tes tertulis dan wawancara terpadu.
+                                    {{-- Kolom judul & deskripsi --}}
+                                    <div class="col-md-10 col-9">
+                                        <div class="fw-semibold">
+                                            {{ $agenda->judul }}
+                                        </div>
+                                        <div class="small text-muted">
+                                            {{ \Illuminate\Support\Str::limit(strip_tags($agenda->deskripsi), 100) }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            {{-- Agenda 3 --}}
-                            <div class="row">
-                                <div class="col-md-2 col-3 text-center">
-                                    <div class="badge bg-light text-muted small">20 Mei</div>
-                                    <div class="small text-muted">2025</div>
+                            @empty
+                                <div class="text-center text-muted small py-2">
+                                    Belum ada agenda yang dijadwalkan.
                                 </div>
-                                <div class="col-md-10 col-9">
-                                    <div class="fw-semibold">
-                                        Pengumuman Hasil Seleksi
-                                    </div>
-                                    <div class="small text-muted">
-                                        Pengumuman melalui website resmi dan email.
-                                    </div>
-                                </div>
-                            </div>
+                            @endforelse
 
                         </div>
-
                     </div>
                 </div>
             </section>
+
 
         </section>
 

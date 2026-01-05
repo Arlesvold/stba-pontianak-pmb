@@ -1,10 +1,63 @@
-@extends('layouts.app')
-
-@section('title', 'Berita')
+@extends('layouts.pmb')
 
 @section('content')
     <div class="container py-5">
-        <h1 class="h3 mb-3">Berita</h1>
-        <p>Daftar berita PMB STBA Pontianak akan ditampilkan di sini.</p>
+        {{-- Header --}}
+        <div class="text-center mb-4">
+            <h1 class="h4 mb-2">Berita Kampus</h1>
+            <p class="text-muted mb-0">
+                Kumpulan kegiatan dan informasi terbaru seputar STBA Pontianak.
+            </p>
+        </div>
+
+        {{-- Wrapper tengah agar kartu tidak terlalu lebar --}}
+        <div class="mx-auto" style="max-width: 1000;">
+            @forelse ($beritas as $berita)
+                <div class="card mb-4 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="row g-0">
+                        {{-- Gambar --}}
+                        <div class="col-md-5">
+                            @if ($berita->gambar)
+                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
+                                    class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 260px;">
+                            @else
+                                <div class="bg-light w-100 h-100 d-flex align-items-center justify-content-center"
+                                    style="min-height: 260px;">
+                                    <span class="text-muted small">Tidak ada gambar</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Konten teks: align ke atas, judul maroon --}}
+                        <div class="col-md-7">
+                            <div class="card-body px-4 py-4">
+                                <div class="text-uppercase text-muted small mb-1">
+                                    STBA Pontianak · {{ $berita->tanggal->format('Y') }}
+                                </div>
+                                <h2 class="h5 mb-2" style="color:#800000;">
+                                    {{ $berita->judul }}
+                                </h2>
+                                <div class="text-muted small mb-3">
+                                    {{ $berita->tanggal->format('d F Y') }}
+                                </div>
+                                <p class="mb-0">
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($berita->isi), 400) }}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            @empty
+                <p class="text-muted text-center">Belum ada berita.</p>
+            @endforelse
+
+            @if ($beritas->hasPages())
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $beritas->links() }}
+                </div>
+            @endif
+        </div>
     </div>
 @endsection
