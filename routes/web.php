@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Pmb\PendaftaranController;
+use App\Http\Controllers\Pmb\AdministrasiController;
 
 use App\Models\Agenda;
 use App\Models\Berita;
@@ -34,6 +36,9 @@ Route::get('/', function () {
 Route::get('/pmb/daftar', function () {
     return view('pmb.daftar');
 })->name('pmb.daftar');
+
+Route::post('/pmb/daftar', [PendaftaranController::class, 'store'])
+    ->name('pmb.daftar.submit');
 
 // Halaman informasi PMB
 Route::get('/pmb/informasi', function () {
@@ -80,6 +85,17 @@ Route::post('/kontak', function (\Illuminate\Http\Request $request) {
     return back()->with('success', 'Pesan berhasil dikirim.');
 })->name('kontak.kirim');
 
+Route::get('/pmb/administrasi', function () {
+    return view('pmb.administrasi');
+})->name('pmb.administrasi');
+
+Route::get('/pmb/administrasi', [AdministrasiController::class, 'index'])
+    ->name('pmb.administrasi');
+
+Route::post('/pmb/administrasi', [AdministrasiController::class, 'store'])
+    ->name('pmb.administrasi.submit');
+
+
 
 
 // ======================
@@ -109,7 +125,7 @@ require __DIR__ . '/auth.php';
 // ======================
 
 // redirect /admin ke dashboard
-Route::redirect('/admin', '/admin/dashboard');
+// Route::redirect('/admin', '/admin/dashboard');
 
 // semua route admin wajib login
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

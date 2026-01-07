@@ -185,10 +185,10 @@
                                     Program Studi
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="prodiDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('prodi.d3') }}">Diploma (D3)</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('prodi.s1') }}">Sarjana S1</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('prodi.sastra') }}">Sarjana Sastra
+                                    <li><a class="dropdown-item" href="{{ route('prodi.d3') }}">Diploma (D3) Bahasa
                                             Inggris</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('prodi.s1') }}">Sarjana (S1) Sastra
+                                            Inggris </a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">

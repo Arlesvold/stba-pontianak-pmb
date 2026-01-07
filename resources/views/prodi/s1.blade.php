@@ -7,7 +7,7 @@
     <div class="container py-5">
         {{-- Judul --}}
         <h1 class="h3 mb-3" style="color: var(--primary-maroon);">
-            Sarjana (S1) Bahasa & Sastra Inggris
+            Sarjana (S1) Sastra Inggris
         </h1>
         <p class="text-muted small mb-4">
             Program akademik yang memadukan kajian bahasa, sastra, dan budaya Inggris dengan keterampilan abad 21,
@@ -94,7 +94,7 @@
         {{-- Call to action --}}
         <div class="mt-4 p-3 rounded-3" style="background-color:#fef2f4;border:1px solid #f7d9df;">
             <div class="small mb-1 fw-semibold" style="color: var(--primary-maroon);">
-                Siap membangun karier bersama Sarjana (S1) Bahasa & Sastra Inggris?
+                Siap membangun karier bersama Sarjana (S1) Sastra Inggris?
             </div>
             <p class="small mb-2">
                 Jelajahi informasi pendaftaran dan beasiswa melalui halaman PMB, atau hubungi narahubung resmi STBA
