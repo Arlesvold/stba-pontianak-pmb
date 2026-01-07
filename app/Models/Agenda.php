@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agenda extends Model
 {
-    protected $table = 'agendas'; // sesuaikan dengan nama tabel
+    protected $table = 'agendas'; // sesuaikan dengan nama tabelnya
 
     protected $fillable = [
         'judul',
