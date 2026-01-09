@@ -2,12 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BeritaResource\Pages;
+use App\Filament\Resources\BeritaResource\Pages\CreateBerita;
+use App\Filament\Resources\BeritaResource\Pages\EditBerita;
+use App\Filament\Resources\BeritaResource\Pages\ListBeritas;
 use App\Models\Berita;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -15,14 +27,14 @@ class BeritaResource extends Resource
 {
     protected static ?string $model = Berita::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?string $navigationLabel = 'Berita Kampus';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('judul')
+        return $schema->components([
+            TextInput::make('judul')
                 ->label('Judul')
                 ->required()
                 ->maxLength(255)
@@ -31,16 +43,16 @@ class BeritaResource extends Resource
                     $set('slug', Str::slug($state));
                 }),
 
-            Forms\Components\TextInput::make('slug')
+            TextInput::make('slug')
                 ->required()
                 ->maxLength(255)
                 ->helperText('Otomatis dari judul, bisa diubah jika perlu.'),
 
-            Forms\Components\DatePicker::make('tanggal')
+            DatePicker::make('tanggal')
                 ->label('Tanggal')
                 ->required(),
 
-            Forms\Components\FileUpload::make('gambar')
+            FileUpload::make('gambar')
                 ->label('Gambar (WebP disarankan)')
                 ->image()
                 ->directory('berita')
@@ -48,7 +60,7 @@ class BeritaResource extends Resource
                 ->hint('Gunakan gambar .webp agar loading cepat.')
                 ->preserveFilenames(),
 
-            Forms\Components\RichEditor::make('isi')
+            RichEditor::make('isi')
                 ->label('Isi Berita')
                 ->required()
                 ->columnSpanFull(),
@@ -59,35 +71,35 @@ class BeritaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('gambar')
+                ImageColumn::make('gambar')
                     ->label('Gambar')
                     ->square()
                     ->height(48),
 
-                Tables\Columns\TextColumn::make('judul')
+                TextColumn::make('judul')
                     ->label('Judul')
                     ->limit(40)
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('tanggal')
+                TextColumn::make('tanggal')
                     ->label('Tanggal')
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('tanggal', 'desc')
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -100,9 +112,9 @@ class BeritaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListBeritas::route('/'),
-            'create' => Pages\CreateBerita::route('/create'),
-            'edit'   => Pages\EditBerita::route('/{record}/edit'),
+            'index'  => ListBeritas::route('/'),
+            'create' => CreateBerita::route('/create'),
+            'edit'   => EditBerita::route('/{record}/edit'),
         ];
     }
 }

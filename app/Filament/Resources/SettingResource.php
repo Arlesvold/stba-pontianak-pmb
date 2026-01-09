@@ -2,27 +2,34 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SettingResource\Pages;
+use App\Filament\Resources\SettingResource\Pages\CreateSetting;
+use App\Filament\Resources\SettingResource\Pages\EditSetting;
+use App\Filament\Resources\SettingResource\Pages\ListSettings;
 use App\Models\Setting;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-megaphone';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-megaphone';
 
     protected static ?string $navigationLabel = 'Marquee Pengumuman';
+
     protected static ?string $pluralModelLabel = 'Marquee Pengumuman';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Forms\Components\Textarea::make('value')
+        return $schema->components([
+            Textarea::make('value')
                 ->label('Teks Marquee')
                 ->rows(3)
                 ->required()
@@ -34,31 +41,31 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('value')
+                TextColumn::make('value')
                     ->label('Teks Marquee')
                     ->limit(80),
-                Tables\Columns\TextColumn::make('updated_at')
+
+                TextColumn::make('updated_at')
                     ->label('Diubah pada')
                     ->dateTime()
                     ->sortable(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                EditAction::make(),
             ])
-            ->bulkActions([]); // tidak perlu bulk delete
+            ->toolbarActions([]); // tidak perlu bulk delete
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSettings::route('/'),
-            'create' => Pages\CreateSetting::route('/create'),
-            'edit' => Pages\EditSetting::route('/{record}/edit'),
+            'index'  => ListSettings::route('/'),
+            'create' => CreateSetting::route('/create'),
+            'edit'   => EditSetting::route('/{record}/edit'),
         ];
     }
 
-    // Boleh juga batasi hanya key = marquee_text di query:
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('key', 'marquee_text');
     }

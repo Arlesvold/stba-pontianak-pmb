@@ -2,39 +2,47 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AgendaResource\Pages;
+use App\Filament\Resources\AgendaResource\Pages\CreateAgenda;
+use App\Filament\Resources\AgendaResource\Pages\EditAgenda;
+use App\Filament\Resources\AgendaResource\Pages\ListAgendas;
 use App\Models\Agenda;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class AgendaResource extends Resource
 {
     protected static ?string $model = Agenda::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
 
     protected static ?string $navigationLabel = 'Agenda Penting';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('judul')
-                ->label('Judul Agenda')
-                ->required()
-                ->maxLength(255),
+        return $schema->components([
+            TextInput::make('judul')
+                ->label('Judul Agenda'),
 
-            Forms\Components\DatePicker::make('tanggal_mulai')
+            DatePicker::make('tanggal_mulai')
                 ->label('Tanggal Mulai')
                 ->required(),
 
-            Forms\Components\DatePicker::make('tanggal_selesai')
+            DatePicker::make('tanggal_selesai')
                 ->label('Tanggal Selesai')
                 ->helperText('Boleh dikosongkan jika hanya satu hari.'),
 
-            Forms\Components\Textarea::make('deskripsi')
+            Textarea::make('deskripsi')
                 ->label('Deskripsi')
                 ->rows(3)
                 ->columnSpanFull(),
@@ -45,35 +53,35 @@ class AgendaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('judul')
+                TextColumn::make('judul')
                     ->label('Judul')
                     ->limit(40)
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('tanggal_mulai')
+                TextColumn::make('tanggal_mulai')
                     ->label('Mulai')
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('tanggal_selesai')
+                TextColumn::make('tanggal_selesai')
                     ->label('Selesai')
                     ->date()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Dibuat')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('tanggal_mulai', 'asc')
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -86,9 +94,9 @@ class AgendaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAgendas::route('/'),
-            'create' => Pages\CreateAgenda::route('/create'),
-            'edit'   => Pages\EditAgenda::route('/{record}/edit'),
+            'index'  => ListAgendas::route('/'),
+            'create' => CreateAgenda::route('/create'),
+            'edit'   => EditAgenda::route('/{record}/edit'),
         ];
     }
 }
