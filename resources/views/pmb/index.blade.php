@@ -63,33 +63,7 @@
                         </div>
                     </div>
 
-                    {{-- Ilustrasi kanan (bisa diganti gambar) --}}
-                    <div class="col-lg-5">
-                        <div class="hero-illustration text-center">
-                            <div class="position-relative d-inline-block">
-                                <div class="rounded-4 bg-white shadow-sm p-4">
-                                    <h5 class="fw-semibold mb-2 text-center" style="color: var(--primary-maroon);">
-                                        Jalur Pendaftaran PMB
-                                    </h5>
-                                    <ul class="list-unstyled small text-start mb-0">
-                                        <li class="mb-2">• Jalur Reguler (Tes Tulis)</li>
-                                        <li class="mb-2">• Jalur Prestasi Akademik & Non Akademik</li>
-                                        <li class="mb-2">• Beasiswa Mitra / Kerjasama</li>
-                                    </ul>
-                                </div>
-                                <div class="position-absolute top-0 start-100 translate-middle d-none d-md-block">
-                                    <span class="badge rounded-pill bg-danger-subtle text-danger fw-semibold small">
-                                        Kuota Terbatas
-                                    </span>
-                                </div>
-                            </div>
 
-                            <p class="mt-3 small text-muted">
-                                Pastikan mendaftar pada gelombang awal untuk peluang beasiswa dan pilihan kelas yang lebih
-                                fleksibel.
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -205,9 +179,8 @@
                                 style="transition: transform .18s ease, box-shadow .18s ease;">
                                 {{-- Gambar --}}
                                 @if ($berita->gambar)
-                                    <img src="{{ asset('storage/' . $berita->gambar) }}"
-                                        class="card-img-top rounded-top-4" alt="{{ $berita->judul }}"
-                                        style="height: 210px; object-fit: cover;">
+                                    <img src="{{ asset('storage/' . $berita->gambar) }}" class="card-img-top rounded-top-4"
+                                        alt="{{ $berita->judul }}" style="height: 210px; object-fit: cover;">
                                 @else
                                     <div class="card-img-top rounded-top-4 bg-light d-flex align-items-center justify-content-center"
                                         style="height: 210px;">

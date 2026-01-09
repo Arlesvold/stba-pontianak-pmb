@@ -142,75 +142,72 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-        {{-- Header: marquee + navbar --}}
-        <header>
-            {{-- Marquee pengumuman (dinamis dari tabel settings) --}}
-            @php
-                $marqueeText =
-                    \App\Models\Setting::where('key', 'marquee_text')->value('value') ??
-                    'PENGUMUMAN 📢: Pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak Tahun Akademik 2025/2026 telah dibuka. Gelombang 1: 1 Februari – 30 April 2025.';
-            @endphp
-            <div class="announcement-bar">
-                <div class="container-fluid">
-                    <marquee behavior="scroll" direction="left">
-                        {{ $marqueeText }}
-                    </marquee>
+        {{-- Marquee pengumuman (TIDAK sticky) --}}
+        @php
+            $marqueeText =
+                \App\Models\Setting::where('key', 'marquee_text')->value('value') ??
+                'PENGUMUMAN 📢: Pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak Tahun Akademik 2025/2026 telah dibuka. Gelombang 1: 1 Februari – 30 April 2025.';
+        @endphp
+        <div class="announcement-bar">
+            <div class="container-fluid">
+                <marquee behavior="scroll" direction="left">
+                    {{ $marqueeText }}
+                </marquee>
+            </div>
+        </div>
+
+        {{-- Navbar utama (STICKY) --}}
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+                    <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak">
+                    <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">STBA Pontianak</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}"
+                                href="{{ route('beranda') }}">Beranda</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle
+                               {{ request()->routeIs('prodi.d3') || request()->routeIs('prodi.s1') ? 'active' : '' }}"
+                                href="#" id="prodiDropdown" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Program Studi
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="prodiDropdown">
+                                <li><a class="dropdown-item" href="{{ route('prodi.d3') }}">Diploma (D3) Bahasa
+                                        Inggris</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prodi.s1') }}">Sarjana (S1) Sastra
+                                        Inggris</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('berita.index') ? 'active' : '' }}"
+                                href="{{ route('berita.index') }}">Berita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
+                                href="{{ route('agenda.index') }}">Agenda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
+                                href="{{ route('kontak') }}">Kontak</a>
+                        </li>
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a class="btn btn-maroon btn-sm" href="{{ route('pmb.daftar') }}">Daftar Sekarang</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            {{-- Navbar utama --}}
-            <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
-                <div class="container">
-                    <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                        <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak">
-                        <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">STBA Pontianak</span>
-                    </a>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="mainNavbar">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}"
-                                    href="{{ route('beranda') }}">Beranda</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle
-                                      {{ request()->routeIs('prodi.d3') || request()->routeIs('prodi.s1') || request()->routeIs('prodi.sastra') ? 'active' : '' }}"
-                                    href="#" id="prodiDropdown" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Program Studi
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="prodiDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('prodi.d3') }}">Diploma (D3) Bahasa
-                                            Inggris</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('prodi.s1') }}">Sarjana (S1) Sastra
-                                            Inggris </a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('berita.index') ? 'active' : '' }}"
-                                    href="{{ route('berita.index') }}">Berita</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
-                                    href="{{ route('agenda.index') }}">Agenda</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
-                                    href="{{ route('kontak') }}">Kontak</a>
-                            </li>
-                            <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                                <a class="btn btn-maroon btn-sm" href="{{ route('pmb.daftar') }}">Daftar Sekarang</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        </nav>
 
         {{-- Konten halaman --}}
         <main class="flex-fill">
