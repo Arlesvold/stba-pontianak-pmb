@@ -9,9 +9,11 @@ use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Pmb\PendaftaranController;
 use App\Http\Controllers\Pmb\AdministrasiController;
+use App\Models\Staf;
 
 use App\Models\Agenda;
 use App\Models\Berita;
+
 
 use Illuminate\Http\Request;
 
@@ -20,16 +22,22 @@ use Illuminate\Http\Request;
 // ======================
 
 // Kalau beranda kamu ada di resources/views/pmb/index.blade.php
+
 Route::get('/', function () {
     $beritaTerbaru = Berita::orderBy('tanggal', 'desc')
         ->limit(6)
         ->get();
-    // 6 agenda penting terdekat
+
     $agendas = Agenda::orderBy('tanggal_mulai', 'asc')
         ->limit(6)
         ->get();
 
-    return view('pmb.index', compact('beritaTerbaru', 'agendas'));
+    $stafs = Staf::where('status_aktif', true)
+        ->orderBy('display_order')
+        ->limit(4)
+        ->get();
+
+    return view('pmb.index', compact('beritaTerbaru', 'agendas', 'stafs'));
 })->name('beranda');
 
 // Halaman form pendaftaran PMB
@@ -66,6 +74,16 @@ Route::get('/berita', function () {
 
     return view('berita.index', compact('beritas'));
 })->name('berita.index');
+
+// Halaman staf / dosen
+Route::get('/staf', function () {
+    $stafs = \App\Models\Staf::where('status_aktif', true)
+        ->orderBy('display_order')
+        ->get();
+
+    return view('staf.index', compact('stafs'));
+})->name('staf.index');
+
 
 // Halaman daftar agenda penting
 Route::get('/agenda', function () {

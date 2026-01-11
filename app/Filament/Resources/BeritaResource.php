@@ -55,7 +55,8 @@ class BeritaResource extends Resource
             FileUpload::make('gambar')
                 ->label('Gambar (WebP disarankan)')
                 ->image()
-                ->directory('berita')
+                ->disk('public')          // simpan ke storage/app/public
+                ->directory('berita')     // storage/app/public/berita
                 ->imagePreviewHeight(150)
                 ->hint('Gunakan gambar .webp agar loading cepat.')
                 ->preserveFilenames(),
@@ -73,6 +74,18 @@ class BeritaResource extends Resource
             ->columns([
                 ImageColumn::make('gambar')
                     ->label('Gambar')
+                    ->getStateUsing(function ($record) {
+                        $path = $record->gambar;
+
+                        // Data lama: images/berita/...
+                        if (str_starts_with($path, 'images/')) {
+                            return asset($path); // http://127.0.0.1:8000/images/...
+                        }
+
+                        // Data baru: berita/...
+                        return asset('storage/' . ltrim($path, '/')); // http://127.0.0.1:8000/storage/berita/...
+                    })
+                    ->tooltip(fn($record) => $record->gambar)
                     ->square()
                     ->height(48),
 
