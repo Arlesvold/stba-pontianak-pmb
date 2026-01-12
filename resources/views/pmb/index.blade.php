@@ -3,7 +3,25 @@
 @section('title', 'Penerimaan Mahasiswa Baru')
 
 @section('content')
+@section('content')
     <style>
+        /* Font global isi: sans-serif */
+        body {
+            font-family: "Open Sans", sans-serif;
+        }
+
+        /* Judul section pakai Open Sans bold */
+        .heading-title {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 700;
+        }
+
+        /* Isi card / teks biasa */
+        .body-text {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 400;
+        }
+
         .card-prodi {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
             border: 1px solid #e9ecef !important;
@@ -15,6 +33,8 @@
             border: 1px solid #e9ecef !important;
         }
     </style>
+
+
 
     <section class="hero-section position-relative d-flex align-items-center" style="min-height: 600px; overflow: hidden;">
 
