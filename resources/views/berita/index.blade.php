@@ -1,6 +1,17 @@
 @extends('layouts.pmb')
 
 @section('content')
+    <style>
+        .card-berita {
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card-berita:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+
     <div class="container py-5">
         {{-- Header --}}
         <div class="text-center mb-4">
@@ -11,9 +22,9 @@
         </div>
 
         {{-- Wrapper tengah agar kartu tidak terlalu lebar --}}
-        <div class="mx-auto" style="max-width: 1000;">
+        <div class="mx-auto" style="max-width: 1000px;">
             @forelse ($beritas as $berita)
-                <div class="card mb-4 border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card card-berita mb-4 border-0 shadow-sm rounded-4 overflow-hidden" style="cursor: pointer;">
                     <div class="row g-0">
                         {{-- Gambar --}}
                         <div class="col-md-5">
@@ -58,6 +69,8 @@
                     {{ $beritas->links() }}
                 </div>
             @endif
+
+
         </div>
     </div>
 @endsection

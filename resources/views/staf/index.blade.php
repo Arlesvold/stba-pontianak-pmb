@@ -3,6 +3,17 @@
 @section('title', 'Daftar Staf')
 
 @section('content')
+    <style>
+        .card-staf {
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card-staf:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+
     <section class="py-5">
         <div class="container">
             <div class="text-center mb-4">
@@ -17,7 +28,7 @@
             <div class="row g-4">
                 @forelse ($stafs as $staf)
                     <div class="col-md-3 col-sm-6">
-                        <div class="card h-100 border-0 shadow-sm rounded-4 text-center">
+                        <div class="card card-staf h-100 border-0 shadow-sm rounded-4 text-center" style="cursor: pointer;">
                             @if ($staf->foto)
                                 <img src="{{ asset('storage/' . ltrim($staf->foto, '/')) }}" alt="{{ $staf->nama }}"
                                     class="card-img-top rounded-top-4"

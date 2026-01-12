@@ -62,23 +62,7 @@
                     </div>
                 </div>
 
-                <div class="flex-fill d-none d-lg-block mx-2">
-                    <div style="height:3px; background-color:#e5e7eb;"></div>
-                </div>
 
-                {{-- Step 4 --}}
-                <div class="d-flex align-items-center flex-fill d-none d-xl-flex">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center"
-                        style="width:32px;height:32px;
-                                background-color:#e5e7eb;
-                                color:#6b7280; font-size:14px;">
-                        4
-                    </div>
-                    <div class="ms-2">
-                        <div class="small fw-semibold text-muted">Pengumuman</div>
-                        <div class="small text-muted">Registrasi ulang</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

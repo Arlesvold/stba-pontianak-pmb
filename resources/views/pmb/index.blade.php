@@ -31,6 +31,17 @@
         .card-staf {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
             border: 1px solid #e9ecef !important;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .card-staf:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .card-berita:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
         }
     </style>
 
@@ -214,7 +225,7 @@
                 <div class="row g-4">
                     @foreach ($stafs as $staf)
                         <div class="col-md-3 col-sm-6">
-                            <div class="card card-staf h-100 shadow-sm rounded-4 text-center">
+                            <div class="card card-staf h-100 shadow-sm rounded-4 text-center" style="cursor: pointer;">
                                 @if ($staf->foto)
                                     <img src="{{ asset('storage/' . ltrim($staf->foto, '/')) }}" alt="{{ $staf->nama }}"
                                         class="card-img-top rounded-top-4"

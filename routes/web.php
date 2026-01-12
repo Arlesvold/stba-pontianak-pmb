@@ -70,8 +70,7 @@ Route::get('/prodi/sastra', function () {
 
 // Halaman daftar berita kampus
 Route::get('/berita', function () {
-    $beritas = Berita::orderBy('tanggal', 'desc')->paginate(6);
-
+    $beritas = Berita::orderBy('tanggal', 'desc')->paginate(6); // 6 berita per halaman
     return view('berita.index', compact('beritas'));
 })->name('berita.index');
 

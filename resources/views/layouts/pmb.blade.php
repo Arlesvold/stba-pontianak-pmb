@@ -9,7 +9,6 @@
     {{-- Bootstrap 5 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
 
 
     <style>
@@ -136,10 +135,16 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             border: 1px solid #f1f3f5;
         }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+        }
     </style>
 
     @stack('styles')
 </head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+
 
 <body>
     <div class="d-flex flex-column min-vh-100">
@@ -204,7 +209,7 @@
                                 href="{{ route('kontak') }}">Kontak</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('staf.index') ? 'active' : '' }}"
                                 href="{{ route('staf.index') }}">Staf</a>
                         </li>
                         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
