@@ -299,32 +299,6 @@
 
             {{-- Sisi kanan: info singkat --}}
             <div class="col-lg-4 mt-4 mt-lg-0">
-                {{-- Info biaya & gelombang --}}
-                <div class="card border-0 shadow-sm rounded-4 mb-3">
-                    <div class="card-body">
-                        <h6 class="fw-bold mb-2">Biaya Pendaftaran</h6>
-                        <p class="small mb-2">
-                            Biaya formulir pendaftaran: <span class="fw-bold">Rp300.000,-</span>
-                        </p>
-
-                        <h6 class="fw-bold mb-2 mt-3">Gelombang Pendaftaran</h6>
-                        <ul class="list-unstyled small mb-0">
-                            <li class="mb-1">
-                                <span class="fw-bold">Gelombang 1</span><br>
-                                <span class="text-muted">1 Feb – 30 Apr</span>
-                            </li>
-                            <li class="mb-1">
-                                <span class="fw-bold">Gelombang 2</span><br>
-                                <span class="text-muted">1 Mei – 30 Jun</span>
-                            </li>
-                            <li>
-                                <span class="fw-bold">Gelombang 3</span><br>
-                                <span class="text-muted">1 Jul – 15 Ags</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
                 {{-- Track progress PMB --}}
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body">

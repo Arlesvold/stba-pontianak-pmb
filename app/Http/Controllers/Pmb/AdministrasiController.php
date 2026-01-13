@@ -15,7 +15,6 @@ class AdministrasiController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'bukti_pembayaran' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'ijazah_rapor'     => 'required|file|mimes:jpg,jpeg,png,pdf|max:4096',
             'pas_foto'         => 'required|image|mimes:jpg,jpeg,png|max:1024',
         ]);
@@ -26,9 +25,8 @@ class AdministrasiController extends Controller
         // $foto   = $request->file('pas_foto')->store('pmb/foto');
         // lalu simpan path ke tabel administrasi_pmb
 
-        return back()->with(
-            'success',
-            'Dokumen administrasi berhasil diunggah. Berkas Anda akan segera diverifikasi.'
-        );
+        return redirect()
+            ->route('pmb.verifikasi-tes')
+            ->with('success', 'Dokumen administrasi berhasil dikirim. Silakan lanjut ke tahap verifikasi dan tes.');
     }
 }

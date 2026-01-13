@@ -99,23 +99,6 @@
                 <form action="{{ route('pmb.administrasi.submit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    {{-- Upload bukti transfer --}}
-                    <div class="card border-0 shadow-sm rounded-4 mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title mb-2">Bukti Transfer Biaya Pendaftaran</h5>
-                            <p class="small text-muted mb-3">
-                                Format yang diizinkan: JPG, PNG, atau PDF. Maksimal 2 MB.
-                            </p>
-                            <div class="mb-3">
-                                <input type="file" name="bukti_pembayaran"
-                                    class="form-control @error('bukti_pembayaran') is-invalid @enderror">
-                                @error('bukti_pembayaran')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-
                     {{-- Upload ijazah/rapor --}}
                     <div class="card border-0 shadow-sm rounded-4 mb-4">
                         <div class="card-body">
@@ -165,7 +148,6 @@
                     <div class="card-body">
                         <h6 class="fw-bold mb-2">Status Berkas</h6>
                         <ul class="small mb-0">
-                            <li class="mb-1">Bukti pembayaran: <span class="text-muted">menunggu upload</span></li>
                             <li class="mb-1">Ijazah / rapor: <span class="text-muted">menunggu upload</span></li>
                             <li>Pas foto: <span class="text-muted">menunggu upload</span></li>
                         </ul>

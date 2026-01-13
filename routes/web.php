@@ -106,11 +106,19 @@ Route::get('/pmb/administrasi', function () {
     return view('pmb.administrasi');
 })->name('pmb.administrasi');
 
+// Halaman administrasi (GET)
 Route::get('/pmb/administrasi', [AdministrasiController::class, 'index'])
     ->name('pmb.administrasi');
 
+// Proses kirim dokumen administrasi (POST)
 Route::post('/pmb/administrasi', [AdministrasiController::class, 'store'])
     ->name('pmb.administrasi.submit');
+
+// Halaman setelah kirim administrasi: Verifikasi & Tes
+Route::get('/pmb/verifikasi-tes', function () {
+    return view('pmb.verifikasi-tes');
+})->name('pmb.verifikasi-tes');
+
 
 
 
