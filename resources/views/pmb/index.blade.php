@@ -334,60 +334,189 @@
         </div>
     </section>
 
+    {{-- SECTION: CTA Pendaftaran --}}
+    <section class="position-relative d-flex align-items-center justify-content-center text-center text-white"
+        style="min-height: 400px; overflow: hidden;">
+
+        {{-- Background with Overlay --}}
+        <div class="position-absolute top-0 start-0 w-100 h-100">
+            <img src="{{ asset('images/mendaftar.jpg') }}" alt="Background Pendaftaran" class="w-100 h-100"
+                style="object-fit: cover; object-position: center;">
+            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.6);"></div>
+        </div>
+
+        {{-- Content --}}
+        <div class="container position-relative z-1">
+            <h2 class="fw-bold mb-3">Ayo Mulai Mendaftar</h2>
+            <p class="mb-4 lead">
+                MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK
+            </p>
+            <a href="{{ route('pmb.daftar') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
+                style="border-width: 2px; letter-spacing: 1px;">
+                TEMPAT PENDAFTARAN ONLINE
+            </a>
+        </div>
+    </section>
+
+    {{-- SECTION: Events --}}
+    @if (count($events) > 0)
+        <section class="py-5 bg-light position-relative overflow-hidden">
+            {{-- Ornament Background --}}
+            <div class="position-absolute start-0 top-0 mt-5 ms-n5 d-none d-lg-block opacity-25">
+                <div style="width: 200px; height: 200px; border: 20px solid var(--primary-maroon); border-radius: 50%;">
+                </div>
+            </div>
+
+            <div class="container position-relative">
+                <div class="row align-items-end mb-5">
+                    <div class="col-md-8">
+                        <h5 class="text-uppercase letter-spacing-2 fw-bold text-muted mb-2"
+                            style="letter-spacing: 2px; font-size: 0.85rem;">Bergabunglah Bersama Kami</h5>
+                        <h2 class="display-6 fw-bold mb-0" style="color: var(--primary-maroon);">Event Terbaru
+                        </h2>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <a href="{{ route('events.index') }}" class="btn btn-outline-dark rounded-pill px-4">
+                            Lihat Semua Event <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    @foreach ($events as $event)
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card card-berita h-100 shadow-sm rounded-4 overflow-hidden">
+                                {{-- Gambar --}}
+                                <div class="position-relative">
+                                    @if ($event->gambar)
+                                        <img src="{{ asset('storage/' . $event->gambar) }}" alt="{{ $event->judul }}"
+                                            class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    @else
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                            style="height: 200px;">
+                                            <i class="bi bi-calendar-event fs-1 text-muted"></i>
+                                        </div>
+                                    @endif
+                                    {{-- Date Badge --}}
+                                    <div class="position-absolute top-0 end-0 m-3">
+                                        <div class="bg-white rounded-3 shadow-sm text-center px-3 py-2">
+                                            <span
+                                                class="d-block fw-bold h5 mb-0 text-dark">{{ $event->tanggal_mulai->format('d') }}</span>
+                                            <span class="d-block small text-uppercase fw-semibold"
+                                                style="color: var(--primary-maroon);">{{ $event->tanggal_mulai->format('M') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Isi Card --}}
+                                <div class="card-body">
+                                    <h5 class="card-title fw-semibold mb-2"
+                                        style="font-size: 1rem; color: var(--primary-maroon);">
+                                        {{ $event->judul }}
+                                    </h5>
+
+                                    <p class="card-text small text-muted mb-2">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        {{ $event->lokasi ?? 'STBA Pontianak' }}
+                                    </p>
+
+                                    @if ($event->deskripsi_singkat)
+                                        <p class="card-text small text-muted mb-2" style="min-height: 40px;">
+                                            {{ \Illuminate\Support\Str::limit($event->deskripsi_singkat, 60) }}
+                                        </p>
+                                    @endif
+
+                                    <a href="{{ route('events.index') }}" class="small text-decoration-none"
+                                        style="color: var(--primary-maroon);">
+                                        Detail Acara →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <style>
+                    .group-hover-effect:hover img {
+                        transform: scale(1.1);
+                    }
+
+                    .group-hover-effect {
+                        transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    }
+
+                    .group-hover-effect:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+                    }
+                </style>
+            </div>
+        </section>
+    @endif
+
+
 
 
 
     {{-- SECTION: Agenda --}}
-    <section class="py-4">
+    <section class="py-5 bg-white">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="h5 fw-bold mb-0" style="color: var(--primary-maroon);">
-                    Agenda Penting
-                </h2>
-                <a href="{{ route('agenda.index') }}" class="small text-decoration-none"
-                    style="color: var(--primary-maroon);">
-                    Lihat semua
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
+                <div class="mb-3 mb-md-0">
+                    <h5 class="fw-bold text-danger text-uppercase mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">
+                        Kalender Akademik</h5>
+                    <h2 class="h3 fw-bold text-dark mb-0">Agenda Penting</h2>
+                </div>
+                <a href="{{ route('agenda.index') }}" class="btn btn-outline-danger rounded-pill px-4">
+                    Lihat Semua Agenda
                 </a>
             </div>
 
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-body">
-
-                    @forelse ($agendas as $agenda)
-                        <div class="row mb-3 {{ $loop->last ? 'mb-0' : '' }}">
-                            {{-- Kolom tanggal --}}
-                            <div class="col-md-2 col-3 text-center">
-                                <div class="badge bg-light text-muted small">
-                                    @if ($agenda->tanggal_selesai)
-                                        {{ $agenda->tanggal_mulai->format('d M') }}
-                                        – {{ $agenda->tanggal_selesai->format('d M') }}
-                                    @else
-                                        {{ $agenda->tanggal_mulai->format('d M') }}
-                                    @endif
+            <div class="row g-4">
+                @forelse ($agendas as $agenda)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 hover-translate"
+                            style="transition: all 0.3s ease;">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-light rounded-3 text-center py-2 px-3 me-3 text-nowrap border"
+                                        style="min-width: 80px;">
+                                        <span
+                                            class="d-block text-danger fw-bold h3 mb-0">{{ $agenda->tanggal_mulai->format('d') }}</span>
+                                        <span
+                                            class="d-block text-uppercase small fw-bold text-muted">{{ $agenda->tanggal_mulai->format('M') }}</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1 fs-6 text-dark lh-base">{{ $agenda->judul }}</h5>
+                                        <div class="small text-muted mb-2">
+                                            @if ($agenda->tanggal_selesai)
+                                                {{ $agenda->tanggal_mulai->format('d M') }} -
+                                                {{ $agenda->tanggal_selesai->format('d M Y') }}
+                                            @else
+                                                {{ $agenda->tanggal_mulai->format('d M Y') }}
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="small text-muted">
-                                    {{ $agenda->tanggal_mulai->format('Y') }}
-                                </div>
-                            </div>
-
-                            {{-- Kolom judul & deskripsi --}}
-                            <div class="col-md-10 col-9">
-                                <div class="fw-semibold">
-                                    {{ $agenda->judul }}
-                                </div>
-                                <div class="small text-muted">
-                                    {{ \Illuminate\Support\Str::limit(strip_tags($agenda->deskripsi), 100) }}
-                                </div>
+                                <p class="card-text small text-muted">
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($agenda->deskripsi), 80) }}
+                                </p>
                             </div>
                         </div>
-                    @empty
-                        <div class="text-center text-muted small py-2">
-                            Belum ada agenda yang dijadwalkan.
-                        </div>
-                    @endforelse
-
-                </div>
+                    </div>
+                @empty
+                    <div class="col-12 text-center py-4">
+                        <p class="text-muted">Belum ada agenda yang ditampilkan.</p>
+                    </div>
+                @endforelse
             </div>
+
+            <style>
+                .hover-translate:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
+                }
+            </style>
         </div>
     </section>
 

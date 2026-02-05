@@ -17,6 +17,9 @@ use App\Models\Berita;
 
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\EventController;
+use App\Models\Event; // Import Event model
+
 // ======================
 // HALAMAN DEPAN (PMB)
 // ======================
@@ -28,6 +31,15 @@ Route::get('/', function () {
         ->limit(6)
         ->get();
 
+    // Use Event model for the new section
+    // Requirement: Show only events that have NOT ended yet (tanggal_selesai >= today)
+    $events = Event::where('tanggal_selesai', '>=', now()->startOfDay())
+        ->orderBy('tanggal_mulai', 'asc')
+        ->limit(4)
+        ->get();
+
+    // Removed fallback that showed old events, so expired events are hidden from homepage.
+
     $agendas = Agenda::orderBy('tanggal_mulai', 'asc')
         ->limit(6)
         ->get();
@@ -37,8 +49,11 @@ Route::get('/', function () {
         ->limit(4)
         ->get();
 
-    return view('pmb.index', compact('beritaTerbaru', 'agendas', 'stafs'));
+    return view('pmb.index', compact('beritaTerbaru', 'agendas', 'stafs', 'events'));
 })->name('beranda');
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
 
 // Halaman form pendaftaran PMB
 Route::get('/pmb/daftar', function () {

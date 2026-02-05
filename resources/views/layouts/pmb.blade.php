@@ -201,6 +201,10 @@
                                 href="{{ route('berita.index') }}">Berita</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('events.index') ? 'active' : '' }}"
+                                href="{{ route('events.index') }}">Event</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
                                 href="{{ route('agenda.index') }}">Agenda</a>
                         </li>
