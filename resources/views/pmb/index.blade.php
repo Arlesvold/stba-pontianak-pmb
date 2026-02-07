@@ -82,9 +82,15 @@
                     </p>
 
                     <div class="hero-cta d-flex flex-wrap gap-2 mb-4">
-                        <a href="{{ route('pmb.daftar') }}" class="btn btn-maroon">
-                            Daftar Sekarang
-                        </a>
+                        @auth
+                            <a href="{{ route('pmb.daftar') }}" class="btn btn-maroon">
+                                Isi Formulir
+                            </a>
+                        @else
+                            <a href="{{ route('register') }}" class="btn btn-maroon">
+                                Daftar Sekarang
+                            </a>
+                        @endauth
                     </div>
 
                     <div class="hero-highlight-box d-none d-md-block">
@@ -351,10 +357,17 @@
             <p class="mb-4 lead">
                 MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK
             </p>
-            <a href="{{ route('pmb.daftar') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
-                style="border-width: 2px; letter-spacing: 1px;">
-                TEMPAT PENDAFTARAN ONLINE
-            </a>
+            @auth
+                <a href="{{ route('pmb.daftar') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
+                    style="border-width: 2px; letter-spacing: 1px;">
+                    ISI FORMULIR PENDAFTARAN
+                </a>
+            @else
+                <a href="{{ route('register') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
+                    style="border-width: 2px; letter-spacing: 1px;">
+                    DAFTAR AKUN SEKARANG
+                </a>
+            @endauth
         </div>
     </section>
 
@@ -459,7 +472,7 @@
 
 
     {{-- SECTION: Agenda --}}
-    <section class="py-5 bg-white">
+    <section class="py-5 bg-light">
         <div class="container">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
                 <div class="mb-3 mb-md-0">

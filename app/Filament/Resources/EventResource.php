@@ -86,7 +86,8 @@ class EventResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('gambar')
-                    ->label('Gambar'),
+                    ->label('Gambar')
+                    ->disk('public'),
 
                 TextColumn::make('judul')
                     ->label('Judul')

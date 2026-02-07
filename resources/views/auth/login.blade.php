@@ -1,88 +1,183 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="id">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PMB STBA Pontianak</title>
+    {{-- Bootstrap 5 --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <style>
+        :root {
+            --primary-maroon: #7b1e30;
+        }
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" value="Password" />
+        body {
+            font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+        }
 
-            <div class="relative">
-                <x-text-input id="password" class="block mt-1 w-full pr-10" type="password" name="password" required
-                    autocomplete="current-password" />
+        .auth-container {
+            min-height: 100vh;
+        }
 
-                <button type="button" onclick="togglePasswordVisibility()"
-                    class="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 text-sm">
-                    {{-- icon mata (show) --}}
-                    <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
+        .left-panel {
+            background-color: #ffffff;
+        }
 
-                    {{-- icon mata dicoret (hide) --}}
-                    <svg id="icon-eye-off" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 012.293-3.95M9.88 9.88A3 3 0 0114.12 14.12M6.1 6.1L4 4m16 16L4 4" />
-                    </svg>
-                </button>
+        .right-panel {
+            background-image: url("{{ asset('images/hero1.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-maroon);
+            box-shadow: 0 0 0 0.25rem rgba(123, 30, 48, 0.15);
+        }
+
+        .btn-maroon {
+            background-color: var(--primary-maroon);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .btn-maroon:hover {
+            background-color: #5a1423;
+            color: white;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border-left: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid p-0 auth-container">
+        <div class="row g-0 h-100 min-vh-100">
+            <!-- Left Panel: Form -->
+            <div
+                class="col-lg-5 col-md-12 d-flex flex-column justify-content-center px-4 px-md-5 py-5 left-panel bg-white">
+                <div class="mx-auto w-100" style="max-width: 480px;">
+                    <div class="mb-4">
+                        <p class="text-muted mb-1">Belum punya akun? Silakan <a href="{{ route('register') }}"
+                                class="text-decoration-none fw-bold" style="color: var(--primary-maroon);">Daftar</a>
+                        </p>
+                        <h2 class="fw-bold fs-2" style="color: #333;">Login ke Akun</h2>
+                        <p class="text-muted small">Masuk untuk mengakses formulir pendaftaran.</p>
+                    </div>
+
+                    <!-- Session Status -->
+                    @if (session('status'))
+                        <div class="alert alert-success small mb-4">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                                placeholder="email@domain.com" required autofocus>
+                            @error('email')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <label class="form-label fw-bold small">Password</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" name="password" id="password" class="form-control"
+                                    placeholder="Masukkan password"
+                                    style="border-radius: 8px 0 0 8px; border-right: none;" required>
+                                <span class="input-group-text border-start-0" style="border-radius: 0 8px 8px 0;"
+                                    onclick="togglePassword('password', 'icon-pass')">
+                                    <i class="bi bi-eye" id="icon-pass"></i>
+                                </span>
+                            </div>
+                            @error('password')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="remember" id="remember_me">
+                                <label class="form-check-label small" for="remember_me">
+                                    Ingat saya
+                                </label>
+                            </div>
+                            @if (Route::has('password.request'))
+                                <a href="{{ route('password.request') }}"
+                                    class="small text-decoration-none text-muted">Lupa Password?</a>
+                            @endif
+                        </div>
+
+                        <button type="submit" class="btn btn-maroon shadow-sm mb-4">
+                            Masuk
+                        </button>
+
+                        <div class="position-relative text-center mb-4">
+                            <div class="border-bottom position-absolute w-100 top-50"></div>
+                            <span class="bg-white px-2 position-relative text-muted small">Atau masuk dengan</span>
+                        </div>
+
+                        <button type="button"
+                            class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"
+                            style="border-radius: 8px; padding: 10px;">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"
+                                height="20" alt="Google">
+                            <span>Masuk dengan Google</span>
+                        </button>
+                    </form>
+                </div>
             </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <!-- Right Panel: Image -->
+            <div class="col-lg-7 d-none d-lg-block right-panel">
+            </div>
         </div>
+    </div>
 
-        <script>
-            function togglePasswordVisibility() {
-                const input = document.getElementById('password');
-                const eye = document.getElementById('icon-eye');
-                const eyeOff = document.getElementById('icon-eye-off');
+    <script>
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
 
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    eye.classList.add('hidden');
-                    eyeOff.classList.remove('hidden');
-                } else {
-                    input.type = 'password';
-                    eye.classList.remove('hidden');
-                    eyeOff.classList.add('hidden');
-                }
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
             }
-        </script>
+        }
+    </script>
+</body>
 
-
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>

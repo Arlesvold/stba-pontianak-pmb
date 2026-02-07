@@ -32,7 +32,7 @@ Route::get('/', function () {
         ->get();
 
     // Use Event model for the new section
-    // Requirement: Show only events that have NOT ended yet (tanggal_selesai >= today)
+    // Requirement: Show only events that have NOT ended yet
     $events = Event::where('tanggal_selesai', '>=', now()->startOfDay())
         ->orderBy('tanggal_mulai', 'asc')
         ->limit(4)
@@ -55,13 +55,14 @@ Route::get('/', function () {
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
 
-// Halaman form pendaftaran PMB
-Route::get('/pmb/daftar', function () {
-    return view('pmb.daftar');
-})->name('pmb.daftar');
+// Halaman form pendaftaran PMB (Protected)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pmb/daftar', [PendaftaranController::class, 'index'])
+        ->name('pmb.daftar');
 
-Route::post('/pmb/daftar', [PendaftaranController::class, 'store'])
-    ->name('pmb.daftar.submit');
+    Route::post('/pmb/daftar', [PendaftaranController::class, 'store'])
+        ->name('pmb.daftar.submit');
+});
 
 // Halaman informasi PMB
 Route::get('/pmb/informasi', function () {
@@ -131,7 +132,17 @@ Route::post('/pmb/administrasi', [AdministrasiController::class, 'store'])
 
 // Halaman setelah kirim administrasi: Verifikasi & Tes
 Route::get('/pmb/verifikasi-tes', function () {
-    return view('pmb.verifikasi-tes');
+    $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
+
+    if (!$registration) {
+        return redirect()->route('pmb.daftar');
+    }
+
+    if ($registration->step < 3) {
+        return redirect()->route('pmb.administrasi')->with('error', 'Silakan selesaikan proses administrasi terlebih dahulu.');
+    }
+
+    return view('pmb.verifikasi-tes', compact('registration'));
 })->name('pmb.verifikasi-tes');
 
 

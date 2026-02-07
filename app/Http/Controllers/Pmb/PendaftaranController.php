@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class PendaftaranController extends Controller
 {
+    public function index()
+    {
+        // Get existing registration data if any
+        $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
+        
+        return view('pmb.daftar', compact('registration'));
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -25,10 +33,13 @@ class PendaftaranController extends Controller
             'setuju'          => 'accepted',
         ]);
 
-        // TODO: simpan ke tabel pendaftaran_pmb dan ambil ID-nya
-        // $pendaftaran = PendaftaranPmb::create($data);
+        // Simpan atau update data pendaftaran
+        $registration = \App\Models\Registration::updateOrCreate(
+            ['user_id' => auth()->id()],
+            array_merge($data, ['step' => max(2, \App\Models\Registration::where('user_id', auth()->id())->value('step') ?? 2)])
+        );
 
-        // Redirect ke halaman proses administrasi (bisa kirim ID pendaftaran kalau perlu)
+        // Redirect ke halaman proses administrasi
         return redirect()
             ->route('pmb.administrasi')
             ->with('success', 'Formulir pendaftaran berhasil disimpan. Silakan melanjutkan ke proses administrasi.');
