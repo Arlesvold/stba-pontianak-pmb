@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Pmb;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PmbSubmissionMail;
 
 class UnggahDokumenController extends Controller
 {
@@ -49,6 +51,16 @@ class UnggahDokumenController extends Controller
 
         // Update DB
         $registration->update($updates);
+
+        // Send Email Confirmation
+        try {
+            if ($registration->email) {
+                Mail::to($registration->email)->send(new PmbSubmissionMail($registration));
+            }
+        } catch (\Exception $e) {
+            // Log error or ignore to prevent blocking the user
+            \Log::error('Gagal mengirim email konfirmasi pendaftaran PMB: ' . $e->getMessage());
+        }
 
         return redirect()
             ->route('pmb.verifikasi-tes')
