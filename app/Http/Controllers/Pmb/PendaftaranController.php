@@ -11,7 +11,7 @@ class PendaftaranController extends Controller
     {
         // Get existing registration data if any
         $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
-        
+
         return view('pmb.daftar', compact('registration'));
     }
 
@@ -39,9 +39,9 @@ class PendaftaranController extends Controller
             array_merge($data, ['step' => max(2, \App\Models\Registration::where('user_id', auth()->id())->value('step') ?? 2)])
         );
 
-        // Redirect ke halaman proses administrasi
+        // Redirect ke halaman unggah dokumen
         return redirect()
-            ->route('pmb.administrasi')
-            ->with('success', 'Formulir pendaftaran berhasil disimpan. Silakan melanjutkan ke proses administrasi.');
+            ->route('pmb.unggah-dokumen')
+            ->with('success', 'Formulir pendaftaran berhasil disimpan. Silakan melanjutkan ke proses unggah dokumen.');
     }
 }

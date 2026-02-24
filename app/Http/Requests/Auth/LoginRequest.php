@@ -59,6 +59,13 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Hanya user dengan role 'user' yang boleh login di PMB
+        if (! $user->hasRole('user')) {
+            throw ValidationException::withMessages([
+                'email' => 'Akun ini tidak memiliki akses ke sistem PMB.',
+            ]);
+        }
+
         // gunakan Auth::login(), bukan auth()->login()
         Auth::login($user, $this->boolean('remember'));
 

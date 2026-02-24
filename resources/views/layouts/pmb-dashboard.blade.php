@@ -142,7 +142,7 @@
             display: flex;
             align-items: center;
         }
-        
+
         .step-item {
             display: flex;
             align-items: center;
@@ -183,6 +183,7 @@
             color: var(--primary-maroon);
             box-shadow: 0 0 0 4px rgba(123, 30, 48, 0.1);
         }
+
         .step-active .step-label {
             color: var(--primary-maroon);
         }
@@ -193,10 +194,12 @@
             color: #fff;
             border: 2px solid var(--primary-maroon);
         }
+
         .step-completed .step-label {
             color: var(--primary-maroon);
         }
-        .step-completed + .step-line {
+
+        .step-completed+.step-line {
             background-color: var(--primary-maroon);
         }
 
@@ -206,6 +209,7 @@
             color: #9ca3af;
             border: 2px solid #e5e7eb;
         }
+
         .step-inactive .step-label {
             color: #9ca3af;
         }
@@ -275,10 +279,10 @@
                 Isi Formulir
             </a>
 
-            <a href="{{ route('pmb.administrasi') }}"
-                class="nav-link {{ request()->routeIs('pmb.administrasi') ? 'active' : '' }}">
+            <a href="{{ route('pmb.unggah-dokumen') }}"
+                class="nav-link {{ request()->routeIs('pmb.unggah-dokumen') ? 'active' : '' }}">
                 <i class="bi bi-2-circle-fill"></i>
-                Proses Administrasi
+                Unggah Dokumen
             </a>
 
             <a href="{{ route('pmb.verifikasi-tes') }}"
@@ -316,27 +320,36 @@
                     {{-- Step 1 --}}
                     @php
                         $isStep1Active = request()->routeIs('pmb.daftar');
-                        $isStep1Done   = request()->routeIs('pmb.administrasi') || request()->routeIs('pmb.verifikasi-tes');
-                        $step1Class    = $isStep1Done ? 'step-completed' : ($isStep1Active ? 'step-active' : 'step-inactive');
-                        $step1Icon     = $isStep1Done ? '<i class="bi bi-check-lg"></i>' : '1';
+                        $isStep1Done =
+                            request()->routeIs('pmb.unggah-dokumen') || request()->routeIs('pmb.verifikasi-tes');
+                        $step1Class = $isStep1Done
+                            ? 'step-completed'
+                            : ($isStep1Active
+                                ? 'step-active'
+                                : 'step-inactive');
+                        $step1Icon = $isStep1Done ? '<i class="bi bi-check-lg"></i>' : '1';
                     @endphp
                     <div class="step-item {{ $step1Class }}">
                         <div class="step-circle">{!! $step1Icon !!}</div>
                         <div class="step-label">Isi Formulir</div>
                     </div>
-                    
+
                     <div class="step-line {{ $isStep1Done ? 'bg-maroon' : '' }}"></div>
 
                     {{-- Step 2 --}}
                     @php
-                        $isStep2Active = request()->routeIs('pmb.administrasi');
-                        $isStep2Done   = request()->routeIs('pmb.verifikasi-tes');
-                        $step2Class    = $isStep2Done ? 'step-completed' : ($isStep2Active ? 'step-active' : 'step-inactive');
-                        $step2Icon     = $isStep2Done ? '<i class="bi bi-check-lg"></i>' : '2';
+                        $isStep2Active = request()->routeIs('pmb.unggah-dokumen');
+                        $isStep2Done = request()->routeIs('pmb.verifikasi-tes');
+                        $step2Class = $isStep2Done
+                            ? 'step-completed'
+                            : ($isStep2Active
+                                ? 'step-active'
+                                : 'step-inactive');
+                        $step2Icon = $isStep2Done ? '<i class="bi bi-check-lg"></i>' : '2';
                     @endphp
                     <div class="step-item {{ $step2Class }}">
                         <div class="step-circle">{!! $step2Icon !!}</div>
-                        <div class="step-label">Administrasi</div>
+                        <div class="step-label">Unggah Dokumen</div>
                     </div>
 
                     <div class="step-line {{ $isStep2Done ? 'bg-maroon' : '' }}"></div>
@@ -344,7 +357,7 @@
                     {{-- Step 3 --}}
                     @php
                         $isStep3Active = request()->routeIs('pmb.verifikasi-tes');
-                        $step3Class    = $isStep3Active ? 'step-active' : 'step-inactive';
+                        $step3Class = $isStep3Active ? 'step-active' : 'step-inactive';
                         // Step 3 is the last step, so assume completed visual when active for better UX or stay active
                     @endphp
                     <div class="step-item {{ $step3Class }}">
@@ -356,9 +369,9 @@
 
             {{-- Mobile Title (When Steps are hidden) --}}
             <div class="d-lg-none ms-3 me-auto">
-                @if(request()->routeIs('pmb.daftar'))
+                @if (request()->routeIs('pmb.daftar'))
                     <span class="fw-bold text-dark">Langkah 1/3</span>
-                @elseif(request()->routeIs('pmb.administrasi'))
+                @elseif(request()->routeIs('pmb.unggah-dokumen'))
                     <span class="fw-bold text-dark">Langkah 2/3</span>
                 @elseif(request()->routeIs('pmb.verifikasi-tes'))
                     <span class="fw-bold text-dark">Langkah 3/3</span>
@@ -378,7 +391,8 @@
                         </div>
                     </div>
                     <ul class="dropdown-menu dropdown-menu-end mt-2 animate slideIn">
-                        <li><span class="dropdown-header d-sm-none">Halo, {{ Auth::user()->name ?? 'User' }}</span></li>
+                        <li><span class="dropdown-header d-sm-none">Halo, {{ Auth::user()->name ?? 'User' }}</span>
+                        </li>
                         {{-- <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil Saya</a></li> --}}
                         <li>
                             <hr class="dropdown-divider">

@@ -3,12 +3,11 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Pmb\PendaftaranController;
-use App\Http\Controllers\Pmb\AdministrasiController;
+use App\Http\Controllers\Pmb\UnggahDokumenController;
 use App\Models\Staf;
 
 use App\Models\Agenda;
@@ -118,17 +117,13 @@ Route::post('/kontak', function (\Illuminate\Http\Request $request) {
     return back()->with('success', 'Pesan berhasil dikirim.');
 })->name('kontak.kirim');
 
-Route::get('/pmb/administrasi', function () {
-    return view('pmb.administrasi');
-})->name('pmb.administrasi');
+// Halaman unggah dokumen (GET)
+Route::get('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'index'])
+    ->name('pmb.unggah-dokumen');
 
-// Halaman administrasi (GET)
-Route::get('/pmb/administrasi', [AdministrasiController::class, 'index'])
-    ->name('pmb.administrasi');
-
-// Proses kirim dokumen administrasi (POST)
-Route::post('/pmb/administrasi', [AdministrasiController::class, 'store'])
-    ->name('pmb.administrasi.submit');
+// Proses upload dokumen (POST)
+Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
+    ->name('pmb.unggah-dokumen.submit');
 
 // Halaman setelah kirim administrasi: Verifikasi & Tes
 Route::get('/pmb/verifikasi-tes', function () {
@@ -139,7 +134,7 @@ Route::get('/pmb/verifikasi-tes', function () {
     }
 
     if ($registration->step < 3) {
-        return redirect()->route('pmb.administrasi')->with('error', 'Silakan selesaikan proses administrasi terlebih dahulu.');
+        return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
     }
 
     return view('pmb.verifikasi-tes', compact('registration'));
@@ -150,12 +145,8 @@ Route::get('/pmb/verifikasi-tes', function () {
 
 
 // ======================
-// DASHBOARD BREEZE
-// ======================
+// DASHBOARD BREEZE REMOVED
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
 
 
 // ======================
@@ -180,8 +171,6 @@ require __DIR__ . '/auth.php';
 
 // semua route admin wajib login
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     // Marquee
     Route::get('/marquee', [SettingController::class, 'editMarquee'])->name('marquee.edit');
     Route::post('/marquee', [SettingController::class, 'updateMarquee'])->name('marquee.update');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Pmb;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdministrasiController extends Controller
+class UnggahDokumenController extends Controller
 {
     public function index()
     {
@@ -13,10 +13,10 @@ class AdministrasiController extends Controller
 
         // Cek jika belum menyelesaikan langkah 1 (Isi Formulir)
         if (!$registration || $registration->step < 2) {
-             return redirect()->route('pmb.daftar')->with('error', 'Silakan selesaikan pengisian formulir terlebih dahulu.');
+            return redirect()->route('pmb.daftar')->with('error', 'Silakan selesaikan pengisian formulir terlebih dahulu.');
         }
 
-        return view('pmb.administrasi', compact('registration'));
+        return view('pmb.unggah-dokumen', compact('registration'));
     }
 
     public function store(Request $request)
@@ -48,12 +48,10 @@ class AdministrasiController extends Controller
         $updates['step'] = max(3, $registration->step);
 
         // Update DB
-        if (!empty($updates)) {
-             $registration->update($updates);
-        }
+        $registration->update($updates);
 
         return redirect()
             ->route('pmb.verifikasi-tes')
-            ->with('success', 'Dokumen administrasi berhasil dikirim. Silakan lanjut ke tahap verifikasi dan tes.');
+            ->with('success', 'Dokumen berhasil diunggah. Pendaftaran Anda sedang diverifikasi.');
     }
 }

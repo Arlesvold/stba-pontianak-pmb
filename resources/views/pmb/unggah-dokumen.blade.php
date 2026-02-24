@@ -1,17 +1,17 @@
 @extends('layouts.pmb-dashboard')
 
-@section('title', 'Proses Administrasi PMB')
+@section('title', 'Unggah Dokumen PMB')
 
 @section('content')
     {{-- Main Content Header --}}
     <div class="mb-4">
-        <h1 class="h3 fw-bold mb-2 text-dark">Proses Administrasi</h1>
+        <h1 class="h3 fw-bold mb-2 text-dark">Unggah Dokumen</h1>
         <p class="text-muted">Unggah dokumen di bawah ini untuk melengkapi pendaftaran Anda.</p>
     </div>
 
     <div class="row">
         <div class="col-lg-8">
-            <form action="{{ route('pmb.administrasi.submit') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('pmb.unggah-dokumen.submit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 {{-- Upload ijazah/rapor --}}
@@ -27,7 +27,7 @@
                             Upload ijazah terakhir atau rapor (semester akhir). Format JPG, PNG, atau PDF, maks. 4 MB.
                         </p>
 
-                        @if(optional($registration)->ijazah_path)
+                        @if (optional($registration)->ijazah_path)
                             <div class="mb-3">
                                 <div class="bg-light p-3 rounded-3 border d-flex align-items-center">
                                     <i class="bi bi-file-earmark-check-fill text-success fs-3 me-3"></i>
@@ -35,14 +35,16 @@
                                         <div class="small fw-bold text-dark">File Tersimpan</div>
                                         <div class="small text-muted text-truncate">
                                             {{-- Assuming the path is 'documents/ijazah/filename.ext' --}}
-                                            <a href="{{ Storage::url($registration->ijazah_path) }}" target="_blank" class="text-decoration-none">
+                                            <a href="{{ Storage::url($registration->ijazah_path) }}" target="_blank"
+                                                class="text-decoration-none">
                                                 Lihat Dokumen
                                             </a>
                                         </div>
                                     </div>
                                     <span class="badge bg-success mb-auto">Terupload</span>
                                 </div>
-                                <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>Upload ulang jika ingin mengganti file.</div>
+                                <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>Upload ulang jika ingin
+                                    mengganti file.</div>
                             </div>
                         @endif
 
@@ -67,24 +69,28 @@
                             Latar belakang polos (disarankan biru/merah), ukuran minimal 3x4, format JPG/PNG, maks. 1 MB.
                         </p>
 
-                        @if(optional($registration)->foto_path)
+                        @if (optional($registration)->foto_path)
                             <div class="mb-3">
                                 <div class="d-flex align-items-start gap-3">
-                                    <div class="border rounded-2 p-1 bg-white shadow-sm" style="width: 100px; height: 120px;">
-                                         <img src="{{ Storage::url($registration->foto_path) }}" 
-                                              alt="Preview Foto" 
-                                              class="w-100 h-100 object-fit-cover rounded-1">
+                                    <div class="border rounded-2 p-1 bg-white shadow-sm"
+                                        style="width: 100px; height: 120px;">
+                                        <img src="{{ Storage::url($registration->foto_path) }}" alt="Preview Foto"
+                                            class="w-100 h-100 object-fit-cover rounded-1">
                                     </div>
                                     <div>
-                                        <div class="small fw-bold text-success mb-1"><i class="bi bi-check-circle-fill me-1"></i>Foto Tersimpan</div>
-                                        <p class="small text-muted mb-0">Ini adalah foto yang akan digunakan untuk kartu ujian Anda.</p>
+                                        <div class="small fw-bold text-success mb-1"><i
+                                                class="bi bi-check-circle-fill me-1"></i>Foto Tersimpan</div>
+                                        <p class="small text-muted mb-0">Ini adalah foto yang akan digunakan untuk kartu
+                                            ujian Anda.</p>
                                     </div>
                                 </div>
-                                <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>Upload ulang jika ingin mengganti foto.</div>
+                                <div class="form-text mt-2"><i class="bi bi-info-circle me-1"></i>Upload ulang jika ingin
+                                    mengganti foto.</div>
                             </div>
                         @endif
 
-                        <input type="file" name="pas_foto" class="form-control @error('pas_foto') is-invalid @enderror" accept=".jpg,.jpeg,.png">
+                        <input type="file" name="pas_foto" class="form-control @error('pas_foto') is-invalid @enderror"
+                            accept=".jpg,.jpeg,.png">
                         @error('pas_foto')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -93,7 +99,7 @@
 
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-maroon">
-                        Kirim Dokumen Administrasi
+                        Kirim Dokumen
                     </button>
                 </div>
             </form>

@@ -35,7 +35,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Nama Lengkap</label>
-                            <input type="text" name="nama_lengkap" value="{{ old('nama_lengkap', optional($registration)->nama_lengkap) }}"
+                            <input type="text" name="nama_lengkap"
+                                value="{{ old('nama_lengkap', optional($registration)->nama_lengkap) }}"
                                 class="form-control @error('nama_lengkap') is-invalid @enderror"
                                 placeholder="Sesuai ijazah">
                             @error('nama_lengkap')
@@ -55,7 +56,8 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Tanggal Lahir</label>
-                                <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', optional($registration)->tanggal_lahir) }}"
+                                <input type="date" name="tanggal_lahir"
+                                    value="{{ old('tanggal_lahir', optional($registration)->tanggal_lahir) }}"
                                     class="form-control @error('tanggal_lahir') is-invalid @enderror">
                                 @error('tanggal_lahir')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -68,12 +70,14 @@
                                 <label class="form-label d-block">Jenis Kelamin</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_l"
-                                        value="L" {{ old('jenis_kelamin', optional($registration)->jenis_kelamin) == 'L' ? 'checked' : '' }}>
+                                        value="L"
+                                        {{ old('jenis_kelamin', optional($registration)->jenis_kelamin) == 'L' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="jk_l">Laki-laki</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_p"
-                                        value="P" {{ old('jenis_kelamin', optional($registration)->jenis_kelamin) == 'P' ? 'checked' : '' }}>
+                                        value="P"
+                                        {{ old('jenis_kelamin', optional($registration)->jenis_kelamin) == 'P' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="jk_p">Perempuan</label>
                                 </div>
                                 @error('jenis_kelamin')
@@ -85,7 +89,8 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" value="{{ old('email', optional($registration)->email) }}"
+                                <input type="email" name="email"
+                                    value="{{ old('email', optional($registration)->email) }}"
                                     class="form-control @error('email') is-invalid @enderror"
                                     placeholder="email@contoh.com">
                                 @error('email')
@@ -94,7 +99,8 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">No. HP (WhatsApp)</label>
-                                <input type="text" name="no_hp" value="{{ old('no_hp', optional($registration)->no_hp) }}"
+                                <input type="text" name="no_hp"
+                                    value="{{ old('no_hp', optional($registration)->no_hp) }}"
                                     class="form-control @error('no_hp') is-invalid @enderror" placeholder="08xxxxxxxxxx">
                                 @error('no_hp')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -184,7 +190,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Nama Sekolah Asal</label>
-                            <input type="text" name="sekolah_asal" value="{{ old('sekolah_asal', optional($registration)->sekolah_asal) }}"
+                            <input type="text" name="sekolah_asal"
+                                value="{{ old('sekolah_asal', optional($registration)->sekolah_asal) }}"
                                 class="form-control @error('sekolah_asal') is-invalid @enderror">
                             @error('sekolah_asal')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -194,7 +201,8 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Jurusan</label>
-                                <input type="text" name="jurusan_sekolah" value="{{ old('jurusan_sekolah', optional($registration)->jurusan_sekolah) }}"
+                                <input type="text" name="jurusan_sekolah"
+                                    value="{{ old('jurusan_sekolah', optional($registration)->jurusan_sekolah) }}"
                                     class="form-control @error('jurusan_sekolah') is-invalid @enderror"
                                     placeholder="IPA / IPS / Bahasa / lainnya">
                                 @error('jurusan_sekolah')
@@ -203,7 +211,8 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label class="form-label">Tahun Lulus</label>
-                                <input type="text" name="tahun_lulus" value="{{ old('tahun_lulus', optional($registration)->tahun_lulus) }}"
+                                <input type="text" name="tahun_lulus"
+                                    value="{{ old('tahun_lulus', optional($registration)->tahun_lulus) }}"
                                     class="form-control @error('tahun_lulus') is-invalid @enderror" placeholder="YYYY">
                                 @error('tahun_lulus')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -233,7 +242,7 @@
 
                 <div class="d-flex justify-content-end mt-3">
                     <button type="submit" id="btn-lanjutkan" class="btn btn-maroon" disabled>
-                        Lanjutkan (Proses Administrasi)
+                        Lanjutkan (Unggah Dokumen)
                     </button>
                 </div>
 
