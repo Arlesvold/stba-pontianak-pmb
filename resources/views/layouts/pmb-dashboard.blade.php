@@ -434,6 +434,7 @@
         closeBtn.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
     </script>
+    @stack('scripts')
 </body>
 
 </html>

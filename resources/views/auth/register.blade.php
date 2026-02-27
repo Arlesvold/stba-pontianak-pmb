@@ -106,20 +106,6 @@
                             @enderror
                         </div>
 
-                        <!-- Nomor HP -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold small">Nomor HP <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light border-end-0"
-                                    style="border-radius: 8px 0 0 8px; border-right: 1px solid #dee2e6;">+62</span>
-                                <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}"
-                                    placeholder="81234567890" style="border-radius: 0 8px 8px 0;" required>
-                            </div>
-                            @error('no_hp')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
-
                         <!-- Password -->
                         <div class="mb-3">
                             <label class="form-label fw-bold small">Password <span class="text-danger">*</span></label>

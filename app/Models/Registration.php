@@ -23,6 +23,12 @@ class Registration extends Model
         'ijazah_path',
         'foto_path',
         'step',
+        'status',
+        'feedback',
+    ];
+
+    protected $casts = [
+        'tanggal_lahir' => 'date',
     ];
 
     public function user()
