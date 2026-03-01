@@ -33,17 +33,44 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'g-recaptcha-response' => ['required'],
         ];
     }
 
     /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws ValidationException
+     * Custom validation messages.
      */
+    public function messages(): array
+    {
+        return [
+            'g-recaptcha-response.required' => 'Silakan verifikasi bahwa Anda bukan robot.',
+        ];
+    }
+
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        // Verify Google reCAPTCHA v2
+        try {
+            $recaptchaResponse = $this->input('g-recaptcha-response');
+            $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => config('services.recaptcha.secret_key'),
+                'response' => $recaptchaResponse,
+                'remoteip' => $this->ip(),
+            ]);
+
+            if (! $response->json('success')) {
+                throw ValidationException::withMessages([
+                    'g-recaptcha-response' => 'Verifikasi reCAPTCHA gagal, silakan coba lagi.',
+                ]);
+            }
+        } catch (ValidationException $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            \Log::error('reCAPTCHA verification error: ' . $e->getMessage());
+            // Allow login to proceed if reCAPTCHA service is down
+        }
 
         $user = User::where('email', $this->email)->first();
 

@@ -8,6 +8,7 @@
     {{-- Bootstrap 5 --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
         :root {
@@ -134,6 +135,14 @@
                                 <a href="{{ route('password.request') }}"
                                     class="small text-decoration-none text-muted">Lupa Password?</a>
                             @endif
+                        </div>
+
+                        {{-- Google reCAPTCHA v2 --}}
+                        <div class="mb-3">
+                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                            @error('g-recaptcha-response')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-maroon shadow-sm mb-4">
