@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konfirmasi Pendaftaran PMB</title>
+    <title>Pendaftaran PMB Selesai</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,6 +27,14 @@
             background-color: #f9fafb;
             padding: 30px;
             border: 1px solid #e5e7eb;
+        }
+
+        .success-box {
+            background-color: #d1fae5;
+            padding: 20px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+            color: #065f46;
         }
 
         .detail-box {
@@ -86,8 +94,11 @@
     <div class="content">
         <h2>Halo, {{ $registration->nama_lengkap }}</h2>
 
-        <p>Terima kasih telah melakukan pendaftaran di <strong>STBA Pontianak</strong>.</p>
-        <p>Dokumen Anda telah kami terima dan saat ini sedang dalam proses verifikasi.</p>
+        <div class="success-box">
+            <strong>Selamat!</strong> Pendaftaran Anda di STBA Pontianak telah selesai dan berkas Anda dinyatakan valid.
+        </div>
+
+        <p>Terima kasih telah menyelesaikan seluruh tahapan pendaftaran. Berikut adalah detail pendaftaran Anda:</p>
 
         <div class="detail-box">
             <h3>Detail Pendaftaran</h3>
@@ -103,16 +114,12 @@
             <div class="detail-item">
                 <span class="detail-label">Sistem Kuliah:</span> {{ $registration->sistem_kuliah }}
             </div>
-            <div class="detail-item">
-                <span class="detail-label">No. HP (WA):</span> {{ $registration->no_hp }}
-            </div>
         </div>
 
-        <p>Silakan pantau status pendaftaran Anda melalui dashboard PMB secara berkala.</p>
-        <p>Kami juga akan menghubungi Anda melalui WhatsApp jika ada informasi lebih lanjut.</p>
+        <p>Silakan tunggu informasi selanjutnya dari panitia PMB melalui WhatsApp terkait langkah berikutnya.</p>
 
         <center>
-            <a href="{{ route('login') }}" class="button">Cek Status Pendaftaran</a>
+            <a href="{{ route('login') }}" class="button">Masuk ke Dashboard</a>
         </center>
 
         <div class="footer">

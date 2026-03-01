@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PmbSubmissionMail extends Mailable
+class PmbCompletedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,7 +27,7 @@ class PmbSubmissionMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Konfirmasi Pendaftaran PMB STBA Pontianak - ' . $this->registration->nama_lengkap,
+            subject: 'Pendaftaran PMB STBA Pontianak Selesai - ' . $this->registration->nama_lengkap,
         );
     }
 
@@ -37,7 +37,7 @@ class PmbSubmissionMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.pmb.submission',
+            view: 'emails.pmb.completed',
             with: [
                 'registration' => $this->registration,
             ],

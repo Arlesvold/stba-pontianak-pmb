@@ -255,10 +255,8 @@
         <div class="sidebar-header">
             {{-- Logo --}}
             <div class="d-flex align-items-center gap-2">
-                <div class="rounded bg-danger d-flex align-items-center justify-content-center text-white fw-bold"
-                    style="width: 36px; height: 36px; background-color: var(--primary-maroon) !important;">
-                    S
-                </div>
+                <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA"
+                    style="width: 70px; height: 70px; object-fit: contain;">
                 <div class="lh-1">
                     <div class="fw-bold text-dark">STBA Pontianak</div>
                     <div class="small text-muted" style="font-size: 0.75rem;">PMB Online</div>

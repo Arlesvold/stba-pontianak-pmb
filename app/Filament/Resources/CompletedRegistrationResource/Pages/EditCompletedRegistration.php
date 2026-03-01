@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\RegistrationResource\Pages;
+namespace App\Filament\Resources\CompletedRegistrationResource\Pages;
 
-use App\Filament\Resources\RegistrationResource;
+use App\Filament\Resources\CompletedRegistrationResource;
 use App\Mail\PmbCompletedMail;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Mail;
 
-class EditRegistration extends EditRecord
+class EditCompletedRegistration extends EditRecord
 {
-    protected static string $resource = RegistrationResource::class;
+    protected static string $resource = CompletedRegistrationResource::class;
 
     protected ?string $oldStatus = null;
 

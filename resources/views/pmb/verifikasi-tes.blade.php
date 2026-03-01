@@ -84,15 +84,9 @@
                             <i class="bi bi-check-circle-fill fs-4 me-3"></i>
                             <div>
                                 <strong>Verifikasi Selesai</strong>
-                                <p class="mb-0 small">Berkas Anda valid. Silakan cek jadwal tes di bawah ini atau tunggu
-                                    informasi selanjutnya melalui WhatsApp.</p>
+                                <p class="mb-0 small">Berkas Anda valid. Silakan tunggu informasi selanjutnya melalui
+                                    WhatsApp.</p>
                             </div>
-                        </div>
-                        {{-- Placeholder for Schedule --}}
-                        <div class="border rounded-3 p-3 bg-light mt-3">
-                            <h6 class="fw-bold mb-2"><i class="bi bi-calendar-event me-2"></i>Jadwal Tes Seleksi</h6>
-                            <p class="mb-1 small"><strong>Lokasi:</strong> Kampus STBA Pontianak, Ruang 201</p>
-                            <p class="mb-0 small"><strong>Waktu:</strong> <em>(Menunggu Penjadwalan)</em></p>
                         </div>
                     @endif
 

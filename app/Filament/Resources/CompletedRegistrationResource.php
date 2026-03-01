@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RegistrationResource\Pages;
+use App\Filament\Resources\CompletedRegistrationResource\Pages;
 use App\Models\Registration;
 use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Components\Section;
@@ -23,24 +23,25 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\HtmlString;
+use Illuminate\Database\Eloquent\Builder;
 
-class RegistrationResource extends Resource
+class CompletedRegistrationResource extends Resource
 {
     protected static ?string $model = Registration::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-check-badge';
 
-    protected static ?string $navigationLabel = 'Pendaftaran PMB';
+    protected static ?string $navigationLabel = 'Selesai';
 
-    protected static ?string $modelLabel = 'Pendaftaran';
+    protected static ?string $modelLabel = 'Pendaftaran Selesai';
 
-    protected static ?string $pluralModelLabel = 'Pendaftaran';
+    protected static ?string $pluralModelLabel = 'Pendaftaran Selesai';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('status', '!=', 'selesai');
+        return parent::getEloquentQuery()->where('status', 'selesai');
     }
 
     public static function form(Schema $schema): Schema
@@ -211,12 +212,6 @@ class RegistrationResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'proses' => 'Dalam Proses',
-                    ]),
-
                 SelectFilter::make('program_studi')
                     ->label('Program Studi')
                     ->options(
@@ -312,9 +307,9 @@ class RegistrationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRegistrations::route('/'),
-            'edit' => Pages\EditRegistration::route('/{record}/edit'),
-            'view' => Pages\ViewRegistration::route('/{record}'),
+            'index' => Pages\ListCompletedRegistrations::route('/'),
+            'edit' => Pages\EditCompletedRegistration::route('/{record}/edit'),
+            'view' => Pages\ViewCompletedRegistration::route('/{record}'),
         ];
     }
 }
