@@ -94,6 +94,9 @@ Route::get('/berita/{berita}', function (Berita $berita) {
     return view('berita.show', compact('berita'));
 })->name('berita.show');
 
+// Halaman daftar dokumen
+Route::get('/dokumen', [\App\Http\Controllers\DokumenController::class, 'index'])->name('dokumen.index');
+
 // Halaman staf / dosen
 Route::get('/staf', function () {
     $stafs = \App\Models\Staf::where('status_aktif', true)

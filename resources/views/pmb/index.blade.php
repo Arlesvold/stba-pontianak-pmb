@@ -93,23 +93,6 @@
                         @endauth
                     </div>
 
-                    <div class="hero-highlight-box d-none d-md-block">
-                        <h6>Kenapa memilih STBA Pontianak?</h6>
-                        <div class="row g-3">
-                            <div class="col-sm-4">
-                                <div class="small text-muted">Akreditasi</div>
-                                <div class="stat">Program Studi Terakreditasi</div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="small text-muted">Fokus</div>
-                                <div class="stat">Bahasa & Sastra Inggris</div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="small text-muted">Lulusan</div>
-                                <div class="stat">Siap Kerja Global</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
 
@@ -117,7 +100,6 @@
         </div>
     </section>
 
-    {{-- SECTION: 3 Program Studi --}}
     {{-- SECTION: 3 Program Studi --}}
     <section class="py-5">
         <div class="container">

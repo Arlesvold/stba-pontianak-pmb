@@ -216,6 +216,10 @@
                             <a class="nav-link {{ request()->routeIs('staf.index') ? 'active' : '' }}"
                                 href="{{ route('staf.index') }}">Staf</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('dokumen.index') ? 'active' : '' }}"
+                                href="{{ route('dokumen.index') }}">Dokumen</a>
+                        </li>
                         <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
                             <a class="btn btn-maroon btn-sm" href="{{ route('pmb.daftar') }}">Daftar Sekarang</a>
                         </li>
@@ -271,19 +275,19 @@
                         <ul class="list-unstyled small mb-0">
                             <li class="mb-1">
                                 <a href="{{ route('berita.index') }}" style="background-color:#eec3c3; color:#800000;">
-                                    Berita Terkini
+                                    Berita
                                 </a>
                             </li>
                             <li class="mb-1">
                                 <a href="{{ route('agenda.index') ?? '#' }}"
                                     style="background-color:#eec3c3; color:#800000;">
-                                    Agenda Penting (Profil Kampus)
+                                    Agenda
                                 </a>
                             </li>
                             <li class="mb-1">
-                                <a href="{{ route('berita.index') ?? '#' }}"
+                                <a href="{{ route('events.index') ?? '#' }}"
                                     style="background-color:#eec3c3; color:#800000;">
-                                    Berita Index (Visi dan Misi)
+                                    Event
                                 </a>
                             </li>
                             <li>
