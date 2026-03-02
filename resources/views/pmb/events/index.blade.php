@@ -16,7 +16,7 @@
 
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h1 class="fw-bold" style="color: var(--primary-maroon);">Agenda & Event Kampus</h1>
+            <h1 class="fw-bold" style="color: var(--primary-maroon);">Event Kampus</h1>
             <p class="text-muted">Kegiatan terbaru yang diselenggarakan oleh STBA Pontianak</p>
         </div>
 
@@ -44,14 +44,17 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title fw-bold mb-2">
-                                {{ $event->judul }}
+                                <a href="{{ route('events.show', $event->id) }}"
+                                    class="text-decoration-none text-dark stretched-link">
+                                    {{ \Illuminate\Support\Str::limit($event->judul, 40) }}
+                                </a>
                             </h5>
                             <div class="d-flex align-items-center text-muted small mb-3">
                                 <i class="bi bi-geo-alt me-2"></i>
                                 {{ $event->lokasi ?? 'Kampus STBA Pontianak' }}
                             </div>
                             <p class="card-text text-muted small">
-                                {{ $event->deskripsi_singkat ?? Str::limit(strip_tags($event->deskripsi), 80) }}
+                                {{ $event->deskripsi_singkat ? \Illuminate\Support\Str::limit($event->deskripsi_singkat, 60) : \Illuminate\Support\Str::limit(strip_tags($event->deskripsi), 60) }}
                             </p>
                         </div>
                     </div>

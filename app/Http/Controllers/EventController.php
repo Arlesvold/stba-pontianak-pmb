@@ -17,7 +17,6 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        // If you need a detail page later
-        // return view('pmb.events.show', compact('event'));
+        return view('pmb.events.show', compact('event'));
     }
 }

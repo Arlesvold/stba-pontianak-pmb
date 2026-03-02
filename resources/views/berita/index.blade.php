@@ -46,13 +46,16 @@
                                     STBA Pontianak · {{ $berita->tanggal->format('Y') }}
                                 </div>
                                 <h2 class="h5 mb-2" style="color:#800000;">
-                                    {{ $berita->judul }}
+                                    <a href="{{ route('berita.show', $berita->id) }}"
+                                        class="text-decoration-none text-reset stretched-link">
+                                        {{ \Illuminate\Support\Str::limit($berita->judul, 60) }}
+                                    </a>
                                 </h2>
                                 <div class="text-muted small mb-3">
                                     {{ $berita->tanggal->format('d F Y') }}
                                 </div>
                                 <p class="mb-0">
-                                    {{ \Illuminate\Support\Str::limit(strip_tags($berita->isi), 400) }}
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($berita->isi), 120) }}
                                 </p>
 
                             </div>

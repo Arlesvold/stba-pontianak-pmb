@@ -52,6 +52,7 @@ Route::get('/', function () {
 })->name('beranda');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 
 // Halaman form pendaftaran PMB (Protected)
@@ -88,6 +89,10 @@ Route::get('/berita', function () {
     $beritas = Berita::orderBy('tanggal', 'desc')->paginate(6); // 6 berita per halaman
     return view('berita.index', compact('beritas'));
 })->name('berita.index');
+
+Route::get('/berita/{berita}', function (Berita $berita) {
+    return view('berita.show', compact('berita'));
+})->name('berita.show');
 
 // Halaman staf / dosen
 Route::get('/staf', function () {

@@ -251,7 +251,10 @@
                                 <div class="card-body py-3">
                                     <h5 class="card-title fw-semibold mb-1 text-center"
                                         style="font-size: 0.95rem; color: var(--primary-maroon);">
-                                        {{ $staf->nama }}
+                                        <a href="{{ route('staf.index') }}"
+                                            class="text-decoration-none text-reset stretched-link">
+                                            {{ $staf->nama }}
+                                        </a>
                                     </h5>
                                     @if ($staf->posisi)
                                         <p class="card-text small text-muted mb-0 text-center">
@@ -299,7 +302,7 @@
                             <div class="card-body">
                                 <h5 class="card-title fw-semibold mb-2"
                                     style="font-size: 1rem; color: var(--primary-maroon);">
-                                    {{ $berita->judul }}
+                                    {{ \Illuminate\Support\Str::limit($berita->judul, 40) }}
                                 </h5>
 
                                 <p class="card-text small text-muted mb-1">
@@ -307,13 +310,14 @@
                                 </p>
 
                                 @php
-                                    $preview = \Illuminate\Support\Str::limit(strip_tags($berita->isi), 60);
+                                    $preview = \Illuminate\Support\Str::limit(strip_tags($berita->isi), 70);
                                 @endphp
                                 <p class="card-text small text-muted mb-2" style="min-height: 48px;">
                                     {{ $preview }}
                                 </p>
 
-                                <a href="{{ route('berita.index') }}" class="small text-decoration-none"
+                                <a href="{{ route('berita.show', $berita->id) }}"
+                                    class="small text-decoration-none stretched-link"
                                     style="color: var(--primary-maroon);">
                                     Read more →
                                 </a>
@@ -374,12 +378,6 @@
     {{-- SECTION: Events --}}
     @if (count($events) > 0)
         <section class="py-5 bg-light position-relative overflow-hidden">
-            {{-- Ornament Background --}}
-            <div class="position-absolute start-0 top-0 mt-5 ms-n5 d-none d-lg-block opacity-25">
-                <div style="width: 200px; height: 200px; border: 20px solid var(--primary-maroon); border-radius: 50%;">
-                </div>
-            </div>
-
             <div class="container position-relative">
                 <div class="row align-items-end mb-5">
                     <div class="col-md-8">
@@ -425,7 +423,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title fw-semibold mb-2"
                                         style="font-size: 1rem; color: var(--primary-maroon);">
-                                        {{ $event->judul }}
+                                        {{ \Illuminate\Support\Str::limit($event->judul, 40) }}
                                     </h5>
 
                                     <p class="card-text small text-muted mb-2">
@@ -433,13 +431,12 @@
                                         {{ $event->lokasi ?? 'STBA Pontianak' }}
                                     </p>
 
-                                    @if ($event->deskripsi_singkat)
-                                        <p class="card-text small text-muted mb-2" style="min-height: 40px;">
-                                            {{ \Illuminate\Support\Str::limit($event->deskripsi_singkat, 60) }}
-                                        </p>
-                                    @endif
+                                    <p class="card-text small text-muted mb-2" style="min-height: 40px;">
+                                        {{ $event->deskripsi_singkat ? \Illuminate\Support\Str::limit($event->deskripsi_singkat, 60) : \Illuminate\Support\Str::limit(strip_tags($event->deskripsi), 60) }}
+                                    </p>
 
-                                    <a href="{{ route('events.index') }}" class="small text-decoration-none"
+                                    <a href="{{ route('events.show', $event->id) }}"
+                                        class="small text-decoration-none stretched-link"
                                         style="color: var(--primary-maroon);">
                                         Detail Acara →
                                     </a>
@@ -466,11 +463,6 @@
             </div>
         </section>
     @endif
-
-
-
-
-
     {{-- SECTION: Agenda --}}
     <section class="py-5 bg-light">
         <div class="container">
