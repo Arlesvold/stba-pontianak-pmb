@@ -114,7 +114,7 @@
 
             <div class="row g-4">
                 {{-- Card D3 --}}
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <a href="{{ route('prodi.d3') }}" class="text-decoration-none text-reset">
                         <div class="card card-prodi h-100 shadow-sm text-center px-4 py-5 hover-shadow-sm"
                             style="cursor:pointer;">
@@ -138,7 +138,7 @@
                 </div>
 
                 {{-- Card S1 --}}
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <a href="{{ route('prodi.s1') }}" class="text-decoration-none text-reset">
                         <div class="card card-prodi h-100 shadow-sm text-center px-4 py-5 hover-shadow-sm"
                             style="cursor:pointer;">
@@ -161,29 +161,6 @@
                     </a>
                 </div>
 
-                {{-- Card Sastra Inggris --}}
-                <div class="col-md-4">
-                    <a href="{{ route('prodi.sastra') }}" class="text-decoration-none text-reset">
-                        <div class="card card-prodi h-100 shadow-sm text-center px-4 py-5 hover-shadow-sm"
-                            style="cursor:pointer;">
-                            <div class="mb-3">
-                                <div class="d-inline-flex align-items-center justify-content-center rounded-3"
-                                    style="width:90px;height:90px;background:var(--primary-maroon); box-shadow:0 10px 20px rgba(123,30,48,0.35);">
-                                    <i class="bi bi-journal-text text-white fs-1"></i>
-                                </div>
-                            </div>
-                            <h4 class="fw-bold mb-3" style="color:var(--primary-maroon);">
-                                Sarjana Sastra Inggris
-                            </h4>
-                            <p class="text-muted small mb-0">
-                                Pendalaman bahasa, sastra, dan budaya Inggris untuk karier di penerjemahan,
-                                pendidikan,
-                                media, riset, dan berbagai bidang internasional lainnya.
-                            </p>
-                            <span class="stretched-link"></span>
-                        </div>
-                    </a>
-                </div>
             </div>
 
 

@@ -3,87 +3,102 @@
 @section('title', 'Kontak')
 
 @section('content')
-    <div class="container py-5">
-        <h1 class="h3 mb-3" style="color: var(--primary-maroon);">Kontak PMB STBA Pontianak</h1>
-        <p class="text-muted mb-4 small">
-            Silakan hubungi narahubung berikut untuk informasi pendaftaran, program studi,
-            dan bantuan teknis terkait PMB.
-        </p>
+    <style>
+        .card-kontak {
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            cursor: default;
+        }
 
-        <div class="row g-4">
-            {{-- Kontak 1 --}}
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body d-flex">
-                        <div class="me-3 d-flex align-items-start">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center"
-                                style="width:52px;height:52px;background:var(--primary-maroon);color:#fff;">
-                                <i class="bi bi-person-lines-fill fs-4"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h5 class="mb-1 fw-semibold">Drs. Andi Pratama</h5>
-                            <div class="small text-muted mb-2">Koordinator Penerimaan Mahasiswa Baru</div>
-                            <div class="small mb-1">
-                                <i class="bi bi-telephone me-1"></i> 0812‑3456‑7890
-                            </div>
-                            <div class="small mb-1">
-                                <i class="bi bi-envelope me-1"></i>
-                                <a href="mailto:andi.pmb@stbapontianak.ac.id" class="text-decoration-none">
-                                    andi.pmb@stbapontianak.ac.id
-                                </a>
-                            </div>
-                            <div class="small text-muted">
-                                Jam layanan: Senin–Jumat, 08.00–15.00 WIB
+        .card-kontak:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+            border-color: transparent !important;
+        }
+
+        .kontak-icon {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-maroon);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+
+            {{-- Header --}}
+            <div class="text-center mb-5">
+                <span class="badge bg-white text-danger shadow-sm px-3 py-2 rounded-pill mb-3 border">
+                    <i class="bi bi-telephone me-2"></i>Hubungi Kami
+                </span>
+                <h2 class="display-6 fw-bold mb-3" style="color: var(--primary-maroon);">
+                    Kontak PMB STBA Pontianak
+                </h2>
+                <p class="text-muted mx-auto" style="max-width: 600px;">
+                    Silakan hubungi narahubung berikut untuk informasi pendaftaran, program studi,
+                    dan bantuan teknis terkait PMB.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($kontaks as $kontak)
+                    <div class="col-md-6">
+                        <div class="card card-kontak border-0 shadow-sm rounded-4 h-100">
+                            <div class="card-body p-4 d-flex gap-3">
+                                <div class="kontak-icon">
+                                    <i class="bi bi-telephone fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h5 class="fw-bold mb-1" style="color: var(--primary-maroon);">{{ $kontak->nama }}</h5>
+                                    <div class="small text-muted mb-3 fst-italic">{{ $kontak->tugas }}</div>
+
+                                    @if ($kontak->nomor_hp)
+                                        <div class="small mb-2 d-flex align-items-center gap-2">
+                                            <span class="badge rounded-pill px-2 py-1"
+                                                style="background:#25D366;color:#fff;">
+                                                <i class="bi bi-whatsapp me-1"></i>WhatsApp
+                                            </span>
+                                            <span>{{ $kontak->nomor_hp }}</span>
+                                        </div>
+                                    @endif
+
+                                    @if ($kontak->email)
+                                        <div class="small mb-2 d-flex align-items-center gap-2">
+                                            <span class="badge rounded-pill px-2 py-1"
+                                                style="background:#0d6efd;color:#fff;">
+                                                <i class="bi bi-envelope me-1"></i>Email
+                                            </span>
+                                            <span class="text-dark">
+                                                {{ $kontak->email }}
+                                            </span>
+                                        </div>
+                                    @endif
+
+                                    @if ($kontak->hari_layanan || $kontak->jam_layanan)
+                                        <div class="small mt-3 text-muted border-top pt-2">
+                                            <i class="bi bi-clock me-1"></i>
+                                            Jam layanan:
+                                            <strong>{{ $kontak->hari_layanan }}{{ $kontak->hari_layanan && $kontak->jam_layanan ? ', ' : '' }}{{ $kontak->jam_layanan }}</strong>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            {{-- Kontak 2 --}}
-            <div class="col-md-6">
-                <div class="card border-0 shadow-sm rounded-4 h-100">
-                    <div class="card-body d-flex">
-                        <div class="me-3 d-flex align-items-start">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center"
-                                style="width:52px;height:52px;background:var(--primary-maroon);color:#fff;">
-                                <i class="bi bi-headset fs-4"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h5 class="mb-1 fw-semibold">Rina Kartika, S.S.</h5>
-                            <div class="small text-muted mb-2">Admin Informasi &amp; Layanan PMB</div>
-                            <div class="small mb-1">
-                                <i class="bi bi-whatsapp me-1"></i> 0851‑2345‑6789
-                            </div>
-                            <div class="small mb-1">
-                                <i class="bi bi-envelope me-1"></i>
-                                <a href="mailto:info.pmb@stbapontianak.ac.id" class="text-decoration-none">
-                                    info.pmb@stbapontianak.ac.id
-                                </a>
-                            </div>
-                            <div class="small text-muted">
-                                Respons cepat melalui WhatsApp &amp; email pada jam kerja.
-                            </div>
-                        </div>
+                @empty
+                    <div class="col-12 text-center py-5">
+                        <img src="https://cdn-icons-png.flaticon.com/512/7486/7486777.png" alt="Empty" width="80"
+                            class="mb-3 opacity-50">
+                        <p class="text-muted fw-semibold">Belum ada data kontak yang tersedia.</p>
                     </div>
-                </div>
+                @endforelse
             </div>
-        </div>
 
-        {{-- Alamat kampus singkat --}}
-        <div class="mt-5">
-            <h2 class="h6 fw-bold mb-2" style="color: var(--primary-maroon);">Alamat Kampus</h2>
-            <p class="small text-muted mb-1">
-                Jl. Contoh Alamat No. 123, Pontianak, Kalimantan Barat
-            </p>
-            <p class="small text-muted mb-0">
-                Telp: (0561) 123456 • Website:
-                <a href="https://www.stbapontianak.ac.id" target="_blank" class="text-decoration-none">
-                    www.stbapontianak.ac.id
-                </a>
-            </p>
         </div>
-    </div>
+    </section>
 @endsection

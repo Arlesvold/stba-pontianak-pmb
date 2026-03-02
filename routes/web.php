@@ -116,7 +116,11 @@ Route::get('/agenda', function () {
 
 // Halaman kontak PMB
 Route::get('/kontak', function () {
-    return view('kontak.index');
+    $kontaks = \App\Models\Kontak::where('aktif', true)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('kontak.index', compact('kontaks'));
 })->name('kontak');
 
 // Jika form kontak melakukan POST ke route('kontak'):
