@@ -101,7 +101,7 @@ Route::get('/dokumen', [\App\Http\Controllers\DokumenController::class, 'index']
 Route::get('/staf', function () {
     $stafs = \App\Models\Staf::where('status_aktif', true)
         ->orderBy('display_order')
-        ->get();
+        ->paginate(12);
 
     return view('staf.index', compact('stafs'));
 })->name('staf.index');
@@ -109,7 +109,7 @@ Route::get('/staf', function () {
 
 // Halaman daftar agenda penting
 Route::get('/agenda', function () {
-    $agendas = Agenda::orderBy('tanggal_mulai', 'asc')->get();
+    $agendas = Agenda::orderBy('tanggal_mulai', 'desc')->paginate(6);
 
     return view('agenda.index', compact('agendas'));
 })->name('agenda.index');

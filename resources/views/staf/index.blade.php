@@ -66,6 +66,10 @@
                     </div>
                 @endforelse
             </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                {{ $stafs->links() }}
+            </div>
         </div>
     </section>
 @endsection

@@ -129,6 +129,10 @@
                 </div>
             </div>
 
+            <div class="d-flex justify-content-center mt-5">
+                {{ $agendas->links() }}
+            </div>
+
             <div class="text-center mt-5">
                 <p class="small text-muted fst-italic">
                     *Jadwal dapat berubah sewaktu-waktu. Silakan cek secara berkala.
