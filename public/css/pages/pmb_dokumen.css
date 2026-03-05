@@ -1,0 +1,33 @@
+#dokumen-page .card-dokumen {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#dokumen-page .card-dokumen:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+#dokumen-page .file-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: rgba(128, 0, 0, 0.1);
+    color: var(--primary-maroon);
+}
+
+#dokumen-page .custom-pagination .pagination {
+     margin-bottom: 0;
+}
+
+#dokumen-page .custom-pagination .page-item {
+    margin: 0 4px;
+}
+
+#dokumen-page .custom-pagination .page-link {
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+

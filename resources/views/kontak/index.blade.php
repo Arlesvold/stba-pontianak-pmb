@@ -2,33 +2,13 @@
 
 @section('title', 'Kontak')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_kontak.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .card-kontak {
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-            cursor: default;
-        }
-
-        .card-kontak:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-            border-color: transparent !important;
-        }
-
-        .kontak-icon {
-            flex-shrink: 0;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--primary-maroon);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
-
-    <section class="py-5 bg-light">
+    <div id="pmb-kontak">
+        <section class="py-5 bg-light">
         <div class="container py-4">
 
             {{-- Header --}}
@@ -101,4 +81,5 @@
 
         </div>
     </section>
+    </div>
 @endsection

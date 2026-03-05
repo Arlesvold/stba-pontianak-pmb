@@ -2,30 +2,13 @@
 
 @section('title', 'Dokumen STBA Pontianak')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_dokumen.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .card-dokumen {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card-dokumen:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-        }
-
-        .file-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background-color: rgba(128, 0, 0, 0.1);
-            color: var(--primary-maroon);
-        }
-    </style>
-
-    <div class="container py-5">
+    <div id="dokumen-page">
+        <div class="container py-5">
         <div class="text-center mb-5">
             <h1 class="fw-bold" style="color: var(--primary-maroon);">Dokumen & Unduhan</h1>
             <p class="text-muted">Kumpulan dokumen, formulir, dan file penting lainnya yang dapat diunduh.</p>
@@ -98,8 +81,22 @@
             @endforelse
         </div>
 
-        <div class="d-flex justify-content-center mt-5">
-            {{ $dokumens->links() }}
-        </div>
+        @if ($dokumens->hasPages())
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    {{-- Info jumlah data --}}
+                    <div class="text-muted small">
+                        Showing {{ $dokumens->firstItem() }} to {{ $dokumens->lastItem() }}
+                        of {{ $dokumens->total() }} results
+                    </div>
+
+                    {{-- Pagination --}}
+                    <nav class="custom-pagination">
+                        {{ $dokumens->links('pagination::simple-bootstrap-5') }}
+                    </nav>
+
+                </div>
+            @endif
+    </div>
     </div>
 @endsection

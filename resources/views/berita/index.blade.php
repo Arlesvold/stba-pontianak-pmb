@@ -1,18 +1,13 @@
 @extends('layouts.pmb')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_berita.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .card-berita {
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
 
-        .card-berita:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
-
-    <div class="container py-5">
+    <div id="berita-page">
+        <div class="container py-5">
         {{-- Header --}}
         <div class="text-center mb-4">
             <h1 class="h4 mb-2">Berita Kampus</h1>
@@ -68,12 +63,22 @@
             @endforelse
 
             @if ($beritas->hasPages())
-                <div class="mt-4 d-flex justify-content-center">
-                    {{ $beritas->links() }}
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    {{-- Info jumlah data --}}
+                    <div class="text-muted small">
+                        Showing {{ $beritas->firstItem() }} to {{ $beritas->lastItem() }}
+                        of {{ $beritas->total() }} results
+                    </div>
+
+                    {{-- Pagination --}}
+                    <nav class="custom-pagination">
+                        {{ $beritas->links('pagination::simple-bootstrap-5') }}
+                    </nav>
+
                 </div>
             @endif
-
-
         </div>
+    </div>
     </div>
 @endsection

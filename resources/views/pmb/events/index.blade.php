@@ -2,19 +2,13 @@
 
 @section('title', 'Event STBA Pontianak')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_event.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .card-event {
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .card-event:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
-
-    <div class="container py-5">
+    <div id="event-page">
+        <div class="container py-5">
         <div class="text-center mb-5">
             <h1 class="fw-bold" style="color: var(--primary-maroon);">Event Kampus</h1>
             <p class="text-muted">Kegiatan terbaru yang diselenggarakan oleh STBA Pontianak</p>
@@ -69,8 +63,22 @@
             @endforelse
         </div>
 
-        <div class="d-flex justify-content-center mt-5">
-            {{ $events->links() }}
-        </div>
+        @if ($events->hasPages())
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    {{-- Info jumlah data --}}
+                    <div class="text-muted small">
+                        Showing {{ $events->firstItem() }} to {{ $events->lastItem() }}
+                        of {{ $events->total() }} results
+                    </div>
+
+                    {{-- Pagination --}}
+                    <nav class="custom-pagination">
+                        {{ $events->links('pagination::simple-bootstrap-5') }}
+                    </nav>
+
+                </div>
+            @endif
+    </div>
     </div>
 @endsection

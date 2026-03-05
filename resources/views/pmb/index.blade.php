@@ -2,51 +2,12 @@
 
 @section('title', 'Penerimaan Mahasiswa Baru')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_index.css') }}">
+@endpush
+
 @section('content')
-@section('content')
-    <style>
-        /* Font global isi: sans-serif */
-        body {
-            font-family: "Open Sans", sans-serif;
-        }
-
-        /* Judul section pakai Open Sans bold */
-        .heading-title {
-            font-family: "Open Sans", sans-serif;
-            font-weight: 700;
-        }
-
-        /* Isi card / teks biasa */
-        .body-text {
-            font-family: "Open Sans", sans-serif;
-            font-weight: 400;
-        }
-
-        .card-prodi {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border: 1px solid #e9ecef !important;
-        }
-
-        .card-berita,
-        .card-staf {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border: 1px solid #e9ecef !important;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .card-staf:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .card-berita:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
-
-
-
+<div id="pmb-page">
     <section class="hero-section position-relative d-flex align-items-center" style="min-height: 600px; overflow: hidden;">
 
         {{-- Background image + overlay --}}
@@ -65,23 +26,23 @@
         <div class="container position-relative" style="z-index: 1;">
             <div class="row align-items-center g-4">
                 {{-- Teks kiri --}}
-                <div class="col-lg-7">
-                    <div class="hero-badge mb-3">
+                <div class="col-lg-7 fade-left">
+                    <div class="hero-badge mb-3 fade-left delay-1">
                         <span class="badge-dot bg-danger rounded-circle" style="width:8px;height:8px;"></span>
                         <span style="color: white;">Penerimaan Mahasiswa Baru</span>
                         <span style="color: white;">Tahun Akademik 2025/2026</span>
                     </div>
 
-                    <h1 class="hero-title mb-3" style="color: white;">
+                    <h1 class="hero-title mb-3 fade-left delay-2" style="color: white;">
                         Wujudkan Masa Depan <span>Anda</span> Bersama STBA Pontianak
                     </h1>
 
-                    <p class="hero-subtitle mb-4" style="color: white;">
+                    <p class="hero-subtitle mb-4 fade-left delay-3" style="color: white;">
                         Bergabunglah dengan kampus bahasa yang modern, berfokus pada kompetensi global,
                         dan didukung dosen berpengalaman untuk menyiapkan karier masa depan Anda.
                     </p>
 
-                    <div class="hero-cta d-flex flex-wrap gap-2 mb-4">
+                    <div class="hero-cta d-flex flex-wrap gap-2 mb-4 fade-left delay-4">
                         @auth
                             <a href="{{ route('pmb.daftar') }}" class="btn btn-maroon">
                                 Isi Formulir
@@ -103,19 +64,19 @@
     {{-- SECTION: 3 Program Studi --}}
     <section class="py-5">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 fade-up">
                 <h2 class="h4 fw-bold mb-2" style="color: var(--primary-maroon);">
                     Pilihan Program Studi
                 </h2>
-                <p class="text-muted mb-0">
+                <p class="text-muted mb-0 fade-up delay-1">
                     Sesuaikan minat dan rencana karier Anda dengan program studi unggulan di STBA Pontianak.
                 </p>
             </div>
 
             <div class="row g-4">
                 {{-- Card D3 --}}
-                <div class="col-md-6">
-                    <a href="{{ route('prodi.d3') }}" class="text-decoration-none text-reset">
+                <div class="col-md-6 fade-up">
+                    <a href="{{ route('prodi.d3') }}" class="text-decoration-none text-reset reveal">
                         <div class="card card-prodi h-100 shadow-sm text-center px-4 py-5 hover-shadow-sm"
                             style="cursor:pointer;">
                             <div class="mb-3">
@@ -138,8 +99,8 @@
                 </div>
 
                 {{-- Card S1 --}}
-                <div class="col-md-6">
-                    <a href="{{ route('prodi.s1') }}" class="text-decoration-none text-reset">
+                <div class="col-md-6 fade-up">
+                    <a href="{{ route('prodi.s1') }}" class="text-decoration-none text-reset reveal">
                         <div class="card card-prodi h-100 shadow-sm text-center px-4 py-5 hover-shadow-sm"
                             style="cursor:pointer;">
                             <div class="mb-3">
@@ -160,10 +121,7 @@
                         </div>
                     </a>
                 </div>
-
             </div>
-
-
         </div>
     </section>
 
@@ -180,17 +138,17 @@
                     </p>
                 </div>
 
-                <div class="d-flex justify-content-end mb-3">
-                    <a href="{{ route('staf.index') }}" class="small text-decoration-none"
+                <div class="d-flex justify-content-end mb-3 fade-up delay-1">
+                    <a href="{{ route('staf.index') }}" class="link-staff small text-decoration-none"
                         style="color: var(--primary-maroon);">
-                        Lihat semua staf →
+                        Lihat semua staf <span class="arrow">→</span>
                     </a>
                 </div>
 
                 <div class="row g-4">
                     @foreach ($stafs as $staf)
                         <div class="col-md-3 col-sm-6">
-                            <div class="card card-staf h-100 shadow-sm rounded-4 text-center" style="cursor: pointer;">
+                            <div class="card card-staf h-100 shadow-sm rounded-4 text-center fade-up" style="cursor: pointer;">
                                 @if ($staf->foto)
                                     <img src="{{ asset('storage/' . ltrim($staf->foto, '/')) }}" alt="{{ $staf->nama }}"
                                         class="card-img-top rounded-top-4"
@@ -232,18 +190,18 @@
     {{-- SECTION: Berita --}}
     <section class="py-5">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-4 fade-up">
                 <h2 class="h4 fw-bold mb-1" style="color: var(--primary-maroon);">
                     Berita Kampus
                 </h2>
-                <p class="text-muted mb-0 small">
+                <p class="text-muted mb-0 small fade-up delay-1">
                     Kegiatan dan informasi terbaru seputar STBA Pontianak.
                 </p>
             </div>
 
             <div class="row g-4">
                 @forelse ($beritaTerbaru as $berita)
-                    <div class="col-md-4">
+                    <div class="col-md-4 fade-up delay-2">
                         <div class="card card-berita h-100 shadow-sm rounded-4 hover-shadow-sm"
                             style="transition: transform .18s ease, box-shadow .18s ease;">
                             {{-- Gambar --}}
@@ -285,7 +243,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-12">
+                    <div class="col-12 fade-up delay-3">
                         <p class="text-center text-muted small mb-0">
                             Belum ada berita kampus.
                         </p>
@@ -294,10 +252,10 @@
             </div>
 
             {{-- Link ke halaman semua berita --}}
-            <div class="text-center mt-4">
-                <a href="{{ route('berita.index') }}" class="small text-decoration-none"
-                    style="color: var(--primary-maroon);">
-                    Lihat semua berita kampus →
+            <div class="text-center mt-4 fade-up delay-4">
+                <a href="{{ route('berita.index') }}"
+                    class="link-berita small text-decoration-none">
+                    Lihat semua berita kampus <span class="arrow">→</span>
                 </a>
             </div>
         </div>
@@ -315,22 +273,26 @@
         </div>
 
         {{-- Content --}}
-        <div class="container position-relative z-1">
-            <h2 class="fw-bold mb-3">Ayo Mulai Mendaftar</h2>
-            <p class="mb-4 lead">
+        <div class="container position-relative z-1 text-center">
+
+            <h2 class="fw-bold mb-3 fade-up delay-1">
+                Ayo Mulai Mendaftar
+            </h2>
+
+            <p class="mb-4 lead fade-up delay-2">
                 MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK
             </p>
+
             @auth
-                <a href="{{ route('pmb.daftar') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
-                    style="border-width: 2px; letter-spacing: 1px;">
+                <a href="{{ route('pmb.daftar') }}" class="btn btn-outline-light rounded-5 px-4 py-3 fw-bold cta-btn fade-up delay-3">
                     ISI FORMULIR PENDAFTARAN
                 </a>
             @else
-                <a href="{{ route('register') }}" class="btn btn-outline-light rounded-0 px-4 py-3 fw-bold"
-                    style="border-width: 2px; letter-spacing: 1px;">
+                <a href="{{ route('register') }}" class="btn btn-outline-light rounded-5 px-4 py-3 fw-bold cta-btn fade-up delay-3">
                     DAFTAR AKUN SEKARANG
                 </a>
             @endauth
+
         </div>
     </section>
 
@@ -340,12 +302,12 @@
             <div class="container position-relative">
                 <div class="row align-items-end mb-5">
                     <div class="col-md-8">
-                        <h5 class="text-uppercase letter-spacing-2 fw-bold text-muted mb-2"
+                        <h5 class="text-uppercase letter-spacing-2 fw-bold text-muted mb-2 fade-up"
                             style="letter-spacing: 2px; font-size: 0.85rem;">Bergabunglah Bersama Kami</h5>
-                        <h2 class="display-6 fw-bold mb-0" style="color: var(--primary-maroon);">Event Terbaru
+                        <h2 class="display-6 fw-bold mb-0 fade-up delay-1" style="color: var(--primary-maroon);">Event Terbaru
                         </h2>
                     </div>
-                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0 fade-up delay-2">
                         <a href="{{ route('events.index') }}" class="btn btn-outline-dark rounded-pill px-4">
                             Lihat Semua Event <i class="bi bi-arrow-right ms-2"></i>
                         </a>
@@ -355,7 +317,7 @@
                 <div class="row g-4">
                     @foreach ($events as $event)
                         <div class="col-lg-3 col-md-6">
-                            <div class="card card-berita h-100 shadow-sm rounded-4 overflow-hidden">
+                            <div class="card card-berita h-100 shadow-sm rounded-4 overflow-hidden fade-up delay-4" style="transition: transform .18s ease, box-shadow .18s ease;">
                                 {{-- Gambar --}}
                                 <div class="position-relative">
                                     @if ($event->gambar)
@@ -404,43 +366,29 @@
                         </div>
                     @endforeach
                 </div>
-
-                <style>
-                    .group-hover-effect:hover img {
-                        transform: scale(1.1);
-                    }
-
-                    .group-hover-effect {
-                        transition: transform 0.3s ease, box-shadow 0.3s ease;
-                    }
-
-                    .group-hover-effect:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
-                    }
-                </style>
             </div>
         </section>
     @endif
+
     {{-- SECTION: Agenda --}}
     <section class="py-5 bg-light">
         <div class="container">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
-                <div class="mb-3 mb-md-0">
+                <div class="mb-3 mb-md-0 fade-up">
                     <h5 class="fw-bold text-danger text-uppercase mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">
                         Kalender Akademik</h5>
                     <h2 class="h3 fw-bold text-dark mb-0">Agenda Penting</h2>
                 </div>
-                <a href="{{ route('agenda.index') }}" class="btn btn-outline-danger rounded-pill px-4">
+                <a href="{{ route('agenda.index') }}" class="btn btn-outline-danger rounded-pill px-4 fade-up delay-1 btn-agenda">
                     Lihat Semua Agenda
                 </a>
             </div>
 
             <div class="row g-4">
                 @forelse ($agendas as $agenda)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 border-0 shadow-sm rounded-4 hover-translate"
-                            style="transition: all 0.3s ease;">
+                    <div class="col-md-6 col-lg-4 fade-up delay-2">
+                        <div class="card h-100 border-0 shadow-sm rounded-4 hover-translate fade-up"
+                            style="transition: transform .18s ease, box-shadow .18s ease;">
                             <div class="card-body p-4">
                                 <div class="d-flex align-items-start mb-3">
                                     <div class="bg-light rounded-3 text-center py-2 px-3 me-3 text-nowrap border"
@@ -469,23 +417,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 text-center py-4">
+                    <div class="col-12 text-center py-4 fade-up delay-2">
                         <p class="text-muted">Belum ada agenda yang ditampilkan.</p>
                     </div>
                 @endforelse
             </div>
-
-            <style>
-                .hover-translate:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1) !important;
-                }
-            </style>
         </div>
     </section>
-
-
-    </section>
-
-    </section>
+</div>
 @endsection

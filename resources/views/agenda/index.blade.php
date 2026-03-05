@@ -2,69 +2,13 @@
 
 @section('title', 'Agenda')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_agenda.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .timeline-wrapper {
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .timeline-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            bottom: 0;
-            left: 0;
-            width: 2px;
-            background: #e9ecef;
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 40px;
-            padding-bottom: 40px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -9px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #fff;
-            border: 4px solid var(--primary-maroon);
-            z-index: 1;
-        }
-
-        .timeline-date {
-            font-size: 0.9rem;
-            color: #6c757d;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content {
-            background: #fff;
-            border: 1px solid #f1f1f1;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .timeline-content:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-            border-color: transparent;
-        }
-    </style>
-
-    <section class="py-5 bg-light">
+    <div id="agenda-page">
+        <section class="py-5 bg-light">
         <div class="container py-4">
             {{-- Header --}}
             <div class="text-center mb-5">
@@ -129,9 +73,22 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center mt-5">
-                {{ $agendas->links() }}
-            </div>
+            @if ($agendas->hasPages())
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    {{-- Info jumlah data --}}
+                    <div class="text-muted small">
+                        Showing {{ $agendas->firstItem() }} to {{ $agendas->lastItem() }}
+                        of {{ $agendas->total() }} results
+                    </div>
+
+                    {{-- Pagination --}}
+                    <nav class="custom-pagination">
+                        {{ $agendas->links('pagination::simple-bootstrap-5') }}
+                    </nav>
+
+                </div>
+            @endif
 
             <div class="text-center mt-5">
                 <p class="small text-muted fst-italic">
@@ -140,4 +97,5 @@
             </div>
         </div>
     </section>
+    </div>
 @endsection

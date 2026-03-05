@@ -55,9 +55,21 @@
             padding: 0.80rem 0;
         }
 
-        footer {
-            border-top: 1px solid #e9ecef;
-            background-color: #ffffff;
+        /* Efek hover untuk link di footer */
+        .footer-link {
+            color: #800000;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .footer-link:hover {
+            color: #b30000;
+            letter-spacing: 0.5px;
+        }
+
+        /* Memastikan ikon alamat sejajar dengan teks multi-baris */
+        .contact-item i {
+            margin-top: 2px;
         }
 
         .btn-maroon {
@@ -309,71 +321,73 @@
         </main>
 
         {{-- Footer --}}
-        <footer class="py-4" style="background-color:#f1d0d0; color:#800000;">
+        <footer class="pt-5 pb-3" style="background-color:#f1d0d0; color:#800000;">
             <div class="container">
-                <div class="row align-items-start">
+                <div class="row justify-content-center text-center text-md-start gap-lg-3">
 
-                    {{-- Logo + deskripsi kampus --}}
-                    <div class="col-md-5 mb-3 mb-md-0">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak"
-                                style="height:48px;" class="me-2">
-                            <div class="fw-bold">
-                                STBA Pontianak
-                            </div>
+                    {{-- Kolom 1: Logo + Deskripsi Kampus --}}
+                    <div class="col-md-4 col-lg-4 mb-4">
+                        <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
+                            <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak" style="height:50px; margin-left: -25px" class="me-3">
+                            <h5 class="fw-bold mb-0">STBA Pontianak</h5>
                         </div>
-                        <p class="mb-0 small">
+                        <p class="mb-0 small pe-lg-3">
                             Sekolah Tinggi Bahasa Asing Pontianak berkomitmen menyediakan pendidikan
                             bahasa asing yang berkualitas untuk menghasilkan lulusan yang siap bersaing
                             di dunia kerja global.
                         </p>
                     </div>
 
-                    {{-- Alamat & Kontak --}}
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <h6 class="fw-bold mb-2">Alamat & Kontak</h6>
-                        <p class="small mb-1">
-                            Jl. (isi alamat lengkap STBA Pontianak di sini) Pontianak, Kalimantan Barat.
-                        </p>
-                        <p class="small mb-1">
-                            <i class="bi bi-telephone-fill me-1"></i> 0561-xxxxxx
-                        </p>
-                        <p class="small mb-0">
-                            <i class="bi bi-envelope-fill me-1"></i>
-                            kampus@stbapontianak.ac.id
-                        </p>
+                    {{-- Kolom 2: Alamat & Kontak --}}
+                    <div class="col-md-4 col-lg-4 mb-4">
+                        <h5 class="fw-bold mb-3">Alamat & Kontak</h5>
+
+                        <div class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <span class="small">
+                                Jl. Purnama I No.1, Akcaya, Kec. Pontianak Selatan,<br>Kota Pontianak, Kalimantan Barat
+                            </span>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-2">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <span class="small">0561-xxxxxx</span>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-0">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <span class="small">kampus@stbapontianak.ac.id</span>
+                        </div>
                     </div>
 
-                    {{-- Link terkait --}}
-                    <div class="col-md-3">
-                        <h6 class="fw-bold mb-2">Link Terkait</h6>
+                    {{-- Kolom 3: Link Terkait --}}
+                    <div class="col-md-3 col-lg-2 mb-4">
+                        <h5 class="fw-bold mb-3">Link Terkait</h5>
                         <ul class="list-unstyled small mb-0">
-                            <li class="mb-1">
-                                <a href="{{ route('berita.index') }}" style="background-color:#eec3c3; color:#800000;">
-                                    Berita
-                                </a>
+                            <li class="mb-2">
+                                <a href="{{ route('berita.index') }}" class="footer-link fw-semibold">Berita</a>
                             </li>
-                            <li class="mb-1">
-                                <a href="{{ route('agenda.index') ?? '#' }}"
-                                    style="background-color:#eec3c3; color:#800000;">
-                                    Agenda
-                                </a>
+                            <li class="mb-2">
+                                <a href="{{ route('agenda.index') ?? '#' }}" class="footer-link fw-semibold">Agenda</a>
                             </li>
-                            <li class="mb-1">
-                                <a href="{{ route('events.index') ?? '#' }}"
-                                    style="background-color:#eec3c3; color:#800000;">
-                                    Event
-                                </a>
+                            <li class="mb-2">
+                                <a href="{{ route('events.index') ?? '#' }}" class="footer-link fw-semibold">Event</a>
                             </li>
-                            <li>
-                                <a href="{{ route('pmb.daftar') ?? '#' }}"
-                                    style="background-color:#eec3c3; color:#800000;">
-                                    PMB Daftar
-                                </a>
+                            <li class="mb-2">
+                                <a href="{{ route('pmb.daftar') ?? '#' }}" class="footer-link fw-semibold">Pendaftaran PMB</a>
                             </li>
                         </ul>
                     </div>
+                </div>
 
+                {{-- Garis Pemisah & Copyright --}}
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <hr style="border-color: #800000; opacity: 0.2;">
+                        <p class="text-center small mb-0" style="opacity: 0.8;">
+                            &copy; {{ date('Y') }} STBA Pontianak. All Rights Reserved.
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>
@@ -403,6 +417,9 @@
     </script>
 
     @stack('scripts')
+
+    {{-- External JS --}}
+    <script src="{{ asset('js/pages/index_pmb.js') }}"></script>
 </body>
 
 </html>

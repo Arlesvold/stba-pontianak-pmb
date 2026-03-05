@@ -50,7 +50,7 @@
 
                         <hr class="mb-4">
 
-                        <div class="news-content" style="line-height: 1.8; font-size: 1.05rem;">
+                        <div class="news-content" style="line-height: 1.8; font-size: 1.05rem; text-align: justify;">
                             {!! $berita->isi !!}
                         </div>
                     </div>

@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Pmb;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\PmbSubmissionMail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UnggahDokumenController extends Controller
 {
     public function index()
     {
-        $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
+$registration = \App\Models\Registration::where('user_id', Auth::id())->first();
 
         // Cek jika belum menyelesaikan langkah 1 (Isi Formulir)
         if (!$registration || $registration->step < 2) {
@@ -23,7 +24,7 @@ class UnggahDokumenController extends Controller
 
     public function store(Request $request)
     {
-        $registration = \App\Models\Registration::where('user_id', auth()->id())->firstOrFail();
+        $registration = \App\Models\Registration::where('user_id', Auth::id())->firstOrFail();
 
         // Validation rules
         // If file already exists in DB, the upload is optional (nullable). If not, it's required.

@@ -1,23 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\Pmb\PendaftaranController;
 use App\Http\Controllers\Pmb\UnggahDokumenController;
-use App\Models\Staf;
-
+use App\Http\Controllers\ProfileController;
 use App\Models\Agenda;
 use App\Models\Berita;
-
-
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\EventController;
 use App\Models\Event; // Import Event model
+use App\Models\Staf;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // ======================
 // HALAMAN DEPAN (PMB)
@@ -139,7 +135,7 @@ Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
 
 // Halaman setelah kirim administrasi: Verifikasi & Tes
 Route::get('/pmb/verifikasi-tes', function () {
-    $registration = \App\Models\Registration::where('user_id', auth()->id())->first();
+    $registration = \App\Models\Registration::where('user_id', Auth::id())->first();
 
     if (!$registration) {
         return redirect()->route('pmb.daftar');

@@ -1,0 +1,26 @@
+#event-page {
+    font-family: "Open Sans", sans-serif;
+}
+
+#event-page .card-event {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+#event-page .card-event:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+#event-page .custom-pagination .pagination {
+     margin-bottom: 0;
+}
+
+#event-page .custom-pagination .page-item {
+    margin: 0 4px;
+}
+
+#event-page .custom-pagination .page-link {
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+

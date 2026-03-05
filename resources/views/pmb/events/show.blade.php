@@ -80,7 +80,7 @@
 
                         <div class="event-description mt-5">
                             <h4 class="fw-bold mb-3 border-bottom pb-2">Deskripsi Kegiatan</h4>
-                            <div class="text-muted" style="line-height: 1.8;">
+                            <div class="text-muted" style="line-height: 1.8; text-align: justify;">
                                 {!! $event->deskripsi !!}
                             </div>
                         </div>

@@ -1,0 +1,22 @@
+#staf-page .card-staf {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+#staf-page .card-staf:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+#staf-page .custom-pagination .pagination {
+     margin-bottom: 0;
+}
+
+#staf-page .custom-pagination .page-item {
+    margin: 0 4px;
+}
+
+#staf-page .custom-pagination .page-link {
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+

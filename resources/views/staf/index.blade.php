@@ -2,19 +2,13 @@
 
 @section('title', 'Daftar Staf')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/pages/pmb_staf.css') }}">
+@endpush
+
 @section('content')
-    <style>
-        .card-staf {
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-
-        .card-staf:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
-
-    <section class="py-5">
+    <div id="staf-page">
+        <section class="py-5">
         <div class="container">
             <div class="text-center mb-4">
                 <h1 class="h4 fw-bold mb-2" style="color: var(--primary-maroon);">
@@ -67,9 +61,23 @@
                 @endforelse
             </div>
 
-            <div class="d-flex justify-content-center mt-5">
-                {{ $stafs->links() }}
-            </div>
+            @if ($stafs->hasPages())
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    {{-- Info jumlah data --}}
+                    <div class="text-muted small">
+                        Showing {{ $stafs->firstItem() }} to {{ $stafs->lastItem() }}
+                        of {{ $stafs->total() }} results
+                    </div>
+
+                    {{-- Pagination --}}
+                    <nav class="custom-pagination">
+                        {{ $stafs->links('pagination::simple-bootstrap-5') }}
+                    </nav>
+
+                </div>
+            @endif
         </div>
     </section>
+    </div>
 @endsection
