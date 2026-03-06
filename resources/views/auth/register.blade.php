@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran - PMB STBA Pontianak</title>
     {{-- Bootstrap 5 CSS --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <style>
@@ -28,7 +28,7 @@
         }
 
         .right-panel {
-            background-image: url("{{ asset('images/hero1.jpg') }}");
+            background-image: url("{{ asset('images/hero1.webp') }}");
             background-size: cover;
             background-position: center;
             position: relative;
@@ -66,6 +66,18 @@
             border-left: none;
             cursor: pointer;
         }
+
+        .link-back {
+            color: var(--primary-maroon);
+            font-weight: 700;
+            transition: all 0.25s ease;
+        }
+
+        .link-back:hover {
+            color: var(--primary-maroon);
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -77,6 +89,9 @@
                 class="col-lg-5 col-md-12 d-flex flex-column justify-content-center px-4 px-md-5 py-5 left-panel bg-white">
                 <div class="mx-auto w-100" style="max-width: 480px;">
                     <div class="mb-4">
+                        <a href="{{ url('/') }}" class="link-back text-decoration-none small text-muted d-inline-block mb-3">
+                            <i class="bi bi-arrow-left me-1"></i> Kembali
+                        </a>
                         <p class="text-muted mb-1">Sudah punya akun? Silakan <a href="{{ route('login') }}"
                                 class="text-decoration-none fw-bold" style="color: var(--primary-maroon);">Login</a></p>
                         <h2 class="fw-bold fs-2" style="color: #333;">Daftar Akun Baru</h2>

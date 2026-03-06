@@ -111,10 +111,11 @@
                         {{-- Client-side Preview Container for Pas Foto --}}
                         <div id="foto_preview_container" class="mt-3 d-none">
                             <p class="small fw-bold mb-2">Preview Foto:</p>
-                            <div class="border rounded-2 p-1 bg-white shadow-sm d-inline-block"
-                                style="width: 120px; height: 150px;">
-                                <img id="foto_preview_img" src="" alt="Preview Foto"
-                                    class="w-100 h-100 object-fit-cover rounded-1">
+                            <div class="border rounded-2 p-1 bg-white shadow-sm" style="width: 120px; height: 150px;">
+                                <img id="foto_preview_img"
+                                    src="{{ optional($registration)->foto_path ? Storage::url($registration->foto_path) : '' }}"
+                                    class="w-100 h-100 object-fit-cover rounded-1"
+                                    alt="Preview Foto">
                             </div>
                         </div>
 
@@ -237,4 +238,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        fotoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    fotoPreviewImg.src = e.target.result; // overwrite foto lama
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 @endsection

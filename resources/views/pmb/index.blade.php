@@ -12,8 +12,15 @@
 
         {{-- Background image + overlay --}}
         <div class="position-absolute top-0 start-0 w-100 h-100">
-            <img src="{{ asset('images/hero1.jpg') }}" alt="Penerimaan Mahasiswa Baru STBA Pontianak" class="w-100 h-100"
-                style="object-fit: cover; object-position: center; transform: scale(1.05);">
+
+               <picture>
+                    <source srcset="{{ asset('images/hero1.webp') }}" type="image/webp">
+                    <img src="{{ asset('images/hero1.jpg') }}"
+                        alt="Penerimaan Mahasiswa Baru STBA Pontianak"
+                        class="w-100 h-100"
+                        style="object-fit: cover; object-position:center; transform:scale(1.05);">
+                </picture>
+
             <div class="position-absolute top-0 start-0 w-100 h-100"
                 style="background: linear-gradient(to right,
                              rgba(0,0,0,0.80),
@@ -425,4 +432,8 @@
         </div>
     </section>
 </div>
+
+@push('scripts')
+<script src="{{ asset('js/pages/index_pmb.js') }}"></script>
+@endpush
 @endsection

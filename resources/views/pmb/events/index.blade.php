@@ -20,8 +20,10 @@
                     <div class="card card-event h-100 shadow-sm border-0 rounded-4 overflow-hidden">
                         <div class="position-relative">
                             @if ($event->gambar)
-                                <img src="{{ asset('storage/' . $event->gambar) }}" alt="{{ $event->judul }}"
-                                    class="card-img-top" style="height: 220px; object-fit: cover;">
+                                <img src="{{ asset('storage/' . $event->gambar) }}"
+                                    loading="lazy"
+                                    class="card-img-top"
+                                    style="height:220px; object-fit:cover;">
                             @else
                                 <div class="bg-light d-flex align-items-center justify-content-center"
                                     style="height: 220px; color: #aaa;">

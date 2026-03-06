@@ -244,59 +244,6 @@
             }
         }
 
-        /* Preloader Modern CSS dengan Efek Blur */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
-        }
-
-        .preloader-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(123, 30, 48, 0.1);
-            border-left-color: var(--primary-maroon);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        .loader-text {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary-maroon);
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            animation: pulseText 1.5s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
         @keyframes pulseText {
 
             0%,
@@ -312,12 +259,6 @@
 </head>
 
 <body>
-    <!-- Modern Preloader -->
-    <div id="preloader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Memuat...</div>
-    </div>
-
     {{-- Mobile Overlay --}}
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -326,7 +267,7 @@
         <div class="sidebar-header">
             {{-- Logo --}}
             <div class="d-flex align-items-center gap-2">
-                <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA"
+                <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA"
                     style="width: 70px; height: 70px; object-fit: contain;">
                 <div class="lh-1">
                     <div class="fw-bold text-dark">STBA Pontianak</div>
@@ -502,21 +443,6 @@
         openBtn.addEventListener('click', toggleSidebar);
         closeBtn.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
-
-        // Script Preloader
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.add('preloader-hidden');
-            }
-        });
-
-        window.addEventListener('beforeunload', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.remove('preloader-hidden');
-            }
-        });
     </script>
     @stack('scripts')
 </body>

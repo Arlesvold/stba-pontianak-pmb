@@ -24,14 +24,18 @@
                     <div class="col-md-3 col-sm-6">
                         <div class="card card-staf h-100 border-0 shadow-sm rounded-4 text-center" style="cursor: pointer;">
                             @if ($staf->foto)
-                                <img src="{{ asset('storage/' . ltrim($staf->foto, '/')) }}" alt="{{ $staf->nama }}"
+                                <img src="{{ asset('storage/' . ltrim($staf->foto, '/')) }}"
+                                    alt="{{ $staf->nama }}"
                                     class="card-img-top rounded-top-4"
+                                    loading="lazy"
+                                    width="300"
+                                    height="260"
                                     style="
-                                                        height: 260px;
-                                                        width: 100%;
-                                                        object-fit: cover;
-                                                        object-position: top;
-                                                    ">
+                                       width:100%;
+                                       height:260px;
+                                       object-fit:cover;
+                                       object-position:top;
+                                    ">
                             @else
                                 <div class="card-img-top rounded-top-4 bg-light d-flex align-items-center justify-content-center"
                                     style="height: 260px;">

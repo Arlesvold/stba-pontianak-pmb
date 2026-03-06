@@ -7,7 +7,7 @@
     <title>@yield('title', 'PMB STBA Pontianak')</title>
 
     {{-- Bootstrap 5 CSS --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 
@@ -152,53 +152,6 @@
             font-family: "Open Sans", sans-serif;
         }
 
-        /* Preloader Modern CSS dengan Efek Blur */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
-            /* Background semi-transparan putih */
-            backdrop-filter: blur(8px);
-            /* Efek blur/kaca */
-            -webkit-backdrop-filter: blur(8px);
-            /* Support untuk browser Safari */
-            z-index: 99999;
-            /* Prioritas tertinggi */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
-        }
-
-        .preloader-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(123, 30, 48, 0.1);
-            border-left-color: var(--primary-maroon);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        .loader-text {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary-maroon);
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            animation: pulseText 1.5s ease-in-out infinite;
-        }
-
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -224,24 +177,20 @@
 
     @stack('styles')
 </head>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 
 <body>
-    <!-- Modern Preloader -->
-    <div id="preloader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Memuat...</div>
-    </div>
-
     <div class="d-flex flex-column min-vh-100">
 
         {{-- Marquee pengumuman (TIDAK sticky) --}}
         @php
-            $marqueeText =
-                \App\Models\Setting::where('key', 'marquee_text')->value('value') ??
-                'PENGUMUMAN 📢: Pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak Tahun Akademik 2025/2026 telah dibuka. Gelombang 1: 1 Februari – 30 April 2025.';
-        @endphp
+            $marqueeText = cache()->remember('marquee_text', 3600, function () {
+                return \App\Models\Setting::where('key', 'marquee_text')->value('value');
+            }) ?? 'PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.';
+            @endphp
         <div class="announcement-bar">
             <div class="container-fluid">
                 <marquee behavior="scroll" direction="left">
@@ -254,8 +203,17 @@
         <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak">
-                    <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">STBA Pontianak</span>
+                    <picture>
+                        <source srcset="{{ asset('images/logo-stba.webp') }}" type="image/webp">
+                        <img src="{{ asset('images/logo-stba.png') }}"
+                             alt="Logo STBA Pontianak"
+                             height="54"
+                             decoding="async">
+                    </picture>
+
+                    <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">
+                        STBA Pontianak
+                    </span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -328,7 +286,7 @@
                     {{-- Kolom 1: Logo + Deskripsi Kampus --}}
                     <div class="col-md-4 col-lg-4 mb-4">
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
-                            <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak" style="height:50px; margin-left: -25px" class="me-3">
+                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak" style="height:50px; margin-left: -25px" class="me-3">
                             <h5 class="fw-bold mb-0">STBA Pontianak</h5>
                         </div>
                         <p class="mb-0 small pe-lg-3">
@@ -395,31 +353,9 @@
     </div>
 
     {{-- Bootstrap JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script Preloader -->
-    <script>
-        // Sembunyikan preloader ketika halaman selesai dimuat
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.add('preloader-hidden');
-            }
-        });
-
-        // Tampilkan preloader segera ketika user menekan link/pindah halaman/refresh
-        window.addEventListener('beforeunload', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.remove('preloader-hidden');
-            }
-        });
-    </script>
+    <script src="{{ asset('/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     @stack('scripts')
-
-    {{-- External JS --}}
-    <script src="{{ asset('js/pages/index_pmb.js') }}"></script>
 </body>
 
 </html>

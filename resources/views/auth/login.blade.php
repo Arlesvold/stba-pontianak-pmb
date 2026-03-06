@@ -5,143 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PMB STBA Pontianak</title>
+
     {{-- Bootstrap 5 --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-    <style>
-        :root {
-            --primary-maroon: #7b1e30;
-        }
-
-        body {
-            font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
-            overflow-x: hidden;
-        }
-
-        .auth-container {
-            min-height: 100vh;
-        }
-
-        .left-panel {
-            background-color: #ffffff;
-        }
-
-        .right-panel {
-            background-image: url("{{ asset('images/hero1.jpg') }}");
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .form-control {
-            border-radius: 8px;
-            padding: 12px 16px;
-            border: 1px solid #dee2e6;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-maroon);
-            box-shadow: 0 0 0 0.25rem rgba(123, 30, 48, 0.15);
-        }
-
-        .btn-maroon {
-            background-color: var(--primary-maroon);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            width: 100%;
-            transition: background 0.3s;
-        }
-
-        .btn-maroon:hover {
-            background-color: #5a1423;
-            color: white;
-        }
-
-        .input-group-text {
-            background: transparent;
-            border-left: none;
-            cursor: pointer;
-        }
-
-        /* Preloader Modern CSS dengan Efek Blur */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
-        }
-
-        .preloader-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(123, 30, 48, 0.1);
-            border-left-color: var(--primary-maroon);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        .loader-text {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary-maroon);
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            animation: pulseText 1.5s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pulseText {
-
-            0%,
-            100% {
-                opacity: 0.6;
-            }
-
-            50% {
-                opacity: 1;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/pages/auth_login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.google.com">
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 </head>
 
 <body>
-    <!-- Modern Preloader -->
-    <div id="preloader">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Memuat...</div>
-    </div>
-
     <div class="container-fluid p-0 auth-container">
         <div class="row g-0 h-100 min-vh-100">
             <!-- Left Panel: Form -->
@@ -149,9 +25,13 @@
                 class="col-lg-5 col-md-12 d-flex flex-column justify-content-center px-4 px-md-5 py-5 left-panel bg-white">
                 <div class="mx-auto w-100" style="max-width: 480px;">
                     <div class="mb-4">
+                        <a href="{{ url('/') }}" class="link-back text-decoration-none small text-muted d-inline-block mb-3">
+                            <i class="bi bi-arrow-left me-1"></i> Kembali
+                        </a>
                         <p class="text-muted mb-1">Belum punya akun? Silakan <a href="{{ route('register') }}"
                                 class="text-decoration-none fw-bold" style="color: var(--primary-maroon);">Daftar</a>
                         </p>
+
                         <h2 class="fw-bold fs-2" style="color: #333;">Login ke Akun</h2>
                         <p class="text-muted small">Masuk untuk mengakses formulir pendaftaran.</p>
                     </div>
@@ -245,19 +125,12 @@
             }
         }
 
-        // Script Preloader
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.add('preloader-hidden');
-            }
-        });
-
-        window.addEventListener('beforeunload', function() {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.classList.remove('preloader-hidden');
-            }
+        window.addEventListener("load", function () {
+            const script = document.createElement("script");
+            script.src = "https://www.google.com/recaptcha/api.js";
+            script.async = true;
+            script.defer = true;
+            document.body.appendChild(script);
         });
     </script>
 </body>
