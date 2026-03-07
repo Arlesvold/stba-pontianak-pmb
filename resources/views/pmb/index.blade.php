@@ -96,9 +96,9 @@
                                 Diploma (D3)
                             </h4>
                             <p class="text-muted small mb-0">
-                                Mempersiapkan lulusan dengan kompetensi bahasa, penelitian, dan soft skill untuk
-                                karier
-                                di pendidikan, media, bisnis internasional, serta lembaga pemerintahan.
+                                Program Diploma Bahasa Inggris yang menekankan keterampilan praktis berbahasa,
+                                komunikasi profesional, serta kemampuan kerja di bidang perkantoran, pariwisata,
+                                dan layanan internasional.
                             </p>
                             <span class="stretched-link"></span>
                         </div>
@@ -120,9 +120,9 @@
                                 Sarjana (S1)
                             </h4>
                             <p class="text-muted small mb-0">
-                                Fokus pada keterampilan praktis untuk dunia kerja: administrasi perkantoran,
-                                hospitality,
-                                front office, dan layanan pelanggan dengan kemampuan bahasa asing yang kuat.
+                                Program Sarjana Sastra Inggris dengan fokus pada kemampuan komunikasi,
+                                penerjemahan, penulisan, serta pemahaman budaya untuk karier di bidang
+                                pendidikan, media, kreatif, dan industri global.
                             </p>
                             <span class="stretched-link"></span>
                         </div>

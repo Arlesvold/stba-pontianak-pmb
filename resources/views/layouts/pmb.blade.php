@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
 
     <style>
         :root {
@@ -303,13 +305,13 @@
                         <div class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
                             <i class="bi bi-geo-alt-fill me-2"></i>
                             <span class="small">
-                                Jl. Purnama I No.1, Akcaya, Kec. Pontianak Selatan,<br>Kota Pontianak, Kalimantan Barat
+                                Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak, Kalimantan Barat
                             </span>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-2">
                             <i class="bi bi-telephone-fill me-2"></i>
-                            <span class="small">0561-xxxxxx</span>
+                            <span class="small">0858-2238-5552</span>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-0">

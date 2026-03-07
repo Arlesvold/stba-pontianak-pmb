@@ -11,6 +11,9 @@
     {{-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+
     <style>
         :root {
             --primary-maroon: #7b1e30;
