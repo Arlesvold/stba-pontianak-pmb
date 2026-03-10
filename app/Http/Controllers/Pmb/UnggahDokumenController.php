@@ -64,7 +64,7 @@ class UnggahDokumenController extends Controller
          */
         try {
             if ($registration->email) {
-               Mail::to($registration->email)->queue(new PmbSubmissionMail($registration));
+                Mail::to($registration->email)->queue(new PmbSubmissionMail($registration));
             }
         } catch (\Exception $e) {
             Log::error('Email PMB gagal: ' . $e->getMessage());
@@ -91,7 +91,7 @@ class UnggahDokumenController extends Controller
                 Http::timeout(5)
                     ->asForm()
                     ->withHeaders([
-                        'Authorization' => config('services.fonnte.token')
+                        'Authorization' => \App\Models\Setting::get('FONNTE_API_TOKEN')
                     ])
                     ->post('https://api.fonnte.com/send', [
                         'target' => $registration->no_hp,
@@ -99,7 +99,6 @@ class UnggahDokumenController extends Controller
                         'countryCode' => '62'
                     ]);
             }
-
         } catch (\Exception $e) {
             Log::error('WhatsApp PMB gagal: ' . $e->getMessage());
         }

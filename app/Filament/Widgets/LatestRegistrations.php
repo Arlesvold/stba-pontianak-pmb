@@ -4,7 +4,6 @@ namespace App\Filament\Widgets;
 
 use App\Filament\Resources\RegistrationResource;
 use App\Models\Registration;
-use Filament\Actions\Action;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -49,12 +48,6 @@ class LatestRegistrations extends BaseWidget
                     ->label('Tanggal Daftar')
                     ->date('d M Y')
                     ->sortable(),
-            ])
-            ->actions([
-                Action::make('view')
-                    ->label('Lihat')
-                    ->url(fn(Registration $record): string => RegistrationResource::getUrl('view', ['record' => $record]))
-                    ->icon('heroicon-m-eye'),
             ])
             ->paginated(false);
     }

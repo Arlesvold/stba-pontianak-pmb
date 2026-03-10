@@ -55,7 +55,7 @@ class LoginRequest extends FormRequest
         try {
             $recaptchaResponse = $this->input('g-recaptcha-response');
             $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret' => config('services.recaptcha.secret_key'),
+                'secret' => \App\Models\Setting::get('RECAPTCHA_SECRET_KEY'),
                 'response' => $recaptchaResponse,
                 'remoteip' => $this->ip(),
             ]);
