@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -28,6 +29,8 @@ class SettingController extends Controller
             ['key' => 'marquee_text'],
             ['value' => $request->value]
         );
+
+        Cache::forget('marquee_text');
 
         return redirect()->route('admin.marquee.edit')
             ->with('success', 'Teks marquee berhasil diperbarui.');

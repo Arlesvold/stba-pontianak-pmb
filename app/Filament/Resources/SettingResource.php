@@ -9,6 +9,7 @@ use App\Models\Setting;
 use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,6 +30,8 @@ class SettingResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
+            Hidden::make('key')
+                ->default('marquee_text'),
             Textarea::make('value')
                 ->label('Teks Marquee')
                 ->rows(3)
