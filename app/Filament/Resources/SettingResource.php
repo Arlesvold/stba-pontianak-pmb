@@ -18,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 
 class SettingResource extends Resource
 {
@@ -30,6 +31,11 @@ class SettingResource extends Resource
     protected static ?string $pluralModelLabel = 'Marquee Pengumuman';
 
     protected static ?string $modelLabel = 'Marquee';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasRole('Super Admin') ?? false;
+    }
 
     public static function form(Schema $schema): Schema
     {

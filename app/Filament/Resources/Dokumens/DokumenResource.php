@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class DokumenResource extends Resource
 {
@@ -23,6 +24,11 @@ class DokumenResource extends Resource
     protected static ?string $navigationLabel = 'Upload Dokumen';
 
     protected static ?string $recordTitleAttribute = 'judul';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasRole('Super Admin') ?? false;
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -3,40 +3,43 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolesAndAdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Reset cached roles and permissions
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        try {
+            DB::transaction(function () {
+                // Reset cached roles and permissions
+                app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create roles for 'web' guard
-        $roleAdminWeb = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
-        $roleUserWeb = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'web']);
+                // Create roles for 'admin' guard (used by Filament panel)
+                $superAdmin = Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'admin']);
+                $adminPmb = Role::firstOrCreate(['name' => 'Admin PMB', 'guard_name' => 'admin']);
 
-        // Create roles for 'admin' guard (since we separated them)
-        $roleAdminGuard = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'admin']);
+                // Create Super Admin user
+                $admin = User::firstOrCreate(
+                    ['email' => 'admin@stbapontianak.ac.id'],
+                    [
+                        'name' => 'Super Admin',
+                        'password' => bcrypt('password'),
+                        'no_hp' => '080000000000',
+                    ]
+                );
 
-        // create admin user
-        $admin = User::firstOrCreate(
-            ['email' => 'admin@stbapontianak.ac.id'],
-            [
-                'name' => 'Super Admin',
-                'password' => bcrypt('password'),
-                'no_hp' => '080000000000',
-            ]
-        );
+                // Sync role to Super Admin (removes old roles, assigns new one)
+                $admin->syncRoles([$superAdmin]);
+            });
 
-        // Assign 'admin' role for both guards to be safe
-        $admin->assignRole($roleAdminWeb);
-        $admin->assignRole($roleAdminGuard);
+            $this->command->info('Roles and Super Admin user seeded successfully.');
+        } catch (\Exception $e) {
+            Log::error('Failed to seed roles and admin: ' . $e->getMessage());
+            $this->command->error('Seeding failed: ' . $e->getMessage());
+        }
     }
 }

@@ -22,6 +22,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class EventResource extends Resource
 {
@@ -32,6 +33,11 @@ class EventResource extends Resource
     protected static ?string $navigationLabel = 'Events';
 
     protected static ?string $modelLabel = 'Event';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasRole('Super Admin') ?? false;
+    }
 
     protected static ?string $pluralModelLabel = 'Events';
 
