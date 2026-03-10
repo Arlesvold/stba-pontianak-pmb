@@ -175,7 +175,7 @@ require __DIR__ . '/auth.php';
 // ======================
 
 // redirect /admin ke dashboard
-Route::redirect('/admin', '/admin/dashboard');
+// Route::redirect('/admin', '/admin/dashboard');
 
 // semua route admin wajib login
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

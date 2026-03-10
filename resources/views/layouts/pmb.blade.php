@@ -189,10 +189,11 @@
 
         {{-- Marquee pengumuman (TIDAK sticky) --}}
         @php
-            $marqueeText = cache()->remember('marquee_text', 3600, function () {
-                return \App\Models\Setting::where('key', 'marquee_text')->value('value');
-            }) ?? 'PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.';
-            @endphp
+            $marqueeText =
+                cache()->remember('active_marquee', 3600, function () {
+                    return \App\Models\Marquee::where('is_active', true)->value('text');
+                }) ?? 'PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.';
+        @endphp
         <div class="announcement-bar">
             <div class="container-fluid">
                 <marquee behavior="scroll" direction="left">
@@ -207,10 +208,8 @@
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <picture>
                         <source srcset="{{ asset('images/logo-stba.webp') }}" type="image/webp">
-                        <img src="{{ asset('images/logo-stba.png') }}"
-                             alt="Logo STBA Pontianak"
-                             height="54"
-                             decoding="async">
+                        <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak" height="54"
+                            decoding="async">
                     </picture>
 
                     <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">
@@ -288,7 +287,8 @@
                     {{-- Kolom 1: Logo + Deskripsi Kampus --}}
                     <div class="col-md-4 col-lg-4 mb-4">
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
-                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak" style="height:50px; margin-left: -25px" class="me-3">
+                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak"
+                                style="height:50px; margin-left: -25px" class="me-3">
                             <h5 class="fw-bold mb-0">STBA Pontianak</h5>
                         </div>
                         <p class="mb-0 small pe-lg-3">
@@ -302,10 +302,12 @@
                     <div class="col-md-4 col-lg-4 mb-4">
                         <h5 class="fw-bold mb-3">Alamat & Kontak</h5>
 
-                        <div class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
+                        <div
+                            class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
                             <i class="bi bi-geo-alt-fill me-2"></i>
                             <span class="small">
-                                Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak, Kalimantan Barat
+                                Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak,
+                                Kalimantan Barat
                             </span>
                         </div>
 
@@ -328,13 +330,16 @@
                                 <a href="{{ route('berita.index') }}" class="footer-link fw-semibold">Berita</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('agenda.index') ?? '#' }}" class="footer-link fw-semibold">Agenda</a>
+                                <a href="{{ route('agenda.index') ?? '#' }}"
+                                    class="footer-link fw-semibold">Agenda</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('events.index') ?? '#' }}" class="footer-link fw-semibold">Event</a>
+                                <a href="{{ route('events.index') ?? '#' }}"
+                                    class="footer-link fw-semibold">Event</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('pmb.daftar') ?? '#' }}" class="footer-link fw-semibold">Pendaftaran PMB</a>
+                                <a href="{{ route('pmb.daftar') ?? '#' }}"
+                                    class="footer-link fw-semibold">Pendaftaran PMB</a>
                             </li>
                         </ul>
                     </div>
