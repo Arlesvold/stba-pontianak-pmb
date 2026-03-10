@@ -5,20 +5,23 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SettingResource\Pages\CreateSetting;
 use App\Filament\Resources\SettingResource\Pages\EditSetting;
 use App\Filament\Resources\SettingResource\Pages\ListSettings;
-use App\Models\Setting;
+use App\Models\Marquee;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 
 class SettingResource extends Resource
 {
-    protected static ?string $model = Setting::class;
+    protected static ?string $model = Marquee::class;
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-megaphone';
 
@@ -26,13 +29,16 @@ class SettingResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Marquee Pengumuman';
 
+    protected static ?string $modelLabel = 'Marquee';
+
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Textarea::make('value')
+            Textarea::make('text')
                 ->label('Teks Marquee')
                 ->rows(3)
                 ->required()
+                ->columnSpanFull()
                 ->helperText('Teks ini akan tampil berjalan di bagian atas beranda STBA.'),
         ]);
     }
@@ -41,19 +47,54 @@ class SettingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('value')
+                TextColumn::make('text')
                     ->label('Teks Marquee')
-                    ->limit(80),
+                    ->limit(80)
+                    ->wrap(),
 
-                TextColumn::make('updated_at')
-                    ->label('Diubah pada')
-                    ->dateTime()
+                ToggleColumn::make('is_active')
+                    ->label('Aktif')
+                    ->afterStateUpdated(function (Marquee $record, bool $state): void {
+                        if ($state) {
+                            $previousActive = Marquee::where('id', '!=', $record->id)
+                                ->where('is_active', true)
+                                ->exists();
+
+                            Marquee::where('id', '!=', $record->id)
+                                ->update(['is_active' => false]);
+
+                            if ($previousActive) {
+                                Notification::make()
+                                    ->title('Marquee lain dinonaktifkan')
+                                    ->body('Hanya satu marquee yang dapat ditampilkan. Marquee sebelumnya telah dinonaktifkan secara otomatis.')
+                                    ->warning()
+                                    ->send();
+                            }
+                        }
+                        Cache::forget('active_marquee');
+                    }),
+
+                TextColumn::make('created_at')
+                    ->label('Dibuat pada')
+                    ->dateTime('d M Y, H:i')
                     ->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make()
+                    ->after(function () {
+                        Cache::forget('active_marquee');
+                    }),
             ])
-            ->toolbarActions([]); // tidak perlu bulk delete
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
+                        ->after(function () {
+                            Cache::forget('active_marquee');
+                        }),
+                ]),
+            ]);
     }
 
     public static function getPages(): array
@@ -63,10 +104,5 @@ class SettingResource extends Resource
             'create' => CreateSetting::route('/create'),
             'edit'   => EditSetting::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('key', 'marquee_text');
     }
 }

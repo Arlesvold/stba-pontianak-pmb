@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateStaf extends CreateRecord
 {
     protected static string $resource = StafResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
