@@ -125,6 +125,39 @@ Untuk memasukkan teks berjalan dibagian atas website.
 
 ---
 
+### 5. PENGATURAN SISTEM & HAK AKSES
+
+Menu ini dikhususkan untuk manajemen konfigurasi tingkat lanjut dan keamanan akun (dibatasi hanya untuk Super Admin).
+
+#### A. Menu "Role" (Hak Akses Pengguna)
+
+Digunakan untuk mengatur tingkat kewenangan / hak akses bagi setiap pengguna yang login ke Dashboard Administrator. Terdapat 2 tingkat peran utama:
+
+- **Super Admin:** Memiliki hak akses penuh (Full Access) terhadap seluruh menu di sistem. Super Admin dapat mengelola, melihat, mengubah, dan menghapus seluruh modul, termasuk menambah user baru serta mengelola layanan Integrasi.
+- **Admin PMB:** Memiliki hak akses operasional yang difokuskan pada manajemen pendaftaran (Admission). Admin PMB utamanya dapat mengevaluasi data calon pendaftar, mengubah status, mengelola data siswa dengan status "selesai" dan mengelola konten informasi di website (Agenda, Kontak).
+- **Cara Penggunaan:** Melalui menu Role, Anda dapat mengelola penugasan (assign) pengguna ke peran yang tepat (_Super Admin_ atau _Admin PMB_) dan menjaga agar area sensitif pada panel tidak diakses oleh pihak yang tidak berwenang.
+
+#### B. Menu "Integrasi" (Manajemen Token)
+
+Berfungsi sebagai konfigurasi jembatan koneksi sistem untuk menghubungkan website PMB STBA dengan layanan aplikasi pihak ketiga. Dua layanan utama di sistem ini adalah **WhatsApp API Gateway (Fonnte)** untuk notifikasi berbalas otomatis ketika ada pendaftar baru, dan **Google reCAPTCHA** untuk mengamankan form pendaftaran dari serangan bot/spam.
+
+- **Manajemen Kredensial & Token:** Di menu ini, admin menyimpan atau mengelola "API Token" dan "Site/Secret Key" yang didapatkan dari penyedia layanan luar agar fungsionalitas pengiriman pesan dan pengamanan form dapat berjalan di web STBA.
+- **Cara Mendapatkan Token Fonnte (WhatsApp API):**
+    1. Kunjungi website dan login di [Fonnte.com](https://fonnte.com/).
+    2. Pada menu **Device**, hubungkan nomor WhatsApp resmi STBA (CS Pendaftaran) dengan memindai/scan QR Code.
+    3. Setelah status perangkat (device) _Connected/Online_, masuk ke menu **API** pada dashboard Fonnte.
+    4. Salin (Copy) kode **Token** yang tersedia.
+    5. Kembali ke dashboard STBA (Menu **Integrasi**), perbarui pengaturan integrasi WhatsApp, dan tempel (Paste) _Token API_ tersebut.
+- **Cara Mendapatkan Kunci Google reCAPTCHA:**
+    1. Kunjungi [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin) dan login menggunakan akun Google/Gmail dari STBA.
+    2. Daftarkan situs baru dengan menekan tombol **+ (Create)**. Masukkan label contoh: "PMB STBA", dan pilih tipe reCAPTCHA (misal: reCAPTCHA v2 -> "I'm not a robot" Checkbox).
+    3. Pada kolom Domains, tambahkan domain website: `stbapontianak.ac.id`.
+    4. Centang persetujuan _Terms of Service_ lalu **Submit**.
+    5. Anda akan mendapatkan **Site Key** dan **Secret Key**.
+    6. Salin (Copy) kedua kunci ini, kemudian paste secara berurutan pada kotak konfigurasi reCAPTCHA di menu **Integrasi** sistem STBA.
+
+---
+
 ### ⚠️ TROUBLESHOOTING (MASALAH UMUM YANG SERING TERJADI)
 
 Buku panduan pelengkap untuk pemecahan masalah:
