@@ -13,7 +13,7 @@
     <meta property="og:description"
         content="Informasi dan pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak." />
     {{-- Kamu bisa ubah asset('images/logo.png') ke gambar yang diinginkan (hero image atau logo) --}}
-    <meta property="og:image" content="{{ asset('images/logo_stba.png') }}" />
+    <meta property="og:image" content="{{ asset('images/stbalogo.jpg') }}" />
 
     {{-- Bootstrap 5 CSS --}}
     <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
