@@ -1,6 +1,6 @@
 @extends('layouts.pmb')
 
-@section('title', 'Penerimaan Mahasiswa Baru')
+@section('title', 'Portal Resmi PMB STBA Pontianak')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/pages/pmb_index.css') }}">

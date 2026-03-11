@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'PMB STBA Pontianak')</title>
 
+    {{-- Open Graph Meta Tags untuk share ke WhatsApp / Social Media --}}
+    <meta property="og:title" content="@yield('title', 'Portal Resmi PMB STBA Pontianak')" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:description"
+        content="Informasi dan pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak." />
+    {{-- Kamu bisa ubah asset('images/logo.png') ke gambar yang diinginkan (hero image atau logo) --}}
+    <meta property="og:image" content="{{ asset('images/logo_stba.png') }}" />
+
     {{-- Bootstrap 5 CSS --}}
     <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
