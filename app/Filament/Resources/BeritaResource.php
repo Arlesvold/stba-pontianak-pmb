@@ -22,6 +22,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class BeritaResource extends Resource
 {
@@ -30,6 +31,11 @@ class BeritaResource extends Resource
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
     protected static ?string $navigationLabel = 'Berita Kampus';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasRole('Super Admin') ?? false;
+    }
 
     public static function form(Schema $schema): Schema
     {

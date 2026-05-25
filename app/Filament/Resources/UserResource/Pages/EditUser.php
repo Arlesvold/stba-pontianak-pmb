@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Dokumens\Pages;
+namespace App\Filament\Resources\UserResource\Pages;
 
-use App\Filament\Resources\Dokumens\DokumenResource;
+use App\Filament\Resources\UserResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDokumen extends EditRecord
+class EditUser extends EditRecord
 {
-    protected static string $resource = DokumenResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -29,7 +29,8 @@
                 class="col-lg-5 col-md-12 d-flex flex-column justify-content-center px-4 px-md-5 py-5 left-panel bg-white">
                 <div class="mx-auto w-100" style="max-width: 480px;">
                     <div class="mb-4">
-                        <a href="{{ url('/') }}" class="link-back text-decoration-none small text-muted d-inline-block mb-3">
+                        <a href="{{ url('/') }}"
+                            class="link-back text-decoration-none small text-muted d-inline-block mb-3">
                             <i class="bi bi-arrow-left me-1"></i> Kembali
                         </a>
                         <p class="text-muted mb-1">Belum punya akun? Silakan <a href="{{ route('register') }}"
@@ -94,7 +95,8 @@
 
                         {{-- Google reCAPTCHA v2 --}}
                         <div class="mb-3">
-                            <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                            <div class="g-recaptcha"
+                                data-sitekey="{{ \App\Models\Setting::get('RECAPTCHA_SITE_KEY') }}"></div>
                             @error('g-recaptcha-response')
                                 <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
@@ -129,7 +131,7 @@
             }
         }
 
-        window.addEventListener("load", function () {
+        window.addEventListener("load", function() {
             const script = document.createElement("script");
             script.src = "https://www.google.com/recaptcha/api.js";
             script.async = true;

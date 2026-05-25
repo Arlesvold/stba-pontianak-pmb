@@ -55,7 +55,7 @@ class LoginRequest extends FormRequest
         try {
             $recaptchaResponse = $this->input('g-recaptcha-response');
             $response = \Illuminate\Support\Facades\Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret' => config('services.recaptcha.secret_key'),
+                'secret' => \App\Models\Setting::get('RECAPTCHA_SECRET_KEY'),
                 'response' => $recaptchaResponse,
                 'remoteip' => $this->ip(),
             ]);
@@ -86,8 +86,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        // Hanya user dengan role 'user' yang boleh login di PMB
-        if (! $user->hasRole('user')) {
+        // Hanya user tanpa role admin yang boleh login di PMB
+        if ($user->hasAnyRole(['Super Admin', 'Admin PMB'])) {
             throw ValidationException::withMessages([
                 'email' => 'Akun ini tidak memiliki akses ke sistem PMB.',
             ]);
