@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Setting;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -29,12 +30,20 @@ class PengaturanUmum extends Page
 
     public function mount(): void
     {
-        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'cta_title', 'cta_subtitle'];
+        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image'];
         $settings = Setting::whereIn('key', $keys)->pluck('value', 'key');
 
-        foreach ($keys as $key) {
-            $this->data[$key] = $settings[$key] ?? '';
-        }
+        $this->form->fill([
+            'wa_admin'            => $settings->get('wa_admin', ''),
+            'hero_badge_label'    => $settings->get('hero_badge_label', ''),
+            'hero_tahun_akademik' => $settings->get('hero_tahun_akademik', ''),
+            'hero_title'          => $settings->get('hero_title', ''),
+            'hero_subtitle'       => $settings->get('hero_subtitle', ''),
+            'hero_image'          => $settings->get('hero_image') ?: null,
+            'cta_title'           => $settings->get('cta_title', ''),
+            'cta_subtitle'        => $settings->get('cta_subtitle', ''),
+            'cta_image'           => $settings->get('cta_image') ?: null,
+        ]);
     }
 
     public function form(Schema $schema): Schema
@@ -54,9 +63,18 @@ class PengaturanUmum extends Page
                     ]),
 
                 Section::make('Konten Hero Homepage')
-                    ->description('Teks yang tampil di bagian paling atas halaman beranda.')
+                    ->description('Gambar latar dan teks yang tampil di bagian paling atas halaman beranda.')
                     ->columns(2)
                     ->schema([
+                        FileUpload::make('hero_image')
+                            ->label('Gambar Latar Hero')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->helperText('Format WebP atau JPG disarankan. Jika kosong, gambar default digunakan.')
+                            ->columnSpanFull(),
+
                         TextInput::make('hero_badge_label')
                             ->label('Teks Badge')
                             ->placeholder('Penerimaan Mahasiswa Baru')
@@ -81,8 +99,17 @@ class PengaturanUmum extends Page
                     ]),
 
                 Section::make('Konten CTA Pendaftaran')
-                    ->description('Teks pada banner ajakan mendaftar di tengah halaman beranda.')
+                    ->description('Gambar latar dan teks pada banner ajakan mendaftar di tengah halaman beranda.')
                     ->schema([
+                        FileUpload::make('cta_image')
+                            ->label('Gambar Latar CTA')
+                            ->image()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->helperText('Format WebP atau JPG disarankan. Jika kosong, gambar default digunakan.')
+                            ->columnSpanFull(),
+
                         TextInput::make('cta_title')
                             ->label('Judul CTA')
                             ->placeholder('Ayo Mulai Mendaftar')
@@ -90,7 +117,7 @@ class PengaturanUmum extends Page
 
                         Textarea::make('cta_subtitle')
                             ->label('Subtitle CTA')
-                            ->placeholder('MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK')
+                            ->placeholder('Mari wujudkan masa depan gemilang Anda bersama kami di STBA Pontianak.')
                             ->rows(2),
                     ]),
             ]);
@@ -104,10 +131,17 @@ class PengaturanUmum extends Page
         $waAdmin = preg_replace('/\D/', '', $data['wa_admin'] ?? '');
         Setting::updateOrCreate(['key' => 'wa_admin'], ['value' => $waAdmin]);
 
-        // hero & cta plain text settings
+        // hero & cta text settings
         $textKeys = ['hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'cta_title', 'cta_subtitle'];
         foreach ($textKeys as $key) {
             Setting::updateOrCreate(['key' => $key], ['value' => $data[$key] ?? '']);
+        }
+
+        // image settings — only update if a new file was uploaded (non-empty)
+        foreach (['hero_image', 'cta_image'] as $key) {
+            if (!empty($data[$key])) {
+                Setting::updateOrCreate(['key' => $key], ['value' => $data[$key]]);
+            }
         }
 
         cache()->forget('wa_admin');

@@ -43,7 +43,7 @@ Route::get('/', function () {
         ->get();
 
     $heroSettings = cache()->remember('hero_settings', 3600, function () {
-        $keys = ['hero_title', 'hero_subtitle', 'hero_badge_label', 'hero_tahun_akademik', 'cta_title', 'cta_subtitle'];
+        $keys = ['hero_title', 'hero_subtitle', 'hero_badge_label', 'hero_tahun_akademik', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image'];
         return Setting::whereIn('key', $keys)->pluck('value', 'key')->toArray();
     });
 
