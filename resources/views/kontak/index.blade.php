@@ -33,7 +33,7 @@
             {{-- Address panel --}}
             <div class="row g-4 mb-5">
                 <div class="col-lg-5">
-                    <div style="background: var(--ink); color: var(--paper); padding: 40px; height: 100%;">
+                    <div style="background: var(--maroon-deep); color: var(--paper); padding: 40px; height: 100%;">
                         <div class="mono mb-4" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);">&#8627; Kantor Pusat</div>
                         <h3 class="h-display mb-4" style="font-size: 1.5rem; color: var(--paper);">STBA Pontianak</h3>
                         <p style="color: rgba(250,245,236,0.72); line-height: 1.75; font-size: 0.9rem; margin-bottom: 24px;">

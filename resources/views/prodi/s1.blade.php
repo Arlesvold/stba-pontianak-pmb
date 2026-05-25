@@ -169,7 +169,7 @@
                         @endforeach
                     </div>
 
-                    <div style="background: var(--ink); color: var(--paper); padding: 28px; margin-top: 16px;">
+                    <div style="background: var(--maroon-deep); color: var(--paper); padding: 28px; margin-top: 16px;">
                         <div class="mono mb-3" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);">Konsultasi</div>
                         <h4 class="h-card mb-2" style="font-size: 1rem; color: var(--paper); line-height: 1.3;">Ngobrol dengan Tim PMB</h4>
                         <p style="font-size: 0.82rem; color: rgba(250,245,236,0.7); line-height: 1.6; margin-bottom: 18px;">Konsultasi peminatan, beasiswa, dan alur pendaftaran tersedia setiap hari kerja.</p>

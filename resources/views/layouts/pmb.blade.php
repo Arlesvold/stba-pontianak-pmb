@@ -117,7 +117,7 @@
 
         /* ─── Announcement Bar ───────────────────────────────────── */
         .announcement-bar {
-            background-color: var(--ink);
+            background-color: var(--maroon-deep);
             color: var(--paper);
             font-size: 0.78rem;
             font-family: var(--font-mono);
@@ -313,7 +313,7 @@
 
         .ds-btn-maroon  { background: var(--maroon); border-color: var(--maroon); color: var(--paper); }
         .ds-btn-maroon:hover { background: var(--maroon-deep); border-color: var(--maroon-deep); color: var(--paper); }
-        .ds-btn-ink     { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+        .ds-btn-ink     { background: var(--maroon-deep); border-color: var(--maroon-deep); color: var(--paper); }
         .ds-btn-ghost   { background: transparent; border-color: var(--rule); color: var(--ink-2); }
         .ds-btn-ghost:hover { border-color: var(--maroon); color: var(--maroon); }
         .ds-btn-paper   { background: var(--paper); border-color: var(--rule); color: var(--ink); }
@@ -349,7 +349,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: var(--ink);
+            background: var(--maroon-deep);
             color: var(--paper);
             padding: 8px 12px;
             min-width: 52px;
@@ -634,8 +634,9 @@
 
         /* ─── Footer ─────────────────────────────────────────────── */
         .site-footer {
-            background-color: var(--ink);
-            color: var(--paper);
+            background-color: var(--paper-2);
+            color: var(--ink-2);
+            border-top: 3px solid var(--maroon);
             padding: 72px 0 32px;
         }
 
@@ -643,7 +644,7 @@
             font-family: var(--font-display);
             font-weight: 600;
             font-size: 1.1rem;
-            color: var(--paper);
+            color: var(--ink);
         }
 
         .site-footer .footer-heading {
@@ -652,18 +653,18 @@
             font-weight: 600;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold-soft);
+            color: var(--maroon);
             margin-bottom: 1.25rem;
         }
 
         .site-footer p, .site-footer span, .site-footer li {
             font-family: var(--font-body);
             font-size: 0.875rem;
-            color: rgba(250,245,236,0.72);
+            color: var(--ink-2);
         }
 
         .site-footer .footer-link {
-            color: rgba(250,245,236,0.72);
+            color: var(--ink-2);
             text-decoration: none;
             font-family: var(--font-body);
             font-size: 0.875rem;
@@ -674,11 +675,11 @@
         }
 
         .site-footer .footer-link:hover {
-            color: var(--gold-soft);
+            color: var(--maroon);
         }
 
         .site-footer hr {
-            border-color: rgba(250,245,236,0.1);
+            border-color: var(--rule);
             opacity: 1;
         }
 
@@ -687,13 +688,13 @@
             align-items: flex-start;
             gap: 0.6rem;
             margin-bottom: 0.75rem;
-            color: rgba(250,245,236,0.72);
+            color: var(--ink-2);
         }
 
         .site-footer .footer-contact-item i {
             margin-top: 2px;
             flex-shrink: 0;
-            color: var(--gold-soft);
+            color: var(--maroon);
             opacity: 0.85;
         }
 
@@ -899,7 +900,7 @@
                     {{-- Col 1: Brand --}}
                     <div class="col-md-4 col-lg-4">
                         <div class="d-flex align-items-center gap-2 mb-3">
-                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak" style="height: 44px; filter: brightness(0) invert(1);">
+                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak" style="height: 44px;">
                             <span class="footer-brand">STBA Pontianak</span>
                         </div>
                         <p class="mb-3 pe-lg-4" style="opacity: 0.72; line-height: 1.7;">
@@ -936,13 +937,13 @@
                             <li><a href="{{ route('events.index') }}" class="footer-link">Event &amp; Acara</a></li>
                             <li><a href="{{ route('staf.index') }}" class="footer-link">Staf &amp; Dosen</a></li>
                             <li><a href="{{ route('dokumen.index') }}" class="footer-link">Dokumen &amp; Unduhan</a></li>
-                            <li><a href="{{ route('pmb.daftar') }}" class="footer-link" style="color: var(--gold-soft); font-weight: 600;">Pendaftaran PMB &rarr;</a></li>
+                            <li><a href="{{ route('pmb.daftar') }}" class="footer-link" style="color: var(--maroon); font-weight: 600;">Pendaftaran PMB &rarr;</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <hr class="mt-5 mb-3">
-                <p class="text-center mb-0" style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(250,245,236,0.4);">
+                <p class="text-center mb-0" style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">
                     &copy; {{ date('Y') }} STBA Pontianak &mdash; Hak Cipta Dilindungi
                 </p>
             </div>

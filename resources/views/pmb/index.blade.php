@@ -60,7 +60,7 @@
                         <img src="{{ $heroImg }}" alt="Kampus STBA Pontianak"
                             style="width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; border: 1px solid var(--rule);">
                         {{-- Floating caption --}}
-                        <div style="position: absolute; bottom: 0; left: -24px; background: var(--ink); color: var(--paper); padding: 18px 22px; max-width: 260px;">
+                        <div style="position: absolute; bottom: 0; left: -24px; background: var(--maroon-deep); color: var(--paper); padding: 18px 22px; max-width: 260px;">
                             <div class="mono" style="font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 6px;">&#8627; Kampus Utama</div>
                             <div style="font-family: var(--font-display); font-size: 0.95rem; line-height: 1.3; color: var(--paper);">STBA Pontianak<br><span style="font-size: 0.8rem; color: rgba(250,245,236,0.65);">Jl. Gajahmada No. 38</span></div>
                         </div>
