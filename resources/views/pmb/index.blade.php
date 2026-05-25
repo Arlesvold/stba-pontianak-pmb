@@ -75,7 +75,7 @@
         <div class="container">
             <div class="d-flex align-items-end justify-content-between mb-5 gap-3 flex-wrap" style="border-bottom: 1.5px solid var(--ink); padding-bottom: 20px;">
                 <div>
-                    <div class="section-num mb-2">&#8627; 01 &mdash; Program Studi</div>
+                    <div class="eyebrow mb-2">Program Studi</div>
                     <h2 class="h-display mb-0" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Pilih jalur Anda.</h2>
                 </div>
                 <span class="mono" style="font-size: 0.68rem; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase;">2 Program Unggulan</span>
@@ -145,7 +145,7 @@
             <div class="container">
                 <div class="d-flex align-items-end justify-content-between mb-5 gap-3 flex-wrap" style="border-bottom: 1.5px solid var(--ink); padding-bottom: 20px;">
                     <div>
-                        <div class="section-num mb-2">&#8627; 02 &mdash; Tenaga Pengajar</div>
+                        <div class="eyebrow mb-2">Tenaga Pengajar</div>
                         <h2 class="h-display mb-0" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Akademik &amp; Pengajaran</h2>
                     </div>
                     <a href="{{ route('staf.index') }}" class="link-more flex-shrink-0">Lihat semua <span class="arr">&#8594;</span></a>
@@ -185,7 +185,7 @@
         <div class="container">
             <div class="d-flex align-items-end justify-content-between mb-5 gap-3 flex-wrap" style="border-bottom: 1.5px solid var(--ink); padding-bottom: 20px;">
                 <div>
-                    <div class="section-num mb-2">&#8627; 03 &mdash; Informasi</div>
+                    <div class="eyebrow mb-2">Informasi</div>
                     <h2 class="h-display mb-0" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Berita Kampus</h2>
                 </div>
                 @if ($beritaTerbaru->count())
@@ -278,7 +278,7 @@
             <div class="container">
                 <div class="d-flex align-items-end justify-content-between mb-5 gap-3 flex-wrap" style="border-bottom: 1.5px solid var(--ink); padding-bottom: 20px;">
                     <div>
-                        <div class="section-num mb-2">&#8627; 04 &mdash; Kegiatan</div>
+                        <div class="eyebrow mb-2">Kegiatan</div>
                         <h2 class="h-display mb-0" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Event Kampus</h2>
                     </div>
                     <a href="{{ route('events.index') }}" class="link-more flex-shrink-0">Semua event <span class="arr">&#8594;</span></a>
@@ -325,7 +325,7 @@
         <div class="container">
             <div class="d-flex align-items-end justify-content-between mb-5 gap-3 flex-wrap" style="border-bottom: 1.5px solid var(--ink); padding-bottom: 20px;">
                 <div>
-                    <div class="section-num mb-2">&#8627; 05 &mdash; Kalender</div>
+                    <div class="eyebrow mb-2">Kalender</div>
                     <h2 class="h-display mb-0" style="font-size: clamp(1.8rem, 3vw, 2.4rem);">Agenda Penting</h2>
                 </div>
                 <a href="{{ route('agenda.index') }}" class="link-more flex-shrink-0">Semua agenda <span class="arr">&#8594;</span></a>

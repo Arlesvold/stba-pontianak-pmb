@@ -36,10 +36,7 @@
                 {{-- Visi --}}
                 @if ($prodi->visi)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 01</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Visi</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Visi</h2>
                         <p style="font-family: var(--font-display); font-style: italic; font-size: 1.05rem; line-height: 1.75; color: var(--ink-2); border-left: 2px solid var(--maroon); padding-left: 20px; margin: 0;">{{ $prodi->visi }}</p>
                     </div>
                 @endif
@@ -47,10 +44,7 @@
                 {{-- Misi --}}
                 @if ($prodi->misi)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 02</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Misi</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Misi</h2>
                         <ol style="list-style: none; padding: 0; margin: 0;">
                             @foreach ($prodi->misi as $i => $m)
                                 <li style="display: grid; grid-template-columns: 52px 1fr; gap: 0; padding: 16px 0; border-top: {{ $i === 0 ? '1px solid var(--rule)' : 'none' }}; border-bottom: 1px solid var(--rule-soft);">
@@ -65,14 +59,11 @@
                 {{-- Tujuan --}}
                 @if ($prodi->tujuan)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 03</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Tujuan</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Tujuan</h2>
                         <ul style="list-style: none; padding: 0; margin: 0;">
                             @foreach ($prodi->tujuan as $t)
                                 <li style="display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--rule-soft); font-size: 0.9rem; line-height: 1.6;">
-                                    <span style="color: var(--maroon); margin-top: 3px;">&#8627;</span>
+                                    <span style="color: var(--maroon); margin-top: 3px;">—</span>
                                     <span style="color: var(--ink-2);">{{ $t['item'] }}</span>
                                 </li>
                             @endforeach
@@ -83,10 +74,7 @@
                 {{-- Peminatan --}}
                 @if ($prodi->peminatan)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 04</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Peminatan Studi</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Peminatan Studi</h2>
                         <div>
                             @foreach ($prodi->peminatan as $i => $p)
                                 <div style="padding: 22px 0; border-top: 1px solid var(--rule); {{ ($i === count($prodi->peminatan) - 1) ? 'border-bottom: 1px solid var(--rule);' : '' }} display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: start;">
@@ -104,10 +92,7 @@
                 {{-- Kurikulum --}}
                 @if ($prodi->kurikulum)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 05</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Kurikulum</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Kurikulum</h2>
                         <p style="color: var(--ink-2); line-height: 1.75; margin-bottom: 16px;">{{ $prodi->kurikulum }}</p>
                         @if ($prodi->kurikulum_pdf_url)
                             <a href="{{ $prodi->kurikulum_pdf_url }}" target="_blank" class="link-more">
@@ -120,17 +105,14 @@
                 {{-- Karir Lulusan --}}
                 @if ($prodi->karir_list)
                     <div class="mb-5">
-                        <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px;">
-                            <span class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&sect; 06</span>
-                            <h2 class="h-display mb-0" style="font-size: 1.5rem;">Karir Lulusan</h2>
-                        </div>
+                        <h2 class="h-display mb-3" style="font-size: 1.5rem;">Karir Lulusan</h2>
                         @if ($prodi->karir_deskripsi)
                             <p style="color: var(--ink-2); line-height: 1.75; margin-bottom: 20px;">{{ $prodi->karir_deskripsi }}</p>
                         @endif
                         <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
                             @foreach ($prodi->karir_list as $k)
                                 <li style="display: flex; gap: 10px; padding: 13px 14px; border-top: 1px solid var(--rule-soft); {{ $loop->even ? '' : 'border-right: 1px solid var(--rule-soft);' }} font-size: 0.875rem; line-height: 1.55;">
-                                    <span style="color: var(--maroon); margin-top: 2px;">&#8627;</span>
+                                    <span style="color: var(--maroon); margin-top: 2px;">—</span>
                                     <span style="color: var(--ink-2);">{{ $k['item'] }}</span>
                                 </li>
                             @endforeach
@@ -155,7 +137,7 @@
             <div class="col-lg-4">
                 <div style="position: sticky; top: 24px;">
                     <div style="background: var(--paper-warm); border: 1px solid var(--rule-soft); padding: 28px;">
-                        <div class="mono mb-4" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">&#8627; Lembar Ringkas</div>
+                        <div class="mono mb-4" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon);">Lembar Ringkas</div>
                         @foreach([
                             ['Jenjang', $prodi->jenjang],
                             ['Nama Program', $prodi->nama],
