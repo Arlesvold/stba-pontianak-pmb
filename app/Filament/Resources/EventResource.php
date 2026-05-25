@@ -29,6 +29,8 @@ class EventResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Website Profile';
+
     protected static ?string $navigationLabel = 'Events';
 
     protected static ?string $modelLabel = 'Event';

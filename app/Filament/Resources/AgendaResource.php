@@ -26,6 +26,8 @@ class AgendaResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Website Profile';
+
     protected static ?string $navigationLabel = 'Agenda Penting';
 
     public static function form(Schema $schema): Schema

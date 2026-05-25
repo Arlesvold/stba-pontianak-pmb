@@ -20,6 +20,8 @@ class DokumenResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-duplicate';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Website Profile';
+
     protected static ?string $navigationLabel = 'Upload Dokumen';
 
     protected static ?string $recordTitleAttribute = 'judul';

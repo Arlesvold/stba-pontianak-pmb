@@ -30,7 +30,9 @@ class RegistrationResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationLabel = 'Pendaftaran PMB';
+    protected static string|\UnitEnum|null $navigationGroup = 'Sistem PMB';
+
+    protected static ?string $navigationLabel = 'Data Pendaftar';
 
     protected static ?string $modelLabel = 'Pendaftaran';
 
@@ -38,10 +40,7 @@ class RegistrationResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
-    {
-        return parent::getEloquentQuery()->where('status', '!=', 'selesai');
-    }
+
 
     public static function form(Schema $schema): Schema
     {
@@ -80,7 +79,7 @@ class RegistrationResource extends Resource
 
                     Placeholder::make('tanggal_lahir')
                         ->label('Tanggal Lahir')
-                        ->content(fn(?Registration $record): string => $record?->tanggal_lahir?->format('d F Y') ?? '-'),
+                        ->content(fn(?Registration $record): string => $record?->tanggal_lahir ? \Carbon\Carbon::parse($record->tanggal_lahir)->format('d F Y') : '-'),
 
                     Placeholder::make('jenis_kelamin')
                         ->label('Jenis Kelamin')
@@ -175,11 +174,11 @@ class RegistrationResource extends Resource
                 ->schema([
                     Placeholder::make('created_at')
                         ->label('Tanggal Daftar')
-                        ->content(fn(?Registration $record): string => $record?->created_at?->format('d F Y H:i') ?? '-'),
+                        ->content(fn(?Registration $record): string => $record?->created_at ? \Carbon\Carbon::parse($record->created_at)->format('d F Y H:i') : '-'),
 
                     Placeholder::make('updated_at')
                         ->label('Terakhir Diupdate')
-                        ->content(fn(?Registration $record): string => $record?->updated_at?->format('d F Y H:i') ?? '-'),
+                        ->content(fn(?Registration $record): string => $record?->updated_at ? \Carbon\Carbon::parse($record->updated_at)->format('d F Y H:i') : '-'),
                 ])
                 ->columns(2)
                 ->collapsed(),
