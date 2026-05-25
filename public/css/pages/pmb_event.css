@@ -1,29 +1,13 @@
-#event-page .card-event {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* ── Event pages ───────────────────────────────────────────────── */
+
+#event-page .card-event h5 {
+    font-family: 'Playfair Display', serif;
 }
 
-#event-page .card-event:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
+#event-page .card-event img {
+    transition: transform 0.3s ease;
 }
 
-#event-page .custom-pagination .pagination {
-    margin-bottom: 0;
-}
-
-#event-page .custom-pagination .page-item {
-    margin: 0 4px;
-}
-
-#event-page .custom-pagination .page-link {
-    border-radius: 8px;
-    padding: 6px 12px;
-    color: var(--primary-maroon);
-    border-color: #dee2e6;
-}
-
-#event-page .custom-pagination .page-link:hover {
-    background-color: var(--primary-maroon);
-    color: #fff;
-    border-color: var(--primary-maroon);
+#event-page .card-event:hover img {
+    transform: scale(1.03);
 }

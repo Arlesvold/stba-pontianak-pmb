@@ -1,18 +1,13 @@
-#pmb-kontak .card-kontak {
-     transition: transform 0.18s ease, box-shadow 0.18s ease;
-    cursor: default;
-}
+/* ── Kontak page ───────────────────────────────────────────────── */
 
-#pmb-kontak .card-kontak:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
-    border-color: transparent !important;
+#pmb-kontak .card-kontak h5 {
+    font-family: 'Playfair Display', serif;
 }
 
 #pmb-kontak .kontak-icon {
     flex-shrink: 0;
-    width: 56px;
-    height: 56px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--primary-maroon);
     color: #fff;

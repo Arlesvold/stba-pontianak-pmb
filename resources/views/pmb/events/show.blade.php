@@ -4,16 +4,16 @@
 
 @section('content')
 
-{{-- Page Header --}}
-<div style="background: linear-gradient(135deg, #fef2f4 0%, #f7d9df 100%); border-bottom: 1px solid #f0c6d0;">
-    <div class="container py-4">
-        <nav aria-label="breadcrumb" class="mb-0">
+{{-- Page Hero --}}
+<div class="page-hero">
+    <div class="container">
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb small mb-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('beranda') }}" class="text-decoration-none" style="color: var(--primary-maroon);">Beranda</a>
+                    <a href="{{ route('beranda') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('events.index') }}" class="text-decoration-none" style="color: var(--primary-maroon);">Event</a>
+                    <a href="{{ route('events.index') }}">Event</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Detail Event</li>
             </ol>

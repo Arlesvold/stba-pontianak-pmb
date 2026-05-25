@@ -1,29 +1,19 @@
-#berita-page .card-berita {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* ── Berita pages ──────────────────────────────────────────────── */
+
+#berita-page .card-berita h2 {
+    font-family: 'Playfair Display', serif;
 }
 
-#berita-page .card-berita:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
+/* News article content */
+.news-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
 }
 
-#berita-page .custom-pagination .pagination {
-    margin-bottom: 0;
-}
-
-#berita-page .custom-pagination .page-item {
-    margin: 0 4px;
-}
-
-#berita-page .custom-pagination .page-link {
-    border-radius: 8px;
-    padding: 6px 12px;
+.news-content h2, .news-content h3, .news-content h4 {
+    font-family: 'Playfair Display', serif;
     color: var(--primary-maroon);
-    border-color: #dee2e6;
-}
-
-#berita-page .custom-pagination .page-link:hover {
-    background-color: var(--primary-maroon);
-    color: #fff;
-    border-color: var(--primary-maroon);
+    margin-top: 2rem;
 }

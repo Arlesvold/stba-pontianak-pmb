@@ -1,62 +1,38 @@
-/* ===============================
-   PMB INDEX PAGE
-================================= */
+/* ── Homepage: pmb/index.blade.php ─────────────────────────────── */
 
-/* Cards */
-#pmb-page .card-berita,
-#pmb-page .card-staf,
-#pmb-page .card-agenda {
-    background: #ffffff;
-    border: 1px solid #e9ecef !important;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+/* Prodi card arrow reveal on hover */
+#pmb-page .card-prodi .prodi-cta {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-#pmb-page .card-berita:hover,
-#pmb-page .card-staf:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
-}
-
-/* Card Prodi */
-#pmb-page .card-prodi {
-    background: #ffffff;
-    border: 1px solid #e9ecef !important;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-#pmb-page .card-prodi:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
-}
-
-/* "Lihat semua" links */
-#pmb-page .link-more {
-    color: var(--primary-maroon);
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-#pmb-page .link-more:hover {
-    color: var(--primary-maroon-dark);
-}
-
-#pmb-page .link-more .arrow {
-    display: inline-block;
-    transition: transform 0.2s ease;
-}
-
-#pmb-page .link-more:hover .arrow {
-    transform: translateX(4px);
+#pmb-page .card-prodi:hover .prodi-cta {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* CTA button */
 #pmb-page .cta-btn {
     color: var(--primary-maroon);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 #pmb-page .cta-btn:hover {
     background-color: var(--primary-maroon);
     color: #ffffff;
     border-color: var(--primary-maroon);
+    box-shadow: 0 4px 16px rgba(123, 30, 48, 0.35);
+}
+
+/* Agenda date box accent */
+#pmb-page .agenda-date-box {
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+#pmb-page .card-agenda:hover .agenda-date-box {
+    background-color: rgba(123, 30, 48, 0.06);
+    border-color: rgba(123, 30, 48, 0.35) !important;
 }

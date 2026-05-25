@@ -4,19 +4,20 @@
 
 @section('content')
 
-{{-- Page Header --}}
-<div style="background: linear-gradient(135deg, #fef2f4 0%, #f7d9df 100%); border-bottom: 1px solid #f0c6d0;">
-    <div class="container py-4">
+{{-- Page Hero --}}
+<div class="page-hero">
+    <div class="container">
         <nav aria-label="breadcrumb" class="mb-2">
             <ol class="breadcrumb small mb-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('beranda') }}" class="text-decoration-none" style="color: var(--primary-maroon);">Beranda</a>
+                    <a href="{{ route('beranda') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item">Program Studi</li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $prodi->jenjang }}</li>
             </ol>
         </nav>
-        <h1 class="fw-bold mb-0" style="color: var(--primary-maroon); font-size: 1.75rem;">{{ $prodi->nama }}</h1>
+        <h1>{{ $prodi->nama }}</h1>
+        <p class="hero-subtitle">{{ $prodi->jenjang }} &mdash; STBA Pontianak</p>
     </div>
 </div>
 

@@ -8,19 +8,19 @@
 
 @section('content')
 
-{{-- Page Header --}}
-<div style="background: linear-gradient(135deg, #fef2f4 0%, #f7d9df 100%); border-bottom: 1px solid #f0c6d0;">
-    <div class="container py-4">
+{{-- Page Hero --}}
+<div class="page-hero">
+    <div class="container">
         <nav aria-label="breadcrumb" class="mb-2">
             <ol class="breadcrumb small mb-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('beranda') }}" class="text-decoration-none" style="color: var(--primary-maroon);">Beranda</a>
+                    <a href="{{ route('beranda') }}">Beranda</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Event Kampus</li>
             </ol>
         </nav>
-        <h1 class="fw-bold mb-1" style="color: var(--primary-maroon); font-size: 1.75rem;">Event Kampus</h1>
-        <p class="text-muted mb-0 small">Kegiatan terbaru yang diselenggarakan oleh STBA Pontianak.</p>
+        <h1>Event Kampus</h1>
+        <p class="hero-subtitle">Kegiatan terbaru yang diselenggarakan oleh STBA Pontianak.</p>
     </div>
 </div>
 
