@@ -17,7 +17,7 @@ test('password can be confirmed', function () {
         'password' => 'password',
     ]);
 
-    $response->assertRedirect();
+    $response->assertRedirect(route('pmb.daftar', absolute: false));
     $response->assertSessionHasNoErrors();
 });
 

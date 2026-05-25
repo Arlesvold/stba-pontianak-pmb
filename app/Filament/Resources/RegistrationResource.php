@@ -4,25 +4,26 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RegistrationResource\Pages;
 use App\Models\Registration;
-use Filament\Forms\Components\Placeholder;
-use Filament\Schemas\Components\Section;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
-use Filament\Tables;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\HtmlString;
 
 class RegistrationResource extends Resource
 {
@@ -30,7 +31,9 @@ class RegistrationResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationLabel = 'Pendaftaran PMB';
+    protected static string|\UnitEnum|null $navigationGroup = 'Sistem PMB';
+
+    protected static ?string $navigationLabel = 'Data Pendaftar';
 
     protected static ?string $modelLabel = 'Pendaftaran';
 
@@ -38,133 +41,197 @@ class RegistrationResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getNavigationBadge(): ?string
     {
-        return parent::getEloquentQuery()->where('status', '!=', 'selesai');
+        $count = static::getModel()::where('status', 'pending')->count();
+
+        return $count > 0 ? (string) $count : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Pendaftar dengan status Pending';
     }
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Section::make('Ubah Status & Feedback')
-                ->description('Ubah status pendaftaran dan berikan feedback kepada pendaftar.')
+            Section::make('Perbarui Status & Catatan')
+                ->description('Ubah status pendaftaran dan berikan catatan untuk pendaftar.')
+                ->icon('heroicon-o-pencil-square')
                 ->schema([
                     Select::make('status')
                         ->label('Status Pendaftaran')
                         ->options([
-                            'pending' => 'Pending',
-                            'proses' => 'Dalam Proses',
-                            'selesai' => 'Selesai',
+                            'pending'  => 'Pending',
+                            'proses'   => 'Dalam Proses',
+                            'selesai'  => 'Selesai',
                         ])
                         ->required()
                         ->native(false),
 
                     Textarea::make('feedback')
-                        ->label('Feedback untuk Pendaftar')
-                        ->placeholder('Berikan catatan atau feedback untuk pendaftar...')
-                        ->rows(4)
+                        ->label('Catatan / Feedback untuk Pendaftar')
+                        ->placeholder('Berikan catatan atau instruksi untuk pendaftar...')
+                        ->rows(5)
                         ->columnSpanFull(),
                 ])
-                ->columns(1)
-                ->collapsible(),
-
-            Section::make('Data Pribadi')
-                ->schema([
-                    Placeholder::make('nama_lengkap')
-                        ->label('Nama Lengkap')
-                        ->content(fn(?Registration $record): string => $record?->nama_lengkap ?? '-'),
-
-                    Placeholder::make('nik')
-                        ->label('NIK')
-                        ->content(fn(?Registration $record): string => $record?->nik ?? '-'),
-
-                    Placeholder::make('tanggal_lahir')
-                        ->label('Tanggal Lahir')
-                        ->content(fn(?Registration $record): string => $record?->tanggal_lahir?->format('d F Y') ?? '-'),
-
-                    Placeholder::make('jenis_kelamin')
-                        ->label('Jenis Kelamin')
-                        ->content(fn(?Registration $record): string => $record?->jenis_kelamin === 'L' ? 'Laki-laki' : ($record?->jenis_kelamin === 'P' ? 'Perempuan' : '-')),
-
-                    Placeholder::make('email')
-                        ->label('Email')
-                        ->content(fn(?Registration $record): string => $record?->email ?? '-'),
-
-                    Placeholder::make('no_hp')
-                        ->label('No. HP')
-                        ->content(fn(?Registration $record): string => $record?->no_hp ?? '-'),
-
-                    Placeholder::make('alamat')
-                        ->label('Alamat')
-                        ->content(fn(?Registration $record): string => $record?->alamat ?? '-')
-                        ->columnSpanFull(),
-                ])
-                ->columns(2)
-                ->collapsible(),
-
-            Section::make('Data Akademik')
-                ->schema([
-                    Placeholder::make('program_studi')
-                        ->label('Program Studi')
-                        ->content(fn(?Registration $record): string => $record?->program_studi ?? '-'),
-
-                    Placeholder::make('sistem_kuliah')
-                        ->label('Sistem Kuliah')
-                        ->content(fn(?Registration $record): string => $record?->sistem_kuliah ?? '-'),
-
-                    Placeholder::make('sekolah_asal')
-                        ->label('Sekolah Asal')
-                        ->content(fn(?Registration $record): string => $record?->sekolah_asal ?? '-'),
-
-                    Placeholder::make('jurusan_sekolah')
-                        ->label('Jurusan Sekolah')
-                        ->content(fn(?Registration $record): string => $record?->jurusan_sekolah ?? '-'),
-
-                    Placeholder::make('tahun_lulus')
-                        ->label('Tahun Lulus')
-                        ->content(fn(?Registration $record): string => $record?->tahun_lulus ?? '-'),
-                ])
-                ->columns(2)
-                ->collapsible(),
-
-            Section::make('Dokumen')
-                ->schema([
-                    Placeholder::make('ijazah_path')
-                        ->label('Ijazah / Rapor')
-                        ->content(function (?Registration $record): HtmlString {
-                            if ($record?->ijazah_path) {
-                                $url = Storage::url($record->ijazah_path);
-                                return new HtmlString('<a href="' . $url . '" target="_blank" class="text-primary-600 underline">Lihat Dokumen</a>');
-                            }
-                            return new HtmlString('<span class="text-danger-600">Belum diupload</span>');
-                        }),
-
-                    Placeholder::make('foto_path')
-                        ->label('Pas Foto')
-                        ->content(function (?Registration $record): HtmlString {
-                            if ($record?->foto_path) {
-                                $url = Storage::url($record->foto_path);
-                                return new HtmlString('<a href="' . $url . '" target="_blank" class="text-primary-600 underline">Lihat Foto</a>');
-                            }
-                            return new HtmlString('<span class="text-danger-600">Belum diupload</span>');
-                        }),
-                ])
-                ->columns(2)
-                ->collapsible(),
-
-            Section::make('Informasi Sistem')
-                ->schema([
-                    Placeholder::make('created_at')
-                        ->label('Tanggal Daftar')
-                        ->content(fn(?Registration $record): string => $record?->created_at?->format('d F Y H:i') ?? '-'),
-
-                    Placeholder::make('updated_at')
-                        ->label('Terakhir Diupdate')
-                        ->content(fn(?Registration $record): string => $record?->updated_at?->format('d F Y H:i') ?? '-'),
-                ])
-                ->columns(2)
-                ->collapsed(),
+                ->columns(1),
         ]);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->columns(3)
+            ->components([
+
+                // ── Sidebar kiri (1 kolom) ──────────────────────────
+                Section::make()
+                    ->columnSpan(1)
+                    ->schema([
+                        ImageEntry::make('foto_path')
+                            ->hiddenLabel()
+                            ->disk('public')
+                            ->height(200)
+                            ->extraImgAttributes([
+                                'class' => 'rounded-xl object-cover shadow mx-auto',
+                                'style' => 'display:block; max-width:150px; aspect-ratio:3/4;',
+                            ]),
+
+                        TextEntry::make('nama_lengkap')
+                            ->hiddenLabel()
+                            ->size(TextSize::Large)
+                            ->weight(FontWeight::Bold),
+
+                        TextEntry::make('status')
+                            ->hiddenLabel()
+                            ->badge()
+                            ->color(fn (string $state): string => match ($state) {
+                                'pending' => 'warning',
+                                'proses'  => 'info',
+                                'selesai' => 'success',
+                                default   => 'gray',
+                            })
+                            ->formatStateUsing(fn (string $state): string => match ($state) {
+                                'pending' => 'Pending',
+                                'proses'  => 'Dalam Proses',
+                                'selesai' => 'Selesai',
+                                default   => $state,
+                            }),
+
+                        TextEntry::make('email')
+                            ->label('Email')
+                            ->icon('heroicon-m-envelope')
+                            ->copyable(),
+
+                        TextEntry::make('no_hp')
+                            ->label('No. HP')
+                            ->icon('heroicon-m-phone'),
+
+                        TextEntry::make('created_at')
+                            ->label('Tanggal Daftar')
+                            ->date('d F Y')
+                            ->icon('heroicon-m-calendar-days'),
+
+                        TextEntry::make('feedback')
+                            ->label('Catatan Admin')
+                            ->placeholder('Belum ada catatan.')
+                            ->color('gray'),
+                    ]),
+
+                // ── Konten utama (2 kolom) ──────────────────────────
+                Section::make()
+                    ->columnSpan(2)
+                    ->schema([
+                        Tabs::make()
+                            ->tabs([
+
+                                Tab::make('Biodata Diri')
+                                    ->icon('heroicon-m-user')
+                                    ->schema([
+                                        TextEntry::make('nik')
+                                            ->label('NIK'),
+                                        TextEntry::make('tanggal_lahir')
+                                            ->label('Tanggal Lahir')
+                                            ->date('d F Y'),
+                                        TextEntry::make('jenis_kelamin')
+                                            ->label('Jenis Kelamin')
+                                            ->formatStateUsing(fn (?string $state): string => match ($state) {
+                                                'L'     => 'Laki-laki',
+                                                'P'     => 'Perempuan',
+                                                default => '-',
+                                            }),
+                                        TextEntry::make('alamat')
+                                            ->label('Alamat')
+                                            ->columnSpanFull(),
+                                    ])
+                                    ->columns(2),
+
+                                Tab::make('Data Akademik')
+                                    ->icon('heroicon-m-academic-cap')
+                                    ->schema([
+                                        TextEntry::make('program_studi')
+                                            ->label('Program Studi Pilihan'),
+                                        TextEntry::make('sistem_kuliah')
+                                            ->label('Sistem Kuliah'),
+                                        TextEntry::make('sekolah_asal')
+                                            ->label('Sekolah Asal'),
+                                        TextEntry::make('jurusan_sekolah')
+                                            ->label('Jurusan Sekolah'),
+                                        TextEntry::make('tahun_lulus')
+                                            ->label('Tahun Lulus'),
+                                    ])
+                                    ->columns(2),
+
+                                Tab::make('Berkas Dokumen')
+                                    ->icon('heroicon-m-document-text')
+                                    ->schema([
+                                        TextEntry::make('ijazah_path')
+                                            ->label('Ijazah / Rapor')
+                                            ->badge()
+                                            ->formatStateUsing(fn (?string $state): string => $state ? 'Lihat Dokumen' : 'Belum diupload')
+                                            ->color(fn (?string $state): string => $state ? 'primary' : 'danger')
+                                            ->icon(fn (?string $state): string => $state ? 'heroicon-m-document-arrow-down' : 'heroicon-m-x-circle')
+                                            ->url(fn (Registration $record): ?string => $record->ijazah_path ? Storage::url($record->ijazah_path) : null)
+                                            ->openUrlInNewTab(),
+
+                                        TextEntry::make('kk_path')
+                                            ->label('Kartu Keluarga (KK)')
+                                            ->badge()
+                                            ->formatStateUsing(fn (?string $state): string => $state ? 'Lihat Dokumen' : 'Belum diupload')
+                                            ->color(fn (?string $state): string => $state ? 'primary' : 'danger')
+                                            ->icon(fn (?string $state): string => $state ? 'heroicon-m-document-arrow-down' : 'heroicon-m-x-circle')
+                                            ->url(fn (Registration $record): ?string => $record->kk_path ? Storage::url($record->kk_path) : null)
+                                            ->openUrlInNewTab(),
+
+                                        TextEntry::make('transkrip_path')
+                                            ->label('Transkrip Nilai')
+                                            ->badge()
+                                            ->formatStateUsing(fn (?string $state): string => $state ? 'Lihat Dokumen' : 'Belum diupload')
+                                            ->color(fn (?string $state): string => $state ? 'primary' : 'danger')
+                                            ->icon(fn (?string $state): string => $state ? 'heroicon-m-document-arrow-down' : 'heroicon-m-x-circle')
+                                            ->url(fn (Registration $record): ?string => $record->transkrip_path ? Storage::url($record->transkrip_path) : null)
+                                            ->openUrlInNewTab(),
+
+                                        TextEntry::make('foto_path')
+                                            ->label('Pas Foto')
+                                            ->badge()
+                                            ->formatStateUsing(fn (?string $state): string => $state ? 'Lihat Foto' : 'Belum diupload')
+                                            ->color(fn (?string $state): string => $state ? 'success' : 'danger')
+                                            ->icon(fn (?string $state): string => $state ? 'heroicon-m-photo' : 'heroicon-m-x-circle')
+                                            ->url(fn (Registration $record): ?string => $record->foto_path ? Storage::url($record->foto_path) : null)
+                                            ->openUrlInNewTab(),
+                                    ])
+                                    ->columns(2),
+                            ]),
+                    ]),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -191,17 +258,17 @@ class RegistrationResource extends Resource
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
-                        'proses' => 'info',
+                        'proses'  => 'info',
                         'selesai' => 'success',
-                        default => 'gray',
+                        default   => 'gray',
                     })
-                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
                         'pending' => 'Pending',
-                        'proses' => 'Proses',
+                        'proses'  => 'Proses',
                         'selesai' => 'Selesai',
-                        default => $state,
+                        default   => $state,
                     }),
 
                 TextColumn::make('created_at')
@@ -214,7 +281,8 @@ class RegistrationResource extends Resource
                 SelectFilter::make('status')
                     ->options([
                         'pending' => 'Pending',
-                        'proses' => 'Dalam Proses',
+                        'proses'  => 'Dalam Proses',
+                        'selesai' => 'Selesai',
                     ]),
 
                 SelectFilter::make('program_studi')
@@ -243,78 +311,12 @@ class RegistrationResource extends Resource
         return [];
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema
-            ->components([
-                Section::make('Data Pribadi')
-                    ->schema([
-                        TextEntry::make('nama_lengkap')->label('Nama Lengkap'),
-                        TextEntry::make('nik')->label('NIK'),
-                        TextEntry::make('tanggal_lahir')->label('Tanggal Lahir')->date('d F Y'),
-                        TextEntry::make('jenis_kelamin')->label('Jenis Kelamin')
-                            ->formatStateUsing(fn(string $state): string => $state === 'L' ? 'Laki-laki' : 'Perempuan'),
-                        TextEntry::make('email')->label('Email'),
-                        TextEntry::make('no_hp')->label('No. HP'),
-                        TextEntry::make('alamat')->label('Alamat')->columnSpanFull(),
-                    ])
-                    ->columns(2),
-
-                Section::make('Data Akademik')
-                    ->schema([
-                        TextEntry::make('program_studi')->label('Program Studi'),
-                        TextEntry::make('sistem_kuliah')->label('Sistem Kuliah'),
-                        TextEntry::make('sekolah_asal')->label('Sekolah Asal'),
-                        TextEntry::make('jurusan_sekolah')->label('Jurusan Sekolah'),
-                        TextEntry::make('tahun_lulus')->label('Tahun Lulus'),
-                    ])
-                    ->columns(2),
-
-                Section::make('Dokumen & Foto')
-                    ->schema([
-                        ImageEntry::make('foto_path')
-                            ->label('Pas Foto')
-                            ->disk('public')
-                            ->imageHeight(250)
-                            ->imageWidth(200)
-                            ->extraImgAttributes([
-                                'class' => 'object-cover rounded-lg border border-gray-200',
-                                'style' => 'max-width:200px; max-height:250px;',
-                            ])
-                            ->columnSpan(1),
-
-                        TextEntry::make('ijazah_path')
-                            ->label('Ijazah / Rapor')
-                            ->formatStateUsing(fn() => 'Lihat Dokumen')
-                            ->url(fn(Registration $record) => $record->ijazah_path ? Storage::url($record->ijazah_path) : '#')
-                            ->openUrlInNewTab()
-                            ->visible(fn(Registration $record) => (bool) $record->ijazah_path)
-                            ->columnSpan(1),
-                    ])
-                    ->columns(2),
-
-                Section::make('Status Pendaftaran')
-                    ->schema([
-                        TextEntry::make('status')
-                            ->badge()
-                            ->color(fn(string $state): string => match ($state) {
-                                'pending' => 'warning',
-                                'proses' => 'info',
-                                'selesai' => 'success',
-                                default => 'gray',
-                            }),
-                        TextEntry::make('feedback')->label('Feedback Admin'),
-                    ])
-                    ->columns(2),
-            ]);
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListRegistrations::route('/'),
-            'edit' => Pages\EditRegistration::route('/{record}/edit'),
-            'view' => Pages\ViewRegistration::route('/{record}'),
+            'edit'  => Pages\EditRegistration::route('/{record}/edit'),
+            'view'  => Pages\ViewRegistration::route('/{record}'),
         ];
     }
 }

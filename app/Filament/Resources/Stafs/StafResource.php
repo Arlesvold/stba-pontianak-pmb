@@ -21,6 +21,8 @@ class StafResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Akademik';
+
     protected static ?string $recordTitleAttribute = 'nama';
 
     public static function canAccess(): bool

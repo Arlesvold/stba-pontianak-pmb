@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AgendaController;
-use App\Http\Controllers\Admin\BeritaController;
-use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Pmb\PendaftaranController;
 use App\Http\Controllers\Pmb\UnggahDokumenController;
@@ -125,28 +122,32 @@ Route::post('/kontak', function (\Illuminate\Http\Request $request) {
     return back()->with('success', 'Pesan berhasil dikirim.');
 })->name('kontak.kirim');
 
-// Halaman unggah dokumen (GET)
-Route::get('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'index'])
-    ->name('pmb.unggah-dokumen');
+// Halaman unggah dokumen & verifikasi (auth required)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'index'])
+        ->name('pmb.unggah-dokumen');
 
-// Proses upload dokumen (POST)
-Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
-    ->name('pmb.unggah-dokumen.submit');
+    Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
+        ->name('pmb.unggah-dokumen.submit');
 
-// Halaman setelah kirim administrasi: Verifikasi & Tes
-Route::get('/pmb/verifikasi-tes', function () {
-    $registration = \App\Models\Registration::where('user_id', Auth::id())->first();
+    Route::get('/pmb/verifikasi-tes', function () {
+        $registration = \App\Models\Registration::where('user_id', Auth::id())->first();
 
-    if (!$registration) {
-        return redirect()->route('pmb.daftar');
-    }
+        if (!$registration) {
+            return redirect()->route('pmb.daftar');
+        }
 
-    if ($registration->step < 3) {
-        return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
-    }
+        if ($registration->step < 3) {
+            return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
+        }
 
-    return view('pmb.verifikasi-tes', compact('registration'));
-})->name('pmb.verifikasi-tes');
+        $waAdmin = cache()->remember('wa_admin', 3600, function () {
+            return \App\Models\Setting::where('key', 'wa_admin')->value('value') ?? '';
+        });
+
+        return view('pmb.verifikasi-tes', compact('registration', 'waAdmin'));
+    })->name('pmb.verifikasi-tes');
+});
 
 
 
@@ -171,21 +172,5 @@ require __DIR__ . '/auth.php';
 
 
 // ======================
-// ROUTE ADMIN
+// ROUTE ADMIN (legacy — dinonaktifkan, semua dihandle Filament)
 // ======================
-
-// redirect /admin ke dashboard
-// Route::redirect('/admin', '/admin/dashboard');
-
-// semua route admin wajib login
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    // Marquee
-    Route::get('/marquee', [SettingController::class, 'editMarquee'])->name('marquee.edit');
-    Route::post('/marquee', [SettingController::class, 'updateMarquee'])->name('marquee.update');
-
-    // CRUD Berita
-    Route::resource('berita', BeritaController::class);
-
-    // CRUD Agenda
-    Route::resource('agenda', \App\Http\Controllers\Admin\AgendaController::class);
-});

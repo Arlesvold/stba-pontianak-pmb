@@ -30,6 +30,8 @@ class BeritaResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Website Profile';
+
     protected static ?string $navigationLabel = 'Berita Kampus';
 
     public static function canAccess(): bool

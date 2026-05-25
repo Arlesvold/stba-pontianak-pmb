@@ -159,19 +159,6 @@
                             Daftar Sekarang
                         </button>
 
-                        <div class="position-relative text-center mb-4">
-                            <div class="border-bottom position-absolute w-100 top-50"></div>
-                            <span class="bg-white px-2 position-relative text-muted small">Atau daftar dengan</span>
-                        </div>
-
-                        <button type="button"
-                            class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"
-                            style="border-radius: 8px; padding: 10px;">
-                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"
-                                height="20" alt="Google">
-                            <span>Daftar dengan Google</span>
-                        </button>
-
                     </form>
                 </div>
             </div>

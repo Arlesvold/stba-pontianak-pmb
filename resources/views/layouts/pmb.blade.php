@@ -6,15 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'PMB STBA Pontianak')</title>
 
-    {{-- Open Graph Meta Tags untuk share ke WhatsApp / Social Media --}}
-    <meta property="og:title" content="@yield('title', 'Portal Resmi PMB STBA Pontianak')" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:description"
-        content="Informasi dan pendaftaran Penerimaan Mahasiswa Baru (PMB) STBA Pontianak." />
-    {{-- Kamu bisa ubah asset('images/logo.png') ke gambar yang diinginkan (hero image atau logo) --}}
-    <meta property="og:image" content="{{ asset('images/stbalogo.jpg') }}" />
-
     {{-- Bootstrap 5 CSS --}}
     <link rel="stylesheet" href="{{ asset('/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -60,10 +51,27 @@
             background-color: var(--primary-maroon);
             color: #ffffff;
             font-size: 1rem;
+            overflow: hidden;
         }
 
-        .announcement-bar marquee {
-            padding: 0.80rem 0;
+        .marquee-wrapper {
+            overflow: hidden;
+            padding: 0.70rem 0;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            white-space: nowrap;
+            will-change: transform;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            padding-right: 18rem;
         }
 
         /* Efek hover untuk link di footer */
@@ -198,18 +206,47 @@
 
         {{-- Marquee pengumuman (TIDAK sticky) --}}
         @php
-            $marqueeText =
-                cache()->remember('active_marquee', 3600, function () {
-                    return \App\Models\Marquee::where('is_active', true)->value('text');
-                }) ?? 'PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.';
+            $marqueeItems = cache()->remember('pengumuman_aktif', 3600, function () {
+                return \App\Models\Pengumuman::aktif()->pluck('teks')->toArray();
+            });
+            if (empty($marqueeItems)) {
+                $marqueeItems = ['PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.'];
+            }
         @endphp
         <div class="announcement-bar">
-            <div class="container-fluid">
-                <marquee behavior="scroll" direction="left">
-                    {{ $marqueeText }}
-                </marquee>
+            <div class="marquee-wrapper">
+                <div class="marquee-track" id="marqueeTrack">
+                    @foreach($marqueeItems as $item)
+                        <span class="marquee-item">{{ $item }}</span>
+                    @endforeach
+                </div>
             </div>
         </div>
+        <script>
+            (function () {
+                var track = document.getElementById('marqueeTrack');
+                var wrapper = track ? track.parentElement : null;
+                if (!track || !wrapper) return;
+
+                var W = wrapper.offsetWidth;   // lebar container (= lebar layar)
+                var T = track.scrollWidth;     // lebar total konten
+                var pxPerDetik = 75;
+
+                // Jarak total: mulai dari tepi kanan (W) sampai habis di tepi kiri (-T)
+                var durasi = (W + T) / pxPerDetik;
+
+                // Inject keyframe: mulai dari kanan layar, habis di kiri layar
+                var style = document.createElement('style');
+                style.textContent =
+                    '@keyframes marquee-rtl {' +
+                    '  from { transform: translateX(' + W + 'px); }' +
+                    '  to   { transform: translateX(-' + T + 'px); }' +
+                    '}';
+                document.head.appendChild(style);
+
+                track.style.animation = 'marquee-rtl ' + durasi.toFixed(1) + 's linear infinite';
+            })();
+        </script>
 
         {{-- Navbar utama (STICKY) --}}
         <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
@@ -217,8 +254,10 @@
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <picture>
                         <source srcset="{{ asset('images/logo-stba.webp') }}" type="image/webp">
-                        <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak" height="54"
-                            decoding="async">
+                        <img src="{{ asset('images/logo-stba.png') }}"
+                             alt="Logo STBA Pontianak"
+                             height="54"
+                             decoding="async">
                     </picture>
 
                     <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">
@@ -296,8 +335,7 @@
                     {{-- Kolom 1: Logo + Deskripsi Kampus --}}
                     <div class="col-md-4 col-lg-4 mb-4">
                         <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
-                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak"
-                                style="height:50px; margin-left: -25px" class="me-3">
+                            <img src="{{ asset('images/logo-stba.webp') }}" alt="Logo STBA Pontianak" style="height:50px; margin-left: -25px" class="me-3">
                             <h5 class="fw-bold mb-0">STBA Pontianak</h5>
                         </div>
                         <p class="mb-0 small pe-lg-3">
@@ -311,12 +349,10 @@
                     <div class="col-md-4 col-lg-4 mb-4">
                         <h5 class="fw-bold mb-3">Alamat & Kontak</h5>
 
-                        <div
-                            class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
+                        <div class="d-flex align-items-start justify-content-center justify-content-md-start mb-2 contact-item">
                             <i class="bi bi-geo-alt-fill me-2"></i>
                             <span class="small">
-                                Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak,
-                                Kalimantan Barat
+                                Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak, Kalimantan Barat
                             </span>
                         </div>
 
@@ -339,16 +375,13 @@
                                 <a href="{{ route('berita.index') }}" class="footer-link fw-semibold">Berita</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('agenda.index') ?? '#' }}"
-                                    class="footer-link fw-semibold">Agenda</a>
+                                <a href="{{ route('agenda.index') ?? '#' }}" class="footer-link fw-semibold">Agenda</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('events.index') ?? '#' }}"
-                                    class="footer-link fw-semibold">Event</a>
+                                <a href="{{ route('events.index') ?? '#' }}" class="footer-link fw-semibold">Event</a>
                             </li>
                             <li class="mb-2">
-                                <a href="{{ route('pmb.daftar') ?? '#' }}"
-                                    class="footer-link fw-semibold">Pendaftaran PMB</a>
+                                <a href="{{ route('pmb.daftar') ?? '#' }}" class="footer-link fw-semibold">Pendaftaran PMB</a>
                             </li>
                         </ul>
                     </div>

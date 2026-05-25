@@ -24,11 +24,15 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Marquee::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-megaphone';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationLabel = 'Marquee Pengumuman';
+    protected static string|\UnitEnum|null $navigationGroup = 'Pengaturan';
 
-    protected static ?string $pluralModelLabel = 'Marquee Pengumuman';
+    protected static ?string $navigationLabel = 'Pengaturan Lainnya';
+
+    protected static ?string $pluralModelLabel = 'Pengaturan Lainnya';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static ?string $modelLabel = 'Marquee';
 

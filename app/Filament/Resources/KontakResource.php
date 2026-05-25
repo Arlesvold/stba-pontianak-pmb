@@ -25,6 +25,8 @@ class KontakResource extends Resource
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-phone';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Website Profile';
+
     protected static ?string $navigationLabel = 'Kontak';
 
     protected static ?string $modelLabel = 'Kontak';

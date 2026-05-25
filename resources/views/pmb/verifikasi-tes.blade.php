@@ -1,156 +1,515 @@
 @extends('layouts.pmb-dashboard')
 
-@section('title', 'Verifikasi & Tes - PMB STBA Pontianak')
+@section('title', 'Status Pendaftaran - PMB STBA Pontianak')
+
+@push('styles')
+<style>
+    /* ---- Progress tracker ---- */
+    .tracker {
+        display: flex;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0.5rem 0;
+    }
+
+    .tracker-step {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        text-align: center;
+    }
+
+    .tracker-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: calc(50% + 16px);
+        right: calc(-50% + 16px);
+        height: 2px;
+        background: #e5e7eb;
+        z-index: 0;
+    }
+
+    .tracker-step.done:not(:last-child)::after,
+    .tracker-step.active:not(:last-child)::after {
+        background: var(--primary-maroon);
+    }
+
+    .tracker-step.done:not(:last-child)::after {
+        background: var(--primary-maroon);
+    }
+
+    /* only color line after "done" steps */
+    .tracker-step.pending:not(:last-child)::after {
+        background: #e5e7eb;
+    }
+
+    .tracker-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        z-index: 1;
+        position: relative;
+        transition: all 0.2s;
+    }
+
+    .tracker-step.done .tracker-circle {
+        background: var(--primary-maroon);
+        color: #fff;
+        border: 2px solid var(--primary-maroon);
+    }
+
+    .tracker-step.active .tracker-circle {
+        background: #fff;
+        color: var(--primary-maroon);
+        border: 2px solid var(--primary-maroon);
+        box-shadow: 0 0 0 4px rgba(123, 30, 48, 0.1);
+    }
+
+    .tracker-step.pending .tracker-circle {
+        background: #f3f4f6;
+        color: #9ca3af;
+        border: 2px solid #e5e7eb;
+    }
+
+    .tracker-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .tracker-step.done .tracker-label,
+    .tracker-step.active .tracker-label {
+        color: var(--primary-maroon);
+    }
+
+    .tracker-step.pending .tracker-label {
+        color: #9ca3af;
+    }
+
+    /* ---- Status banner ---- */
+    .status-banner {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 1.125rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .status-banner.pending {
+        background: #fffbeb;
+        border: 1.5px solid #fde68a;
+    }
+
+    .status-banner.proses {
+        background: #eff6ff;
+        border: 1.5px solid #bfdbfe;
+    }
+
+    .status-banner.selesai {
+        background: #f0fdf4;
+        border: 1.5px solid #bbf7d0;
+    }
+
+    .status-banner .banner-icon {
+        font-size: 1.375rem;
+        flex-shrink: 0;
+        line-height: 1;
+    }
+
+    .status-banner.pending .banner-icon { color: #d97706; }
+    .status-banner.proses  .banner-icon { color: #2563eb; }
+    .status-banner.selesai .banner-icon { color: #16a34a; }
+
+    .status-banner .banner-title {
+        font-size: 0.9375rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+    }
+
+    .status-banner.pending .banner-title { color: #92400e; }
+    .status-banner.proses  .banner-title { color: #1e40af; }
+    .status-banner.selesai .banner-title { color: #15803d; }
+
+    .status-banner .banner-desc {
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        margin: 0;
+    }
+
+    .status-banner.pending .banner-desc { color: #78350f; }
+    .status-banner.proses  .banner-desc { color: #1e3a8a; }
+    .status-banner.selesai .banner-desc { color: #14532d; }
+
+    /* ---- Feedback box ---- */
+    .feedback-box {
+        background: #f9fafb;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 1rem 1.125rem;
+        margin-top: 1rem;
+    }
+
+    .feedback-box .fb-label {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: #374151;
+        margin-bottom: 0.625rem;
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+    }
+
+    .feedback-box .fb-label i {
+        color: var(--primary-maroon);
+    }
+
+    .feedback-box .fb-content {
+        font-size: 0.875rem;
+        color: #111827;
+        line-height: 1.6;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+    }
+
+    .feedback-box .fb-time {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 0.5rem;
+    }
+
+    /* ---- Summary list in sidebar ---- */
+    .summary-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .summary-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 0.8125rem;
+    }
+
+    .summary-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .summary-list .sl-label {
+        color: #6b7280;
+        flex-shrink: 0;
+    }
+
+    .summary-list .sl-value {
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+    }
+
+    /* ---- Contact button ---- */
+    .btn-wa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: #16a34a;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        width: 100%;
+        transition: background 0.2s;
+    }
+
+    .btn-wa:hover {
+        background: #15803d;
+        color: #fff;
+    }
+
+    .btn-outline-doc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: #fff;
+        color: #374151;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 0.5625rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        width: 100%;
+        transition: border-color 0.15s, background 0.15s;
+        margin-top: 0.625rem;
+    }
+
+    .btn-outline-doc:hover {
+        border-color: var(--primary-maroon);
+        color: var(--primary-maroon);
+        background: rgba(123, 30, 48, 0.03);
+    }
+</style>
+@endpush
 
 @section('content')
+
+    {{-- Page header --}}
     <div class="mb-4">
-        <h1 class="h3 fw-bold mb-2 text-dark">Status Pendaftaran</h1>
-        <p class="text-muted">Pantau status verifikasi berkas dan jadwal tes seleksi Anda di sini.</p>
+        <h1 class="fw-bold mb-1" style="font-size: 1.25rem; color: #111827;">Status Pendaftaran</h1>
+        <p class="mb-0" style="font-size: 0.8125rem; color: #6b7280;">
+            Langkah 3 dari 3 &mdash; Pantau progres verifikasi berkas Anda di bawah ini.
+        </p>
     </div>
 
     @if (session('success'))
-        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-4">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+        <div class="status-banner selesai mb-4">
+            <i class="bi bi-check-circle-fill banner-icon"></i>
+            <div>
+                <div class="banner-title">Berhasil</div>
+                <p class="banner-desc">{{ session('success') }}</p>
+            </div>
         </div>
     @endif
 
-    {{-- Status Timeline --}}
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-body p-4">
-            <div class="position-relative m-4">
-                <div class="progress" style="height: 4px;">
-                    <div class="progress-bar bg-maroon" role="progressbar"
-                        style="width: {{ $registration->status == 'selesai' ? '100%' : ($registration->status == 'proses' ? '50%' : '0%') }};"
-                        aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <button type="button"
-                    class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-maroon rounded-pill fw-bold"
-                    style="width: 2rem; height:2rem;">1</button>
-                <button type="button"
-                    class="position-absolute top-0 start-50 translate-middle btn btn-sm {{ $registration->status == 'proses' || $registration->status == 'selesai' ? 'btn-maroon' : 'btn-secondary' }} rounded-pill fw-bold"
-                    style="width: 2rem; height:2rem;">2</button>
-                <button type="button"
-                    class="position-absolute top-0 start-100 translate-middle btn btn-sm {{ $registration->status == 'selesai' ? 'btn-maroon' : 'btn-secondary' }} rounded-pill fw-bold"
-                    style="width: 2rem; height:2rem;">3</button>
+    @if (session('success') && $waAdmin)
+        @php
+            $waMessage = urlencode(
+                "Halo Admin PMB STBA Pontianak, saya {$registration->nama_lengkap} baru saja mengunggah dokumen pendaftaran.\n\n"
+                . "Detail:\n"
+                . "Nama: {$registration->nama_lengkap}\n"
+                . "Program Studi: {$registration->program_studi}\n"
+                . "Sistem Kuliah: {$registration->sistem_kuliah}\n"
+                . "No. HP: {$registration->no_hp}\n\n"
+                . "Mohon segera ditindaklanjuti. Terima kasih."
+            );
+        @endphp
+        <div class="status-banner proses mb-4">
+            <i class="bi bi-whatsapp banner-icon" style="color: #16a34a;"></i>
+            <div style="flex: 1;">
+                <div class="banner-title" style="color: #15803d;">Beritahu Admin via WhatsApp</div>
+                <p class="banner-desc" style="color: #14532d; margin-bottom: 0.75rem;">
+                    Dokumen Anda sudah diterima. Kirim notifikasi ke admin PMB agar proses verifikasi lebih cepat.
+                </p>
+                <a href="https://wa.me/{{ $waAdmin }}?text={{ $waMessage }}"
+                   target="_blank"
+                   class="btn-wa"
+                   style="display: inline-flex; width: auto; padding: 0.5rem 1.25rem;">
+                    <i class="bi bi-whatsapp"></i> Kirim Notifikasi ke Admin
+                </a>
+            </div>
+        </div>
+    @endif
 
-                <div class="row mt-4 small fw-bold">
-                    <div class="col-4 text-start">Berkas Masuk</div>
-                    <div class="col-4 text-center">Verifikasi</div>
-                    <div class="col-4 text-end">Selesai</div>
+    {{-- ===== PROGRESS TRACKER ===== --}}
+    @php
+        $isDone   = $registration->status === 'selesai';
+        $isProses = $registration->status === 'proses';
+
+        $step1 = 'done';
+        $step2 = $isDone ? 'done' : ($isProses ? 'active' : 'pending');
+        $step3 = $isDone ? 'active' : 'pending';
+    @endphp
+
+    <div class="section-card card mb-4">
+        <div class="section-body">
+            <div class="tracker">
+                <div class="tracker-step {{ $step1 }}">
+                    <div class="tracker-circle">
+                        <i class="bi bi-check-lg" style="font-size: 0.875rem;"></i>
+                    </div>
+                    <div class="tracker-label">Berkas Masuk</div>
+                </div>
+
+                <div class="tracker-step {{ $step2 }}">
+                    <div class="tracker-circle">
+                        @if ($isDone)
+                            <i class="bi bi-check-lg" style="font-size: 0.875rem;"></i>
+                        @else
+                            2
+                        @endif
+                    </div>
+                    <div class="tracker-label">Verifikasi</div>
+                </div>
+
+                <div class="tracker-step {{ $step3 }}">
+                    <div class="tracker-circle">
+                        @if ($isDone)
+                            <i class="bi bi-check-lg" style="font-size: 0.875rem;"></i>
+                        @else
+                            3
+                        @endif
+                    </div>
+                    <div class="tracker-label">Selesai</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row g-4 align-items-start">
+
+        {{-- ===== MAIN STATUS DETAIL ===== --}}
         <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-4 mb-4 h-100">
-                <div class="card-header bg-white border-bottom-0 pt-4 px-4">
-                    <h5 class="card-title fw-bold text-dark mb-0">
-                        <i class="bi bi-info-circle me-2" style="color: var(--primary-maroon);"></i>
-                        Detail Status:
-                        @if ($registration->status == 'pending')
-                            <span class="badge bg-warning text-dark">Pending</span>
-                        @elseif($registration->status == 'proses')
-                            <span class="badge bg-info text-dark">Dalam Proses</span>
-                        @elseif($registration->status == 'selesai')
-                            <span class="badge bg-success">Selesai</span>
+            <div class="section-card card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="s-icon"><i class="bi bi-info-circle-fill"></i></span>
+                        Detail Status
+                        @if ($registration->status === 'pending')
+                            <span style="font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.625rem; border-radius: 9999px; background: #fef3c7; color: #92400e; margin-left: 0.25rem;">Menunggu</span>
+                        @elseif ($registration->status === 'proses')
+                            <span style="font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.625rem; border-radius: 9999px; background: #dbeafe; color: #1e40af; margin-left: 0.25rem;">Dalam Proses</span>
+                        @elseif ($registration->status === 'selesai')
+                            <span style="font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.625rem; border-radius: 9999px; background: #dcfce7; color: #15803d; margin-left: 0.25rem;">Selesai</span>
                         @endif
-                    </h5>
+                    </h2>
                 </div>
-                <div class="card-body px-4 pb-4">
-                    @if ($registration->status == 'pending')
-                        <div class="alert alert-warning border-0 d-flex align-items-center" role="alert">
-                            <i class="bi bi-hourglass-split fs-4 me-3"></i>
+                <div class="section-body">
+
+                    @if ($registration->status === 'pending')
+                        <div class="status-banner pending">
+                            <i class="bi bi-hourglass-split banner-icon"></i>
                             <div>
-                                <strong>Menunggu Verifikasi Admin</strong>
-                                <p class="mb-0 small">Berkas Anda sudah kami terima dan sedang dalam antrean verifikasi.
-                                    Mohon menunggu 1-2 hari kerja.</p>
+                                <div class="banner-title">Menunggu Verifikasi Admin</div>
+                                <p class="banner-desc">
+                                    Berkas Anda sudah kami terima dan sedang dalam antrean verifikasi.
+                                    Mohon menunggu <strong>1&ndash;2 hari kerja</strong>.
+                                </p>
                             </div>
                         </div>
-                        <p class="text-muted small">Tim PMB akan mengecek kelengkapan dokumen (Ijazah, Rapor, Foto, dll).
+                        <p style="font-size: 0.8125rem; color: #6b7280; margin: 0;">
+                            Tim PMB akan mengecek kelengkapan seluruh dokumen yang Anda unggah.
+                            Anda akan dihubungi jika ada kekurangan.
                         </p>
-                    @elseif($registration->status == 'proses')
-                        <div class="alert alert-info border-0 d-flex align-items-center" role="alert">
-                            <i class="bi bi-gear-wide-connected fs-4 me-3"></i>
+
+                    @elseif ($registration->status === 'proses')
+                        <div class="status-banner proses">
+                            <i class="bi bi-gear-wide-connected banner-icon"></i>
                             <div>
-                                <strong>Sedang Diverifikasi</strong>
-                                <p class="mb-0 small">Berkas sedang diperiksa oleh panitia. Pastikan nomor HP/Email Anda
-                                    aktif jika kami perlu menghubungi Anda.</p>
+                                <div class="banner-title">Sedang Diverifikasi</div>
+                                <p class="banner-desc">
+                                    Berkas sedang diperiksa oleh panitia PMB.
+                                    Pastikan nomor HP dan email Anda aktif agar kami dapat menghubungi Anda.
+                                </p>
                             </div>
                         </div>
-                    @elseif($registration->status == 'selesai')
-                        <div class="alert alert-success border-0 d-flex align-items-center" role="alert">
-                            <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+
+                    @elseif ($registration->status === 'selesai')
+                        <div class="status-banner selesai">
+                            <i class="bi bi-check-circle-fill banner-icon"></i>
                             <div>
-                                <strong>Verifikasi Selesai</strong>
-                                <p class="mb-0 small">Berkas Anda valid. Silakan tunggu informasi selanjutnya melalui
-                                    WhatsApp.</p>
+                                <div class="banner-title">Verifikasi Selesai</div>
+                                <p class="banner-desc">
+                                    Berkas Anda telah terverifikasi dan dinyatakan valid.
+                                    Silakan tunggu informasi selanjutnya melalui WhatsApp atau email Anda.
+                                </p>
                             </div>
                         </div>
                     @endif
 
                     {{-- Feedback dari Admin --}}
                     @if ($registration->feedback)
-                        <div class="card mt-4 border-0 bg-light">
-                            <div class="card-body">
-                                <h6 class="fw-bold mb-2">
-                                    <i class="bi bi-chat-left-text me-2" style="color: var(--primary-maroon);"></i>
-                                    Feedback dari Admin
-                                </h6>
-                                <div class="p-3 bg-white rounded-3 border">
-                                    <p class="mb-0">{{ $registration->feedback }}</p>
-                                </div>
-                                <small class="text-muted mt-2 d-block">
-                                    <i class="bi bi-clock me-1"></i>
-                                    Diperbarui: {{ $registration->updated_at->format('d M Y, H:i') }}
-                                </small>
+                        <div class="feedback-box">
+                            <div class="fb-label">
+                                <i class="bi bi-chat-left-quote-fill"></i>
+                                Catatan dari Admin
+                            </div>
+                            <div class="fb-content">{{ $registration->feedback }}</div>
+                            <div class="fb-time">
+                                <i class="bi bi-clock me-1"></i>
+                                Diperbarui: {{ $registration->updated_at->format('d M Y, H:i') }} WIB
                             </div>
                         </div>
                     @endif
+
                 </div>
             </div>
         </div>
 
+        {{-- ===== SIDEBAR ===== --}}
         <div class="col-lg-4">
-            {{-- Summary Card --}}
-            <div class="card border-0 shadow-sm rounded-4 mb-3">
-                <div class="card-body p-4">
-                    <h6 class="fw-bold mb-3">Data Pendaftar</h6>
-                    <ul class="list-unstyled small mb-0 spacing-y-2">
-                        <li class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Nama:</span>
-                            <span class="fw-bold text-end">{{ $registration->nama_lengkap }}</span>
+
+            {{-- Data ringkasan --}}
+            <div class="section-card card" style="position: sticky; top: 90px;">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="s-icon"><i class="bi bi-person-fill"></i></span>
+                        Data Pendaftar
+                    </h2>
+                </div>
+                <div class="section-body">
+                    <ul class="summary-list">
+                        <li>
+                            <span class="sl-label">Nama</span>
+                            <span class="sl-value">{{ $registration->nama_lengkap }}</span>
                         </li>
-                        <li class="d-flex justify-content-between mb-2">
-                            <span class="text-muted">Prodi:</span>
-                            <span class="fw-bold text-end">{{ $registration->program_studi }}</span>
+                        <li>
+                            <span class="sl-label">Program Studi</span>
+                            <span class="sl-value">{{ $registration->program_studi }}</span>
                         </li>
-                        <li class="d-flex justify-content-between">
-                            <span class="text-muted">Tanggal Daftar:</span>
-                            <span class="fw-bold text-end">{{ $registration->created_at->format('d M Y') }}</span>
+                        <li>
+                            <span class="sl-label">Sistem Kuliah</span>
+                            <span class="sl-value">{{ $registration->sistem_kuliah }}</span>
+                        </li>
+                        <li>
+                            <span class="sl-label">Tanggal Daftar</span>
+                            <span class="sl-value">{{ $registration->created_at->format('d M Y') }}</span>
                         </li>
                     </ul>
-                    <hr>
-                    <div class="d-grid">
-                        <a href="{{ route('pmb.unggah-dokumen') }}" class="btn btn-outline-secondary btn-sm">
-                            <i class="bi bi-eye me-2"></i>Lihat Dokumen
+
+                    <div class="mt-3">
+                        <a href="{{ route('pmb.unggah-dokumen') }}" class="btn-outline-doc">
+                            <i class="bi bi-folder2-open"></i> Lihat Dokumen Saya
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-header bg-white border-bottom-0 pt-4 px-4">
-                    <h6 class="fw-bold mb-0">Bantuan ?</h6>
+            {{-- Bantuan --}}
+            <div class="section-card card">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="s-icon"><i class="bi bi-headset"></i></span>
+                        Butuh Bantuan?
+                    </h2>
                 </div>
-                <div class="card-body px-4 pb-4">
-                    <p class="small text-muted mb-3">Jika butuh bantuan, hubungi panitia PMB:</p>
-                    <a href="#" class="btn btn-success btn-sm w-100 mb-2">
-                        <i class="bi bi-whatsapp me-2"></i>Hubungi via WhatsApp
-                    </a>
+                <div class="section-body">
+                    <p style="font-size: 0.8125rem; color: #6b7280; margin-bottom: 0.875rem;">
+                        Hubungi panitia PMB jika ada pertanyaan seputar proses pendaftaran Anda.
+                    </p>
+                    @if ($waAdmin)
+                        <a href="https://wa.me/{{ $waAdmin }}" target="_blank" class="btn-wa">
+                            <i class="bi bi-whatsapp" style="font-size: 1rem;"></i>
+                            Hubungi via WhatsApp
+                        </a>
+                    @else
+                        <p style="font-size: 0.8125rem; color: #9ca3af; margin: 0;">
+                            Nomor WhatsApp admin belum dikonfigurasi.
+                        </p>
+                    @endif
                 </div>
             </div>
+
         </div>
     </div>
+
 @endsection

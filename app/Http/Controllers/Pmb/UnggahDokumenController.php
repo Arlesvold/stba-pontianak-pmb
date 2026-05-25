@@ -7,7 +7,6 @@ use App\Mail\PmbSubmissionMail;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -38,8 +37,18 @@ class UnggahDokumenController extends Controller
             ? 'nullable|image|mimes:jpg,jpeg,png|max:1024'
             : 'required|image|mimes:jpg,jpeg,png|max:1024';
 
+        $kkRule = $registration->kk_path
+            ? 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4096'
+            : 'required|file|mimes:jpg,jpeg,png,pdf|max:4096';
+
+        $transkripRule = $registration->transkrip_path
+            ? 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4096'
+            : 'required|file|mimes:jpg,jpeg,png,pdf|max:4096';
+
         $request->validate([
             'ijazah_rapor' => $ijazahRule,
+            'kk'           => $kkRule,
+            'transkrip_nilai' => $transkripRule,
             'pas_foto'     => $fotoRule,
         ]);
 
@@ -48,6 +57,16 @@ class UnggahDokumenController extends Controller
         if ($request->hasFile('ijazah_rapor')) {
             $updates['ijazah_path'] = $request->file('ijazah_rapor')
                 ->store('documents/ijazah', 'public');
+        }
+
+        if ($request->hasFile('kk')) {
+            $updates['kk_path'] = $request->file('kk')
+                ->store('documents/kk', 'public');
+        }
+
+        if ($request->hasFile('transkrip_nilai')) {
+            $updates['transkrip_path'] = $request->file('transkrip_nilai')
+                ->store('documents/transkrip', 'public');
         }
 
         if ($request->hasFile('pas_foto')) {
@@ -64,43 +83,10 @@ class UnggahDokumenController extends Controller
          */
         try {
             if ($registration->email) {
-                Mail::to($registration->email)->queue(new PmbSubmissionMail($registration));
+               Mail::to($registration->email)->queue(new PmbSubmissionMail($registration));
             }
         } catch (\Exception $e) {
             Log::error('Email PMB gagal: ' . $e->getMessage());
-        }
-
-        /**
-         * WhatsApp Confirmation (Fonnte)
-         */
-        try {
-
-            if ($registration->no_hp) {
-
-                $message = "Halo *{$registration->nama_lengkap}*, pendaftaran PMB STBA Pontianak berhasil diterima.\n\n"
-                    . "Detail Pendaftaran:\n"
-                    . "Nama : {$registration->nama_lengkap}\n"
-                    . "NIK : {$registration->nik}\n"
-                    . "Program Studi : {$registration->program_studi}\n"
-                    . "Sistem Kuliah : {$registration->sistem_kuliah}\n"
-                    . "Sekolah Asal : {$registration->sekolah_asal}\n"
-                    . "Email : {$registration->email}\n"
-                    . "No HP : {$registration->no_hp}\n\n"
-                    . "Terima kasih.";
-
-                Http::timeout(5)
-                    ->asForm()
-                    ->withHeaders([
-                        'Authorization' => \App\Models\Setting::get('FONNTE_API_TOKEN')
-                    ])
-                    ->post('https://api.fonnte.com/send', [
-                        'target' => $registration->no_hp,
-                        'message' => $message,
-                        'countryCode' => '62'
-                    ]);
-            }
-        } catch (\Exception $e) {
-            Log::error('WhatsApp PMB gagal: ' . $e->getMessage());
         }
 
         return redirect()
