@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -30,20 +31,24 @@ class PengaturanUmum extends Page
 
     public function mount(): void
     {
-        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image', 'login_image'];
+        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image', 'login_image', 'navbar_portal_links'];
         $settings = Setting::whereIn('key', $keys)->pluck('value', 'key');
 
+        $portalRaw = $settings->get('navbar_portal_links');
+        $portalLinks = $portalRaw ? json_decode($portalRaw, true) : [];
+
         $this->form->fill([
-            'wa_admin'            => $settings->get('wa_admin', ''),
-            'hero_badge_label'    => $settings->get('hero_badge_label', ''),
-            'hero_tahun_akademik' => $settings->get('hero_tahun_akademik', ''),
-            'hero_title'          => $settings->get('hero_title', ''),
-            'hero_subtitle'       => $settings->get('hero_subtitle', ''),
-            'hero_image'          => $settings->get('hero_image') ?: null,
-            'cta_title'           => $settings->get('cta_title', ''),
-            'cta_subtitle'        => $settings->get('cta_subtitle', ''),
-            'cta_image'           => $settings->get('cta_image') ?: null,
-            'login_image'         => $settings->get('login_image') ?: null,
+            'wa_admin'             => $settings->get('wa_admin', ''),
+            'hero_badge_label'     => $settings->get('hero_badge_label', ''),
+            'hero_tahun_akademik'  => $settings->get('hero_tahun_akademik', ''),
+            'hero_title'           => $settings->get('hero_title', ''),
+            'hero_subtitle'        => $settings->get('hero_subtitle', ''),
+            'hero_image'           => $settings->get('hero_image') ?: null,
+            'cta_title'            => $settings->get('cta_title', ''),
+            'cta_subtitle'         => $settings->get('cta_subtitle', ''),
+            'cta_image'            => $settings->get('cta_image') ?: null,
+            'login_image'          => $settings->get('login_image') ?: null,
+            'navbar_portal_links'  => $portalLinks,
         ]);
     }
 
@@ -137,6 +142,28 @@ class PengaturanUmum extends Page
                             ->placeholder('Mari wujudkan masa depan gemilang Anda bersama kami di STBA Pontianak.')
                             ->rows(2),
                     ]),
+
+                Section::make('Portal & Tautan Eksternal')
+                    ->description('Tautan subdomain atau sistem STBA Pontianak yang muncul di navbar. Kosongkan jika tidak ingin menampilkan menu Portal.')
+                    ->schema([
+                        Repeater::make('navbar_portal_links')
+                            ->label('')
+                            ->schema([
+                                TextInput::make('label')
+                                    ->label('Nama Tautan')
+                                    ->required()
+                                    ->placeholder('SIAKAD'),
+                                TextInput::make('url')
+                                    ->label('URL')
+                                    ->required()
+                                    ->url()
+                                    ->placeholder('https://siakad.stbapontianak.ac.id'),
+                            ])
+                            ->columns(2)
+                            ->addActionLabel('Tambah Tautan')
+                            ->reorderable()
+                            ->defaultItems(0),
+                    ]),
             ]);
     }
 
@@ -161,10 +188,14 @@ class PengaturanUmum extends Page
             }
         }
 
-        cache()->forget('login_image');
+        // portal links — encode as JSON
+        $portalLinks = $data['navbar_portal_links'] ?? [];
+        Setting::updateOrCreate(['key' => 'navbar_portal_links'], ['value' => json_encode(array_values($portalLinks))]);
 
+        cache()->forget('login_image');
         cache()->forget('wa_admin');
         cache()->forget('hero_settings');
+        cache()->forget('navbar_portal_links');
 
         Notification::make()
             ->title('Pengaturan berhasil disimpan.')

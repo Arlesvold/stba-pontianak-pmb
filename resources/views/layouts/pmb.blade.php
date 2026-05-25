@@ -37,19 +37,78 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
-        .navbar-brand img {
-            height: 54px;
-        }
-
         .navbar-nav .nav-link {
             font-weight: 500;
+            font-size: 0.9rem;
             color: #343a40;
+            position: relative;
+            padding-bottom: 0.4rem;
+            transition: color 0.15s ease;
         }
 
         .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link:focus,
+        .navbar-nav .nav-link:focus {
+            color: var(--primary-maroon);
+        }
+
         .navbar-nav .nav-link.active {
             color: var(--primary-maroon);
+            font-weight: 600;
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav .nav-link.active::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0.5rem;
+                right: 0.5rem;
+                height: 2px;
+                background-color: var(--primary-maroon);
+                border-radius: 2px;
+            }
+        }
+
+        .navbar-custom .dropdown-menu {
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 0.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 0.4rem;
+            min-width: 210px;
+        }
+
+        .navbar-custom .dropdown-item {
+            border-radius: 0.375rem;
+            padding: 0.45rem 0.75rem;
+            font-size: 0.875rem;
+            color: #343a40;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-custom .dropdown-item:hover,
+        .navbar-custom .dropdown-item:focus {
+            background-color: #fef2f4;
+            color: var(--primary-maroon);
+        }
+
+        .navbar-custom .dropdown-item i {
+            width: 1rem;
+            opacity: 0.65;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .navbar-custom .dropdown-divider {
+            border-color: #f0f0f0;
+        }
+
+        .nav-cta-divider {
+            border-left: 1px solid #e9ecef;
+            height: 1.5rem;
+            align-self: center;
+            margin: 0 0.25rem;
         }
 
         .announcement-bar {
@@ -248,72 +307,119 @@
         {{-- Navbar utama (STICKY) --}}
         <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+
+                {{-- Brand --}}
+                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url('/') }}">
                     <picture>
                         <source srcset="{{ asset('images/logo-stba.webp') }}" type="image/webp">
-                        <img src="{{ asset('images/logo-stba.png') }}"
-                             alt="Logo STBA Pontianak"
-                             height="54"
-                             decoding="async">
+                        <img src="{{ asset('images/logo-stba.png') }}" alt="Logo STBA Pontianak" height="46" decoding="async">
                     </picture>
-
-                    <span class="ms-2 fw-semibold text-muted d-none d-sm-inline">
-                        STBA Pontianak
+                    <span class="fw-bold d-none d-sm-inline" style="color: #212529; font-size: 0.95rem; line-height: 1.2;">
+                        STBA<br>
+                        <span style="color: var(--primary-maroon); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;">Pontianak</span>
                     </span>
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-1">
+
+                        {{-- Beranda --}}
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}"
                                 href="{{ route('beranda') }}">Beranda</a>
                         </li>
+
+                        {{-- Program Studi --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle
-                               {{ request()->routeIs('prodi.d3') || request()->routeIs('prodi.s1') ? 'active' : '' }}"
-                                href="#" id="prodiDropdown" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Program Studi
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="prodiDropdown">
-                                <li><a class="dropdown-item" href="{{ route('prodi.d3') }}">Diploma (D3) Bahasa
-                                        Inggris</a></li>
-                                <li><a class="dropdown-item" href="{{ route('prodi.s1') }}">Sarjana (S1) Sastra
-                                        Inggris</a></li>
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('prodi.*') ? 'active' : '' }}"
+                                href="#" data-bs-toggle="dropdown" aria-expanded="false">Program Studi</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('prodi.d3') }}">
+                                        <i class="bi bi-mortarboard"></i> Diploma (D3) Bahasa Inggris
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('prodi.s1') }}">
+                                        <i class="bi bi-mortarboard-fill"></i> Sarjana (S1) Sastra Inggris
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+
+                        {{-- Berita --}}
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('berita.index') ? 'active' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('berita.*') ? 'active' : '' }}"
                                 href="{{ route('berita.index') }}">Berita</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('events.index') ? 'active' : '' }}"
-                                href="{{ route('events.index') }}">Event</a>
+
+                        {{-- Informasi --}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('events.*', 'agenda.*', 'staf.*', 'dokumen.*', 'kontak') ? 'active' : '' }}"
+                                href="#" data-bs-toggle="dropdown" aria-expanded="false">Informasi</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('events.index') }}">
+                                        <i class="bi bi-calendar-event"></i> Event
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('agenda.index') }}">
+                                        <i class="bi bi-calendar3"></i> Agenda
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider mx-2 my-1"></li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('staf.index') }}">
+                                        <i class="bi bi-people"></i> Staf & Dosen
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('dokumen.index') }}">
+                                        <i class="bi bi-file-earmark-text"></i> Dokumen
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('kontak') }}">
+                                        <i class="bi bi-telephone"></i> Kontak
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('agenda.index') ? 'active' : '' }}"
-                                href="{{ route('agenda.index') }}">Agenda</a>
+
+                        {{-- Portal (subdomain links — hanya tampil jika ada data) --}}
+                        @php
+                            $portalLinks = cache()->remember('navbar_portal_links', 3600, function () {
+                                $val = \App\Models\Setting::where('key', 'navbar_portal_links')->value('value');
+                                return $val ? json_decode($val, true) : [];
+                            });
+                        @endphp
+                        @if (!empty($portalLinks))
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Portal</a>
+                                <ul class="dropdown-menu">
+                                    @foreach ($portalLinks as $link)
+                                        <li>
+                                            <a class="dropdown-item" href="{{ $link['url'] }}" target="_blank" rel="noopener noreferrer">
+                                                <i class="bi bi-box-arrow-up-right"></i> {{ $link['label'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endif
+
+                        {{-- Divider + CTA --}}
+                        <li class="d-none d-lg-flex nav-cta-divider"></li>
+                        <li class="nav-item mt-2 mt-lg-0">
+                            <a class="btn btn-maroon btn-sm px-3" href="{{ route('pmb.daftar') }}">Daftar Sekarang</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('kontak') ? 'active' : '' }}"
-                                href="{{ route('kontak') }}">Kontak</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('staf.index') ? 'active' : '' }}"
-                                href="{{ route('staf.index') }}">Staf</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('dokumen.index') ? 'active' : '' }}"
-                                href="{{ route('dokumen.index') }}">Dokumen</a>
-                        </li>
-                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                            <a class="btn btn-maroon btn-sm" href="{{ route('pmb.daftar') }}">Daftar Sekarang</a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
