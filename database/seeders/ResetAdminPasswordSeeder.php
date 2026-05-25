@@ -13,9 +13,9 @@ class ResetAdminPasswordSeeder extends Seeder
     {
         $user = User::where('email', 'admin@stbapontianak.ac.id')->first();
         if ($user) {
-            $user->password = Hash::make('password');
+            $user->password = Hash::make('sintang2026');
             $user->save();
-            $this->command->info('Password has been reset to: password');
+            $this->command->info('Password has been reset to: sintang2026');
 
             // Ensure roles match just in case
             $user->assignRole('admin');
