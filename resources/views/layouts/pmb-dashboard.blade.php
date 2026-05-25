@@ -13,6 +13,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    @stack('styles')
 
     <style>
         :root {
@@ -257,6 +258,134 @@
             50% {
                 opacity: 1;
             }
+        }
+
+        /* ===== Shared PMB page styles ===== */
+        .form-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.35rem;
+            letter-spacing: 0.01em;
+        }
+
+        .section-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
+            margin-bottom: 1.25rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1rem 1.375rem;
+            border-bottom: 1px solid #f3f4f6;
+            background: #fff;
+        }
+
+        .section-title {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .section-title .s-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            background: rgba(123, 30, 48, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-maroon);
+            font-size: 0.8125rem;
+            flex-shrink: 0;
+        }
+
+        .section-body {
+            padding: 1.25rem 1.375rem 1.375rem;
+            background: #fff;
+        }
+
+        .form-control,
+        .form-select {
+            font-size: 0.875rem;
+            border-color: #e5e7eb;
+            border-radius: 8px;
+            padding: 0.5625rem 0.875rem;
+            color: #111827;
+            background-color: #fff;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-maroon);
+            box-shadow: 0 0 0 3px rgba(123, 30, 48, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .field-error {
+            font-size: 0.8125rem;
+            color: #dc2626;
+            margin-top: 0.3rem;
+        }
+
+        .submit-bar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1rem 1.375rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .submit-bar .hint {
+            font-size: 0.8125rem;
+            color: #6b7280;
+        }
+
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: var(--primary-maroon);
+            color: #fff;
+            border: none;
+            padding: 0.6875rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .btn-submit:hover:not([disabled]) {
+            background: var(--primary-maroon-dark);
+            color: #fff;
+        }
+
+        .btn-submit[disabled],
+        .btn-submit:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
         }
     </style>
 </head>

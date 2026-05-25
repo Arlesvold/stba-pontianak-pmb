@@ -7,7 +7,6 @@ use App\Mail\PmbSubmissionMail;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -88,40 +87,6 @@ class UnggahDokumenController extends Controller
             }
         } catch (\Exception $e) {
             Log::error('Email PMB gagal: ' . $e->getMessage());
-        }
-
-        /**
-         * WhatsApp Confirmation (Fonnte)
-         */
-        try {
-
-            if ($registration->no_hp) {
-
-                $message = "Halo *{$registration->nama_lengkap}*, pendaftaran PMB STBA Pontianak berhasil diterima.\n\n"
-                    . "Detail Pendaftaran:\n"
-                    . "Nama : {$registration->nama_lengkap}\n"
-                    . "NIK : {$registration->nik}\n"
-                    . "Program Studi : {$registration->program_studi}\n"
-                    . "Sistem Kuliah : {$registration->sistem_kuliah}\n"
-                    . "Sekolah Asal : {$registration->sekolah_asal}\n"
-                    . "Email : {$registration->email}\n"
-                    . "No HP : {$registration->no_hp}\n\n"
-                    . "Terima kasih.";
-
-                Http::timeout(5)
-                    ->asForm()
-                    ->withHeaders([
-                        'Authorization' => config('services.fonnte.token')
-                    ])
-                    ->post('https://api.fonnte.com/send', [
-                        'target' => $registration->no_hp,
-                        'message' => $message,
-                        'countryCode' => '62'
-                    ]);
-            }
-
-        } catch (\Exception $e) {
-            Log::error('WhatsApp PMB gagal: ' . $e->getMessage());
         }
 
         return redirect()

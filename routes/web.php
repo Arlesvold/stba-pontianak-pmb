@@ -141,7 +141,11 @@ Route::middleware(['auth'])->group(function () {
             return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
         }
 
-        return view('pmb.verifikasi-tes', compact('registration'));
+        $waAdmin = cache()->remember('wa_admin', 3600, function () {
+            return \App\Models\Setting::where('key', 'wa_admin')->value('value') ?? '';
+        });
+
+        return view('pmb.verifikasi-tes', compact('registration', 'waAdmin'));
     })->name('pmb.verifikasi-tes');
 });
 
