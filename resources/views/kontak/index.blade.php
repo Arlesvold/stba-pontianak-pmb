@@ -4,6 +4,7 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/pages/pmb_kontak.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 @endpush
 
 @section('content')
@@ -34,7 +35,7 @@
             <div class="row g-4 mb-5">
                 <div class="col-lg-5">
                     <div style="background: var(--maroon-deep); color: var(--paper); padding: 40px; height: 100%;">
-                        <div class="mono mb-4" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);">&#8627; Kantor Pusat</div>
+                        <div class="mono mb-4" style="font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);">Kantor Pusat</div>
                         <h3 class="h-display mb-4" style="font-size: 1.5rem; color: var(--paper);">STBA Pontianak</h3>
                         <p style="color: rgba(250,245,236,0.72); line-height: 1.75; font-size: 0.9rem; margin-bottom: 24px;">
                             Jl. Gajahmada No. 38<br>
@@ -54,19 +55,14 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <div style="background: var(--paper-2); border: 1px solid var(--rule); height: 100%; min-height: 280px; display: grid; place-items: center; position: relative; overflow: hidden;">
-                        <div style="text-align: center; color: var(--muted);">
-                            <i class="bi bi-geo-alt" style="font-size: 2.5rem; color: var(--maroon); margin-bottom: 12px; display: block;"></i>
-                            <div class="mono" style="font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);">Jl. Gajahmada No. 38, Pontianak</div>
-                        </div>
-                    </div>
+                    <div id="map-stba" style="height: 100%; min-height: 320px; border: 1px solid var(--rule);"></div>
                 </div>
             </div>
 
             {{-- Narahubung --}}
             <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1.5px solid var(--ink);">
                 <div>
-                    <div class="section-num mb-2">&#8627; Narahubung</div>
+                    <div class="eyebrow mb-2">Narahubung</div>
                     <h2 class="h-display" style="font-size: 1.8rem; margin-bottom: 0;">Tim layanan STBA Pontianak</h2>
                 </div>
                 <span class="mono d-none d-md-inline" style="font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">Respon rata-rata 2 jam</span>
@@ -122,4 +118,26 @@
     </section>
 
 </div>
+
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    (function () {
+        var lat = -0.03053497954046026;
+        var lng = 109.33981050022429;
+        var map = L.map('map-stba', { scrollWheelZoom: false }).setView([lat, lng], 18);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            maxZoom: 19
+        }).addTo(map);
+
+        var marker = L.marker([lat, lng]).addTo(map);
+        marker.bindPopup(
+            '<b style="font-family: serif; font-size: 13px;">STBA Pontianak</b>' +
+            '<br><span style="font-size: 11px; color: #666;">Jl. Gajahmada No. 38, Pontianak</span>'
+        ).openPopup();
+    })();
+</script>
+@endpush
 @endsection
