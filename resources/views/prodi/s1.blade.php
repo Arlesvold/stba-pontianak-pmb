@@ -1,109 +1,130 @@
-{{-- resources/views/prodi/s1.blade.php --}}
 @extends('layouts.pmb')
 
-@section('title', 'Program Studi Sarjana (S1)')
+@section('title', $prodi->nama . ' - STBA Pontianak')
 
 @section('content')
-    <div class="container py-5">
-        {{-- Judul --}}
-        <h1 class="h3 mb-3" style="color: var(--primary-maroon);">
-            Sarjana (S1) Sastra Inggris
-        </h1>
-        <p class="text-muted small mb-4">
-            Program akademik yang memadukan kajian bahasa, sastra, dan budaya Inggris dengan keterampilan abad 21,
-            sehingga lulusan siap berkarya di dunia pendidikan, media, bisnis, dan bidang profesional lainnya.
-        </p>
 
-        {{-- Visi --}}
-        <h2 class="h5 mt-4 mb-2">Visi</h2>
-        <p class="small">
-            Menjadi program studi yang unggul dalam pengembangan keilmuan bahasa dan sastra Inggris,
-            berdaya saing nasional dan regional, serta berkontribusi pada pembangunan masyarakat yang berwawasan global.
-        </p>
+{{-- Page Header --}}
+<div style="background: linear-gradient(135deg, #fef2f4 0%, #f7d9df 100%); border-bottom: 1px solid #f0c6d0;">
+    <div class="container py-4">
+        <nav aria-label="breadcrumb" class="mb-2">
+            <ol class="breadcrumb small mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('beranda') }}" class="text-decoration-none" style="color: var(--primary-maroon);">Beranda</a>
+                </li>
+                <li class="breadcrumb-item">Program Studi</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $prodi->jenjang }}</li>
+            </ol>
+        </nav>
+        <h1 class="fw-bold mb-1" style="color: var(--primary-maroon); font-size: 1.75rem;">{{ $prodi->nama }}</h1>
+        @if ($prodi->deskripsi)
+            <p class="text-muted mb-0 small">{{ \Illuminate\Support\Str::limit($prodi->deskripsi, 120) }}</p>
+        @endif
+    </div>
+</div>
 
-        {{-- Misi --}}
-        <h2 class="h5 mt-4 mb-2">Misi</h2>
-        <ul class="small">
-            <li>Menyelenggarakan pendidikan tinggi di bidang bahasa dan sastra Inggris yang bermutu dan berorientasi pada
-                kebutuhan masa depan.</li>
-            <li>Mengembangkan kemampuan berpikir kritis, analitis, dan kreatif melalui kajian linguistik, sastra, dan
-                budaya.</li>
-            <li>Mendorong penelitian dan publikasi ilmiah dosen dan mahasiswa di bidang bahasa, sastra, dan pengajarannya.
-            </li>
-            <li>Mengadakan kegiatan pengabdian kepada masyarakat berbasis keilmuan bahasa dan sastra Inggris.</li>
-        </ul>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
 
-        {{-- Tujuan --}}
-        <h2 class="h5 mt-4 mb-2">Tujuan</h2>
-        <ul class="small">
-            <li>Menghasilkan lulusan yang menguasai teori dan praktik bahasa Inggris secara lisan maupun tulisan.</li>
-            <li>Menghasilkan sarjana yang memiliki kepekaan budaya, integritas, dan etika profesional.</li>
-            <li>Menyiapkan lulusan yang kompeten sebagai pendidik, peneliti, penulis, penerjemah, dan praktisi bahasa
-                lainnya.</li>
-        </ul>
+            @if ($prodi->deskripsi)
+                <p class="text-muted mb-5" style="line-height: 1.8;">{{ $prodi->deskripsi }}</p>
+            @endif
 
-        {{-- Peminatan / Konsentrasi --}}
-        <h2 class="h5 mt-4 mb-2">Peminatan Studi</h2>
-        <p class="small mb-1">
-            Untuk mengakomodasi minat dan rencana karier mahasiswa, Program Studi S1 menyediakan beberapa bidang peminatan:
-        </p>
-        <ul class="small">
-            <li>
-                <strong>Linguistik Terapan</strong><br>
-                Menekankan kajian struktur bahasa, analisis wacana, dan penerapan linguistik dalam pengajaran,
-                penerjemahan, dan komunikasi profesional.
-            </li>
-            <li class="mt-2">
-                <strong>Sastra & Kajian Budaya</strong><br>
-                Mengkaji karya sastra, film, dan teks budaya berbahasa Inggris untuk membangun kepekaan estetis
-                dan pemahaman kritis terhadap isu-isu sosial dan kemanusiaan.
-            </li>
-            <li class="mt-2">
-                <strong>Pengajaran Bahasa Inggris</strong><br>
-                Berfokus pada teori dan praktik pengajaran bahasa Inggris (ELT), termasuk perencanaan pembelajaran,
-                pengembangan materi, dan evaluasi.
-            </li>
-        </ul>
+            {{-- Visi --}}
+            @if ($prodi->visi)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Visi</h2>
+                    <p class="text-muted mb-0" style="line-height: 1.8;">{{ $prodi->visi }}</p>
+                </div>
+            @endif
 
-        {{-- Kurikulum --}}
-        <h2 class="h5 mt-4 mb-2">Kurikulum</h2>
-        <p class="small mb-1">
-            Kurikulum Sarjana (S1) dirancang mengintegrasikan mata kuliah keilmuan dasar, keahlian utama,
-            serta mata kuliah pilihan yang adaptif terhadap perkembangan dunia kerja dan studi lanjut.
-            Mahasiswa akan mengikuti perkuliahan, praktikum, penelitian skripsi, dan kegiatan pengembangan diri.
-        </p>
-        <p class="small mb-0">
-            <a href="#" class="text-decoration-none" style="color: var(--primary-maroon);">
-                Unduh ringkasan kurikulum S1 Bahasa & Sastra Inggris (PDF)
-            </a>
-        </p>
+            {{-- Misi --}}
+            @if ($prodi->misi)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Misi</h2>
+                    <ul class="text-muted ps-3 mb-0" style="line-height: 1.9;">
+                        @foreach ($prodi->misi as $m)
+                            <li class="mb-1">{{ $m['item'] }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        {{-- Prospek Karier --}}
-        <h2 class="h5 mt-4 mb-2">Karir Lulusan Sarjana (S1)</h2>
-        <p class="small">
-            Lulusan Program Studi S1 Bahasa & Sastra Inggris memiliki peluang karier yang luas, antara lain sebagai:
-        </p>
-        <ul class="small">
-            <li>Guru atau instruktur bahasa Inggris di sekolah, lembaga kursus, dan institusi pendidikan lainnya.</li>
-            <li>Penerjemah dan juru bahasa di lembaga pemerintah, perusahaan, dan organisasi internasional.</li>
-            <li>Penulis konten, editor, dan pekerja kreatif di media cetak maupun digital.</li>
-            <li>Staf komunikasi, public relations, dan corporate communication di berbagai jenis organisasi.</li>
-            <li>Peneliti, akademisi, atau melanjutkan studi ke jenjang magister dan doktoral.</li>
-        </ul>
+            {{-- Tujuan --}}
+            @if ($prodi->tujuan)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Tujuan</h2>
+                    <ul class="text-muted ps-3 mb-0" style="line-height: 1.9;">
+                        @foreach ($prodi->tujuan as $t)
+                            <li class="mb-1">{{ $t['item'] }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        {{-- Call to action --}}
-        <div class="mt-4 p-3 rounded-3" style="background-color:#fef2f4;border:1px solid #f7d9df;">
-            <div class="small mb-1 fw-semibold" style="color: var(--primary-maroon);">
-                Siap membangun karier bersama Sarjana (S1) Sastra Inggris?
+            {{-- Peminatan --}}
+            @if ($prodi->peminatan)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Peminatan Studi</h2>
+                    <div class="row g-3">
+                        @foreach ($prodi->peminatan as $p)
+                            <div class="col-md-4">
+                                <div class="p-3 h-100 rounded-3 border" style="border-color: #f0c6d0 !important; background-color: #fef9fa;">
+                                    <h6 class="fw-bold mb-2" style="color: var(--primary-maroon);">
+                                        @if (!empty($p['icon']))
+                                            <i class="bi {{ $p['icon'] }} me-2"></i>
+                                        @endif
+                                        {{ $p['judul'] }}
+                                    </h6>
+                                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ $p['deskripsi'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            {{-- Kurikulum --}}
+            @if ($prodi->kurikulum)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Kurikulum</h2>
+                    <p class="text-muted mb-2" style="line-height: 1.8;">{{ $prodi->kurikulum }}</p>
+                    @if ($prodi->kurikulum_pdf_url)
+                        <a href="{{ $prodi->kurikulum_pdf_url }}" target="_blank" class="text-decoration-none small fw-semibold" style="color: var(--primary-maroon);">
+                            <i class="bi bi-file-earmark-pdf me-1"></i> Unduh ringkasan kurikulum selengkapnya
+                        </a>
+                    @endif
+                </div>
+            @endif
+
+            {{-- Karir Lulusan --}}
+            @if ($prodi->karir_list)
+                <div class="mb-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 1.05rem; color: var(--primary-maroon); padding-left: 0.75rem; border-left: 3px solid var(--primary-maroon);">Karir Lulusan</h2>
+                    @if ($prodi->karir_deskripsi)
+                        <p class="text-muted mb-3" style="line-height: 1.8;">{{ $prodi->karir_deskripsi }}</p>
+                    @endif
+                    <ul class="text-muted ps-3 mb-0" style="line-height: 1.9;">
+                        @foreach ($prodi->karir_list as $k)
+                            <li class="mb-1">{{ $k['item'] }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- CTA --}}
+            <div class="p-4 rounded-3 border" style="background-color: #fef2f4; border-color: #f7d9df !important;">
+                <h5 class="fw-bold mb-2" style="color: var(--primary-maroon);">Siap bergabung dengan {{ $prodi->nama }}?</h5>
+                <p class="text-muted mb-3" style="line-height: 1.7;">
+                    Jelajahi informasi pendaftaran dan beasiswa melalui halaman PMB, atau hubungi narahubung resmi STBA Pontianak untuk konsultasi pilihan program studi.
+                </p>
+                <a href="{{ route('pmb.daftar') }}" class="btn btn-maroon btn-sm px-4">
+                    Daftar {{ $prodi->jenjang }} Sekarang
+                </a>
             </div>
-            <p class="small mb-2">
-                Jelajahi informasi pendaftaran dan beasiswa melalui halaman PMB, atau hubungi narahubung resmi STBA
-                Pontianak
-                untuk konsultasi pilihan program studi.
-            </p>
-            <a href="{{ route('pmb.daftar') }}" class="btn btn-maroon btn-sm">
-                Daftar S1 Sekarang
-            </a>
+
         </div>
     </div>
+</div>
 @endsection

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Agenda;
 use App\Models\Berita;
 use App\Models\Event;
+use App\Models\ProgramStudi;
 use App\Models\Setting;
 use App\Models\Staf;
 use Illuminate\Http\Request;
@@ -70,12 +71,14 @@ Route::get('/pmb/informasi', function () {
 
 // Halaman Program Studi Diploma (D3)
 Route::get('/prodi/d3', function () {
-    return view('prodi.d3');
+    $prodi = ProgramStudi::where('kode', 'd3')->firstOrFail();
+    return view('prodi.d3', compact('prodi'));
 })->name('prodi.d3');
 
 // Halaman Program Studi Sarjana (S1)
 Route::get('/prodi/s1', function () {
-    return view('prodi.s1');
+    $prodi = ProgramStudi::where('kode', 's1')->firstOrFail();
+    return view('prodi.s1', compact('prodi'));
 })->name('prodi.s1');
 
 // Halaman Program Studi Sastra Bahasa Inggris (S1)
