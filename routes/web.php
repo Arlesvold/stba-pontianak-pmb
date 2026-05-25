@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AgendaController;
-use App\Http\Controllers\Admin\BeritaController;
-use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Pmb\PendaftaranController;
 use App\Http\Controllers\Pmb\UnggahDokumenController;
@@ -171,21 +168,5 @@ require __DIR__ . '/auth.php';
 
 
 // ======================
-// ROUTE ADMIN
+// ROUTE ADMIN (legacy — dinonaktifkan, semua dihandle Filament)
 // ======================
-
-// redirect /admin ke dashboard
-// Route::redirect('/admin', '/admin/dashboard');
-
-// semua route admin wajib login
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    // Marquee
-    Route::get('/marquee', [SettingController::class, 'editMarquee'])->name('marquee.edit');
-    Route::post('/marquee', [SettingController::class, 'updateMarquee'])->name('marquee.update');
-
-    // CRUD Berita
-    Route::resource('berita', BeritaController::class);
-
-    // CRUD Agenda
-    Route::resource('agenda', \App\Http\Controllers\Admin\AgendaController::class);
-});
