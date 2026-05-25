@@ -139,6 +139,25 @@ class RegistrationResource extends Resource
                             return new HtmlString('<span class="text-danger-600">Belum diupload</span>');
                         }),
 
+                    Placeholder::make('kk_path')
+                        ->label('Kartu Keluarga (KK)')
+                        ->content(function (?Registration $record): HtmlString {
+                            if ($record?->kk_path) {
+                                $url = Storage::url($record->kk_path);
+                                return new HtmlString('<a href="' . $url . '" target="_blank" class="text-primary-600 underline">Lihat Dokumen</a>');
+                            }
+                            return new HtmlString('<span class="text-danger-600">Belum diupload</span>');
+                        }),
+
+                    Placeholder::make('transkrip_path')
+                        ->label('Transkrip Nilai')
+                        ->content(function (?Registration $record): HtmlString {
+                            if ($record?->transkrip_path) {
+                                $url = Storage::url($record->transkrip_path);
+                                return new HtmlString('<a href="' . $url . '" target="_blank" class="text-primary-600 underline">Lihat Dokumen</a>');
+                            }
+                            return new HtmlString('<span class="text-danger-600">Belum diupload</span>');
+                        }),
                     Placeholder::make('foto_path')
                         ->label('Pas Foto')
                         ->content(function (?Registration $record): HtmlString {
@@ -289,6 +308,21 @@ class RegistrationResource extends Resource
                             ->url(fn(Registration $record) => $record->ijazah_path ? Storage::url($record->ijazah_path) : '#')
                             ->openUrlInNewTab()
                             ->visible(fn(Registration $record) => (bool) $record->ijazah_path)
+                            ->columnSpan(1),
+                        TextEntry::make('kk_path')
+                            ->label('Kartu Keluarga (KK)')
+                            ->formatStateUsing(fn() => 'Lihat Dokumen')
+                            ->url(fn(Registration $record) => $record->kk_path ? Storage::url($record->kk_path) : '#')
+                            ->openUrlInNewTab()
+                            ->visible(fn(Registration $record) => (bool) $record->kk_path)
+                            ->columnSpan(1),
+
+                        TextEntry::make('transkrip_path')
+                            ->label('Transkrip Nilai')
+                            ->formatStateUsing(fn() => 'Lihat Dokumen')
+                            ->url(fn(Registration $record) => $record->transkrip_path ? Storage::url($record->transkrip_path) : '#')
+                            ->openUrlInNewTab()
+                            ->visible(fn(Registration $record) => (bool) $record->transkrip_path)
                             ->columnSpan(1),
                     ])
                     ->columns(2),

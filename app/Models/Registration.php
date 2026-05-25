@@ -21,6 +21,8 @@ class Registration extends Model
         'jurusan_sekolah',
         'tahun_lulus',
         'ijazah_path',
+        'kk_path',
+        'transkrip_path',
         'foto_path',
         'step',
         'status',

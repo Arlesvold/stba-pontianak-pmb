@@ -38,8 +38,18 @@ class UnggahDokumenController extends Controller
             ? 'nullable|image|mimes:jpg,jpeg,png|max:1024'
             : 'required|image|mimes:jpg,jpeg,png|max:1024';
 
+        $kkRule = $registration->kk_path
+            ? 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4096'
+            : 'required|file|mimes:jpg,jpeg,png,pdf|max:4096';
+
+        $transkripRule = $registration->transkrip_path
+            ? 'nullable|file|mimes:jpg,jpeg,png,pdf|max:4096'
+            : 'required|file|mimes:jpg,jpeg,png,pdf|max:4096';
+
         $request->validate([
             'ijazah_rapor' => $ijazahRule,
+            'kk'           => $kkRule,
+            'transkrip_nilai' => $transkripRule,
             'pas_foto'     => $fotoRule,
         ]);
 
@@ -48,6 +58,16 @@ class UnggahDokumenController extends Controller
         if ($request->hasFile('ijazah_rapor')) {
             $updates['ijazah_path'] = $request->file('ijazah_rapor')
                 ->store('documents/ijazah', 'public');
+        }
+
+        if ($request->hasFile('kk')) {
+            $updates['kk_path'] = $request->file('kk')
+                ->store('documents/kk', 'public');
+        }
+
+        if ($request->hasFile('transkrip_nilai')) {
+            $updates['transkrip_path'] = $request->file('transkrip_nilai')
+                ->store('documents/transkrip', 'public');
         }
 
         if ($request->hasFile('pas_foto')) {
