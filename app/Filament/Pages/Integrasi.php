@@ -33,7 +33,7 @@ class Integrasi extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return Auth::user()?->hasRole('Super Admin') ?? false;
+        return Auth::user()?->hasRole('admin') ?? false;
     }
 
     public function mount(): void
@@ -141,3 +141,4 @@ class Integrasi extends Page implements HasForms
         }
     }
 }
+

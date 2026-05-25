@@ -36,7 +36,7 @@ class BeritaResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()?->hasRole('Super Admin') ?? false;
+        return Auth::user()?->hasRole('admin') ?? false;
     }
 
     public static function form(Schema $schema): Schema
@@ -139,3 +139,4 @@ class BeritaResource extends Resource
         ];
     }
 }
+

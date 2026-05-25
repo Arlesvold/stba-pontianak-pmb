@@ -23,9 +23,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        // Super Admin bypasses all authorization checks
+        // Admin bypasses all authorization checks
         Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super Admin') ? true : null;
+            return $user->hasRole('admin') ? true : null;
         });
     }
 }

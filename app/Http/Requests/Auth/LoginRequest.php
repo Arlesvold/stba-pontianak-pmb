@@ -86,8 +86,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        // Hanya user tanpa role admin yang boleh login di PMB
-        if ($user->hasAnyRole(['Super Admin', 'Admin PMB'])) {
+        // Akun admin tidak bisa login di form PMB
+        if ($user->hasRole('admin')) {
             throw ValidationException::withMessages([
                 'email' => 'Akun ini tidak memiliki akses ke sistem PMB.',
             ]);

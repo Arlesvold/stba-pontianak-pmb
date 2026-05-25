@@ -36,7 +36,7 @@ class UserResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()?->hasRole('Super Admin') ?? false;
+        return Auth::user()?->hasRole('admin') ?? false;
     }
 
     public static function form(Schema $schema): Schema
@@ -69,7 +69,7 @@ class UserResource extends Resource
 
             Select::make('roles')
                 ->label('Role')
-                ->relationship('roles', 'name', fn($query) => $query->where('guard_name', 'admin'))
+                ->relationship('roles', 'name', fn($query) => $query->where('guard_name', 'web'))
                 ->preload()
                 ->required(),
         ]);
@@ -125,7 +125,7 @@ class UserResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->whereHas('roles', function (Builder $query) {
-            $query->whereIn('name', ['Super Admin', 'Admin PMB']);
+            $query->whereIn('name', ['admin']);
         });
     }
 }

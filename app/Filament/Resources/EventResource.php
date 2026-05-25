@@ -15,7 +15,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\ImageColumn;
@@ -38,7 +37,7 @@ class EventResource extends Resource
 
     public static function canAccess(): bool
     {
-        return Auth::user()?->hasRole('Super Admin') ?? false;
+        return Auth::user()?->hasRole('admin') ?? false;
     }
 
     protected static ?string $pluralModelLabel = 'Events';
@@ -150,3 +149,4 @@ class EventResource extends Resource
         ];
     }
 }
+
