@@ -6,7 +6,8 @@ use App\Http\Controllers\Pmb\UnggahDokumenController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Agenda;
 use App\Models\Berita;
-use App\Models\Event; // Import Event model
+use App\Models\Event;
+use App\Models\Setting;
 use App\Models\Staf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,12 @@ Route::get('/', function () {
         ->limit(4)
         ->get();
 
-    return view('pmb.index', compact('beritaTerbaru', 'agendas', 'stafs', 'events'));
+    $heroSettings = cache()->remember('hero_settings', 3600, function () {
+        $keys = ['hero_title', 'hero_subtitle', 'hero_badge_label', 'hero_tahun_akademik', 'cta_title', 'cta_subtitle'];
+        return Setting::whereIn('key', $keys)->pluck('value', 'key')->toArray();
+    });
+
+    return view('pmb.index', compact('beritaTerbaru', 'agendas', 'stafs', 'events', 'heroSettings'));
 })->name('beranda');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');

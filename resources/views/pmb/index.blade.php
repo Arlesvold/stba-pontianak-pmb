@@ -35,17 +35,16 @@
                     <div class="col-lg-7 fade-left">
                         <div class="hero-badge mb-3 fade-left delay-1">
                             <span class="badge-dot bg-danger rounded-circle" style="width:8px;height:8px;"></span>
-                            <span style="color: white;">Penerimaan Mahasiswa Baru</span>
-                            <span style="color: white;">Tahun Akademik 2025/2026</span>
+                            <span style="color: white;">{{ $heroSettings['hero_badge_label'] ?? 'Penerimaan Mahasiswa Baru' }}</span>
+                            <span style="color: white;">Tahun Akademik {{ $heroSettings['hero_tahun_akademik'] ?? '2025/2026' }}</span>
                         </div>
 
                         <h1 class="hero-title mb-3 fade-left delay-2" style="color: white;">
-                            Wujudkan Masa Depan <span>Anda</span> Bersama STBA Pontianak
+                            {{ $heroSettings['hero_title'] ?? 'Wujudkan Masa Depan Anda Bersama STBA Pontianak' }}
                         </h1>
 
                         <p class="hero-subtitle mb-4 fade-left delay-3" style="color: white;">
-                            Bergabunglah dengan kampus bahasa yang modern, berfokus pada kompetensi global,
-                            dan didukung dosen berpengalaman untuk menyiapkan karier masa depan Anda.
+                            {{ $heroSettings['hero_subtitle'] ?? 'Bergabunglah dengan kampus bahasa yang modern, berfokus pada kompetensi global, dan didukung dosen berpengalaman untuk menyiapkan karier masa depan Anda.' }}
                         </p>
 
                         <div class="hero-cta d-flex flex-wrap gap-2 mb-4 fade-left delay-4">
@@ -71,10 +70,10 @@
         <section class="py-5">
             <div class="container">
                 <div class="text-center mb-4 fade-up">
-                    <h2 class="h4 fw-bold mb-2" style="color: var(--primary-maroon);">
+                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-maroon);">
                         Pilihan Program Studi
                     </h2>
-                    <p class="text-muted mb-0 fade-up delay-1">
+                    <p class="text-muted small mb-0 fade-up delay-1">
                         Sesuaikan minat dan rencana karier Anda dengan program studi unggulan di STBA Pontianak.
                     </p>
                 </div>
@@ -136,10 +135,10 @@
             <section class="py-5">
                 <div class="container">
                     <div class="text-center mb-4">
-                        <h2 class="h5 fw-bold mb-1" style="color: var(--primary-maroon);">
+                        <h2 class="h4 fw-bold mb-1" style="color: var(--primary-maroon);">
                             Staf & Dosen STBA Pontianak
                         </h2>
-                        <p class="text-muted mb-0 small">
+                        <p class="text-muted small mb-0">
                             Beberapa staf dan dosen yang akan mendampingi proses belajar Anda.
                         </p>
                     </div>
@@ -211,7 +210,6 @@
                         <div class="col-md-4 fade-up delay-2">
                             <div class="card card-berita h-100 shadow-sm rounded-4 hover-shadow-sm"
                                 style="transition: transform .18s ease, box-shadow .18s ease;">
-                                {{-- Gambar --}}
                                 @if ($berita->gambar)
                                     <img src="{{ asset('storage/' . $berita->gambar) }}"
                                         class="card-img-top rounded-top-4" alt="{{ $berita->judul }}"
@@ -223,7 +221,6 @@
                                     </div>
                                 @endif
 
-                                {{-- Isi --}}
                                 <div class="card-body">
                                     <h5 class="card-title fw-semibold mb-2"
                                         style="font-size: 1rem; color: var(--primary-maroon);">
@@ -244,27 +241,25 @@
                                     <a href="{{ route('berita.show', $berita->id) }}"
                                         class="small text-decoration-none stretched-link"
                                         style="color: var(--primary-maroon);">
-                                        Read more →
+                                        Baca selengkapnya →
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     @empty
                         <div class="col-12 fade-up delay-3">
-                            <p class="text-center text-muted small mb-0">
-                                Belum ada berita kampus.
-                            </p>
+                            <p class="text-center text-muted small mb-0">Belum ada berita kampus.</p>
                         </div>
                     @endforelse
                 </div>
 
-                {{-- Link ke halaman semua berita --}}
-                <div class="text-center mt-4 fade-up delay-4">
-                    <a href="{{ route('berita.index') }}" class="link-berita small text-decoration-none">
-                        Lihat semua berita kampus <span class="arrow">→</span>
-                    </a>
-                </div>
+                @if ($beritaTerbaru->count())
+                    <div class="text-center mt-4 fade-up delay-4">
+                        <a href="{{ route('berita.index') }}" class="link-berita small text-decoration-none">
+                            Lihat semua berita kampus <span class="arrow">→</span>
+                        </a>
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -283,11 +278,11 @@
             <div class="container position-relative z-1 text-center">
 
                 <h2 class="fw-bold mb-3 fade-up delay-1">
-                    Ayo Mulai Mendaftar
+                    {{ $heroSettings['cta_title'] ?? 'Ayo Mulai Mendaftar' }}
                 </h2>
 
                 <p class="mb-4 lead fade-up delay-2">
-                    MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK
+                    {{ $heroSettings['cta_subtitle'] ?? 'MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK' }}
                 </p>
 
                 @auth
@@ -309,19 +304,15 @@
         @if (count($events) > 0)
             <section class="py-5 bg-light position-relative overflow-hidden">
                 <div class="container position-relative">
-                    <div class="row align-items-end mb-5">
-                        <div class="col-md-8">
-                            <h5 class="text-uppercase letter-spacing-2 fw-bold text-muted mb-2 fade-up"
-                                style="letter-spacing: 2px; font-size: 0.85rem;">Bergabunglah Bersama Kami</h5>
-                            <h2 class="display-6 fw-bold mb-0 fade-up delay-1" style="color: var(--primary-maroon);">Event
-                                Terbaru
-                            </h2>
-                        </div>
-                        <div class="col-md-4 text-md-end mt-3 mt-md-0 fade-up delay-2">
-                            <a href="{{ route('events.index') }}" class="btn btn-outline-dark rounded-pill px-4">
-                                Lihat Semua Event <i class="bi bi-arrow-right ms-2"></i>
-                            </a>
-                        </div>
+                    <div class="text-center mb-4">
+                        <h2 class="h4 fw-bold mb-1" style="color: var(--primary-maroon);">Event Terbaru</h2>
+                        <p class="text-muted small mb-0">Event dan kegiatan mendatang di STBA Pontianak.</p>
+                    </div>
+                    <div class="d-flex justify-content-end mb-3 fade-up delay-1">
+                        <a href="{{ route('events.index') }}" class="link-staff small text-decoration-none"
+                            style="color: var(--primary-maroon);">
+                            Lihat semua event <span class="arrow">→</span>
+                        </a>
                     </div>
 
                     <div class="row g-4">
@@ -385,16 +376,14 @@
         {{-- SECTION: Agenda --}}
         <section class="py-5 bg-light">
             <div class="container">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
-                    <div class="mb-3 mb-md-0 fade-up">
-                        <h5 class="fw-bold text-danger text-uppercase mb-2"
-                            style="font-size: 0.85rem; letter-spacing: 1px;">
-                            Kalender Akademik</h5>
-                        <h2 class="h3 fw-bold text-dark mb-0">Agenda Penting</h2>
-                    </div>
-                    <a href="{{ route('agenda.index') }}"
-                        class="btn btn-outline-danger rounded-pill px-4 fade-up delay-1 btn-agenda">
-                        Lihat Semua Agenda
+                <div class="text-center mb-4">
+                    <h2 class="h4 fw-bold mb-1" style="color: var(--primary-maroon);">Agenda Penting</h2>
+                    <p class="text-muted small mb-0">Kalender kegiatan akademik STBA Pontianak.</p>
+                </div>
+                <div class="d-flex justify-content-end mb-3 fade-up delay-1">
+                    <a href="{{ route('agenda.index') }}" class="link-staff small text-decoration-none"
+                        style="color: var(--primary-maroon);">
+                        Lihat semua agenda <span class="arrow">→</span>
                     </a>
                 </div>
 

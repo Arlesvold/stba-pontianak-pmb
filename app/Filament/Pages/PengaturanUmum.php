@@ -4,10 +4,11 @@ namespace App\Filament\Pages;
 
 use App\Models\Setting;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class PengaturanUmum extends Page
@@ -28,9 +29,12 @@ class PengaturanUmum extends Page
 
     public function mount(): void
     {
-        $this->data['wa_admin'] = cache()->remember('wa_admin', 3600, function () {
-            return Setting::where('key', 'wa_admin')->value('value') ?? '';
-        });
+        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'cta_title', 'cta_subtitle'];
+        $settings = Setting::whereIn('key', $keys)->pluck('value', 'key');
+
+        foreach ($keys as $key) {
+            $this->data[$key] = $settings[$key] ?? '';
+        }
     }
 
     public function form(Schema $schema): Schema
@@ -48,20 +52,66 @@ class PengaturanUmum extends Page
                             ->required()
                             ->maxLength(20),
                     ]),
+
+                Section::make('Konten Hero Homepage')
+                    ->description('Teks yang tampil di bagian paling atas halaman beranda.')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('hero_badge_label')
+                            ->label('Teks Badge')
+                            ->placeholder('Penerimaan Mahasiswa Baru')
+                            ->maxLength(100),
+
+                        TextInput::make('hero_tahun_akademik')
+                            ->label('Tahun Akademik')
+                            ->placeholder('2025/2026')
+                            ->maxLength(20),
+
+                        TextInput::make('hero_title')
+                            ->label('Judul Hero')
+                            ->placeholder('Wujudkan Masa Depan Anda Bersama STBA Pontianak')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
+                        Textarea::make('hero_subtitle')
+                            ->label('Subtitle Hero')
+                            ->placeholder('Bergabunglah dengan kampus bahasa yang modern...')
+                            ->rows(2)
+                            ->columnSpanFull(),
+                    ]),
+
+                Section::make('Konten CTA Pendaftaran')
+                    ->description('Teks pada banner ajakan mendaftar di tengah halaman beranda.')
+                    ->schema([
+                        TextInput::make('cta_title')
+                            ->label('Judul CTA')
+                            ->placeholder('Ayo Mulai Mendaftar')
+                            ->maxLength(255),
+
+                        Textarea::make('cta_subtitle')
+                            ->label('Subtitle CTA')
+                            ->placeholder('MARI WUJUDKAN MASA DEPAN GEMILANG ANDA BERSAMA KAMI DI STBA PONTIANAK')
+                            ->rows(2),
+                    ]),
             ]);
     }
 
     public function save(): void
     {
         $data = $this->form->getState();
-        $waAdmin = preg_replace('/\D/', '', $data['wa_admin'] ?? '');
 
-        Setting::updateOrCreate(
-            ['key' => 'wa_admin'],
-            ['value' => $waAdmin]
-        );
+        // wa_admin: strip non-digits
+        $waAdmin = preg_replace('/\D/', '', $data['wa_admin'] ?? '');
+        Setting::updateOrCreate(['key' => 'wa_admin'], ['value' => $waAdmin]);
+
+        // hero & cta plain text settings
+        $textKeys = ['hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'cta_title', 'cta_subtitle'];
+        foreach ($textKeys as $key) {
+            Setting::updateOrCreate(['key' => $key], ['value' => $data[$key] ?? '']);
+        }
 
         cache()->forget('wa_admin');
+        cache()->forget('hero_settings');
 
         Notification::make()
             ->title('Pengaturan berhasil disimpan.')
