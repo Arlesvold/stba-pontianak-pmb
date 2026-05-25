@@ -51,10 +51,27 @@
             background-color: var(--primary-maroon);
             color: #ffffff;
             font-size: 1rem;
+            overflow: hidden;
         }
 
-        .announcement-bar marquee {
-            padding: 0.80rem 0;
+        .marquee-wrapper {
+            overflow: hidden;
+            padding: 0.70rem 0;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            white-space: nowrap;
+            will-change: transform;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            padding-right: 18rem;
         }
 
         /* Efek hover untuk link di footer */
@@ -189,17 +206,47 @@
 
         {{-- Marquee pengumuman (TIDAK sticky) --}}
         @php
-            $marqueeText = cache()->remember('marquee_text', 3600, function () {
-                return \App\Models\Setting::where('key', 'marquee_text')->value('value');
-            }) ?? 'PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.';
-            @endphp
+            $marqueeItems = cache()->remember('pengumuman_aktif', 3600, function () {
+                return \App\Models\Pengumuman::aktif()->pluck('teks')->toArray();
+            });
+            if (empty($marqueeItems)) {
+                $marqueeItems = ['PENGUMUMAN 📢: Pendaftaran PMB STBA Pontianak telah dibuka.'];
+            }
+        @endphp
         <div class="announcement-bar">
-            <div class="container-fluid">
-                <marquee behavior="scroll" direction="left">
-                    {{ $marqueeText }}
-                </marquee>
+            <div class="marquee-wrapper">
+                <div class="marquee-track" id="marqueeTrack">
+                    @foreach($marqueeItems as $item)
+                        <span class="marquee-item">{{ $item }}</span>
+                    @endforeach
+                </div>
             </div>
         </div>
+        <script>
+            (function () {
+                var track = document.getElementById('marqueeTrack');
+                var wrapper = track ? track.parentElement : null;
+                if (!track || !wrapper) return;
+
+                var W = wrapper.offsetWidth;   // lebar container (= lebar layar)
+                var T = track.scrollWidth;     // lebar total konten
+                var pxPerDetik = 75;
+
+                // Jarak total: mulai dari tepi kanan (W) sampai habis di tepi kiri (-T)
+                var durasi = (W + T) / pxPerDetik;
+
+                // Inject keyframe: mulai dari kanan layar, habis di kiri layar
+                var style = document.createElement('style');
+                style.textContent =
+                    '@keyframes marquee-rtl {' +
+                    '  from { transform: translateX(' + W + 'px); }' +
+                    '  to   { transform: translateX(-' + T + 'px); }' +
+                    '}';
+                document.head.appendChild(style);
+
+                track.style.animation = 'marquee-rtl ' + durasi.toFixed(1) + 's linear infinite';
+            })();
+        </script>
 
         {{-- Navbar utama (STICKY) --}}
         <nav class="navbar navbar-expand-lg navbar-custom sticky-top">

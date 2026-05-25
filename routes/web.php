@@ -125,28 +125,28 @@ Route::post('/kontak', function (\Illuminate\Http\Request $request) {
     return back()->with('success', 'Pesan berhasil dikirim.');
 })->name('kontak.kirim');
 
-// Halaman unggah dokumen (GET)
-Route::get('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'index'])
-    ->name('pmb.unggah-dokumen');
+// Halaman unggah dokumen & verifikasi (auth required)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'index'])
+        ->name('pmb.unggah-dokumen');
 
-// Proses upload dokumen (POST)
-Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
-    ->name('pmb.unggah-dokumen.submit');
+    Route::post('/pmb/unggah-dokumen', [UnggahDokumenController::class, 'store'])
+        ->name('pmb.unggah-dokumen.submit');
 
-// Halaman setelah kirim administrasi: Verifikasi & Tes
-Route::get('/pmb/verifikasi-tes', function () {
-    $registration = \App\Models\Registration::where('user_id', Auth::id())->first();
+    Route::get('/pmb/verifikasi-tes', function () {
+        $registration = \App\Models\Registration::where('user_id', Auth::id())->first();
 
-    if (!$registration) {
-        return redirect()->route('pmb.daftar');
-    }
+        if (!$registration) {
+            return redirect()->route('pmb.daftar');
+        }
 
-    if ($registration->step < 3) {
-        return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
-    }
+        if ($registration->step < 3) {
+            return redirect()->route('pmb.unggah-dokumen')->with('error', 'Silakan selesaikan unggah dokumen terlebih dahulu.');
+        }
 
-    return view('pmb.verifikasi-tes', compact('registration'));
-})->name('pmb.verifikasi-tes');
+        return view('pmb.verifikasi-tes', compact('registration'));
+    })->name('pmb.verifikasi-tes');
+});
 
 
 
