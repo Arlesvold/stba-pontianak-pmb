@@ -16,10 +16,7 @@
                 <li class="breadcrumb-item active" aria-current="page">{{ $prodi->jenjang }}</li>
             </ol>
         </nav>
-        <h1 class="fw-bold mb-1" style="color: var(--primary-maroon); font-size: 1.75rem;">{{ $prodi->nama }}</h1>
-        @if ($prodi->deskripsi)
-            <p class="text-muted mb-0 small">{{ \Illuminate\Support\Str::limit($prodi->deskripsi, 120) }}</p>
-        @endif
+        <h1 class="fw-bold mb-0" style="color: var(--primary-maroon); font-size: 1.75rem;">{{ $prodi->nama }}</h1>
     </div>
 </div>
 
