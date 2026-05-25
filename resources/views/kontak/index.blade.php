@@ -103,7 +103,7 @@
                                             <span style="display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;">
                                                 <i class="bi bi-clock"></i> Jam
                                             </span>
-                                            <span style="font-size: 0.82rem; color: var(--muted);">{{ $kontak->hari_layanan }}{{ $kontak->hari_layanan && $kontak->jam_layanan ? ' &middot; ' : '' }}{{ $kontak->jam_layanan }}</span>
+                                            <span style="font-size: 0.82rem; color: var(--muted);">{{ $kontak->hari_layanan }}{{ $kontak->hari_layanan && $kontak->jam_layanan ? ' · ' : '' }}{{ $kontak->jam_layanan }}</span>
                                         @endif
                                     </div>
                                 </div>
