@@ -1,18 +1,14 @@
-#berita-page {
-    font-family: "Open Sans", sans-serif;
-}
-
 #berita-page .card-berita {
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 #berita-page .card-berita:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09) !important;
 }
 
 #berita-page .custom-pagination .pagination {
-     margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 #berita-page .custom-pagination .page-item {
@@ -22,5 +18,12 @@
 #berita-page .custom-pagination .page-link {
     border-radius: 8px;
     padding: 6px 12px;
+    color: var(--primary-maroon);
+    border-color: #dee2e6;
 }
 
+#berita-page .custom-pagination .page-link:hover {
+    background-color: var(--primary-maroon);
+    color: #fff;
+    border-color: var(--primary-maroon);
+}
