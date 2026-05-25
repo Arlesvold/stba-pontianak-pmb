@@ -4,104 +4,66 @@
 
 @section('content')
 
-{{-- Page Hero --}}
-<div class="page-hero">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb small mb-0">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('beranda') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('events.index') }}">Event</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Detail Event</li>
-            </ol>
-        </nav>
-    </div>
-</div>
+{{-- Event header --}}
+<section style="background: var(--paper-2); border-bottom: 1px solid var(--rule);">
+    <div class="wrap-narrow" style="padding-top: 52px; padding-bottom: 44px;">
+        <div class="crumb mb-5">
+            <a href="{{ route('beranda') }}">Beranda</a>
+            <span class="sep">/</span>
+            <a href="{{ route('events.index') }}">Event</a>
+            <span class="sep">/</span>
+            <span>Detail Event</span>
+        </div>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <span class="tag-pill mb-4" style="display: inline-block;">Event Kampus</span>
 
-            <div class="card shadow-sm border-0 rounded-3 overflow-hidden mb-5">
-                @if ($event->gambar)
-                    <img src="{{ asset('storage/' . $event->gambar) }}" class="card-img-top" alt="{{ $event->judul }}"
-                        style="max-height: 380px; object-fit: cover;">
-                @else
-                    <div class="bg-light d-flex align-items-center justify-content-center"
-                        style="height: 260px; color: #adb5bd;">
-                        <i class="bi bi-calendar-event" style="font-size: 4rem;"></i>
-                    </div>
-                @endif
+        <h1 style="font-family: var(--font-display); font-weight: 600; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--ink); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 24px;">
+            {{ $event->judul }}
+        </h1>
 
-                <div class="card-body p-4 p-md-5">
-                    <div class="d-flex align-items-center mb-3 flex-wrap gap-2">
-                        <span class="badge rounded-pill px-3 py-2 fw-semibold small"
-                            style="background-color: rgba(123,30,48,0.08); color: var(--primary-maroon);">
-                            Event Kampus
-                        </span>
-                        <span class="text-muted small">
-                            <i class="bi bi-clock me-1"></i>
-                            Diperbarui {{ $event->updated_at->diffForHumans() }}
-                        </span>
-                    </div>
-
-                    <h1 class="fw-bold mb-4" style="color: var(--primary-maroon); font-size: 1.6rem;">
-                        {{ $event->judul }}
-                    </h1>
-
-                    <div class="row g-3 mb-4 rounded-3 p-3" style="background-color: #f8f9fa;">
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-start">
-                                <i class="bi bi-calendar-check fs-4 me-3 mt-1" style="color: var(--primary-maroon);"></i>
-                                <div>
-                                    <h6 class="fw-bold mb-1 small text-uppercase text-muted" style="letter-spacing: 0.04em;">Tanggal Mulai</h6>
-                                    <p class="mb-0">{{ $event->tanggal_mulai->translatedFormat('d F Y') }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-start">
-                                <i class="bi bi-calendar-x fs-4 me-3 mt-1" style="color: var(--primary-maroon);"></i>
-                                <div>
-                                    <h6 class="fw-bold mb-1 small text-uppercase text-muted" style="letter-spacing: 0.04em;">Tanggal Selesai</h6>
-                                    <p class="mb-0">
-                                        {{ $event->tanggal_selesai ? $event->tanggal_selesai->translatedFormat('d F Y') : 'Belum ditentukan' }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="d-flex align-items-start">
-                                <i class="bi bi-geo-alt fs-4 me-3 mt-1" style="color: var(--primary-maroon);"></i>
-                                <div>
-                                    <h6 class="fw-bold mb-1 small text-uppercase text-muted" style="letter-spacing: 0.04em;">Lokasi Kegiatan</h6>
-                                    <p class="mb-0">{{ $event->lokasi ?? 'Kampus STBA Pontianak' }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <h4 class="fw-bold mb-3 pb-2 border-bottom">Deskripsi Kegiatan</h4>
-                        <div class="text-muted" style="line-height: 1.8; text-align: justify;">
-                            {!! $event->deskripsi !!}
-                        </div>
-                    </div>
+        {{-- Meta --}}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--rule);">
+            <div>
+                <div class="mono mb-1" style="font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--maroon);">Tanggal Mulai</div>
+                <div class="h-card" style="font-size: 0.95rem; color: var(--ink);">{{ $event->tanggal_mulai->translatedFormat('d F Y') }}</div>
+            </div>
+            @if ($event->tanggal_selesai)
+                <div>
+                    <div class="mono mb-1" style="font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--maroon);">Tanggal Selesai</div>
+                    <div class="h-card" style="font-size: 0.95rem; color: var(--ink);">{{ $event->tanggal_selesai->translatedFormat('d F Y') }}</div>
                 </div>
+            @endif
+            <div>
+                <div class="mono mb-1" style="font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--maroon);">Lokasi</div>
+                <div class="h-card" style="font-size: 0.95rem; color: var(--ink);">{{ $event->lokasi ?? 'Kampus STBA Pontianak' }}</div>
             </div>
-
-            <div class="text-center">
-                <a href="{{ route('events.index') }}" class="btn btn-outline-maroon px-4 py-2 rounded-pill">
-                    <i class="bi bi-arrow-left me-2"></i> Kembali ke Daftar Event
-                </a>
-            </div>
-
         </div>
     </div>
-</div>
+</section>
+
+{{-- Cover image --}}
+@if ($event->gambar)
+    <section style="background: var(--paper); padding-top: 40px;">
+        <div class="wrap-narrow">
+            <img src="{{ asset('storage/' . $event->gambar) }}" alt="{{ $event->judul }}"
+                style="width: 100%; max-height: 420px; object-fit: cover; display: block; border: 1px solid var(--rule-soft);">
+        </div>
+    </section>
+@endif
+
+{{-- Event body --}}
+<section style="background: var(--paper); padding: 56px 0 80px;">
+    <div class="wrap-narrow">
+        <h3 class="h-display mb-4" style="font-size: 1.3rem; color: var(--ink); border-bottom: 1px solid var(--rule); padding-bottom: 16px;">Deskripsi Kegiatan</h3>
+        <div style="font-size: 1rem; line-height: 1.85; color: var(--ink-2); max-width: 720px;">
+            {!! $event->deskripsi !!}
+        </div>
+
+        <div style="margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule);">
+            <a href="{{ route('events.index') }}" class="link-more">
+                <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Event
+            </a>
+        </div>
+    </div>
+</section>
 @endsection

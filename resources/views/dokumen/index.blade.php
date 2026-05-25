@@ -11,89 +11,69 @@
 
     {{-- Page Hero --}}
     <div class="page-hero">
-        <div class="container">
-            <nav aria-label="breadcrumb" class="mb-2">
-                <ol class="breadcrumb small mb-0">
-                    <li class="breadcrumb-item">
+        <div class="page-hero-inner">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="crumb mb-4">
                         <a href="{{ route('beranda') }}">Beranda</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Dokumen & Unduhan</li>
-                </ol>
-            </nav>
-            <h1>Dokumen &amp; Unduhan</h1>
-            <p class="hero-subtitle">Kumpulan dokumen, formulir, dan file penting yang dapat diunduh.</p>
+                        <span class="sep">/</span>
+                        <span>Dokumen &amp; Unduhan</span>
+                    </div>
+                    <h1>Pusat <em>dokumen</em> &amp; unduhan.</h1>
+                    <p class="hero-subtitle">Formulir resmi, panduan akademik, dan dokumen rujukan yang dapat diunduh secara terbuka.</p>
+                </div>
+                <span class="page-hero-mark d-none d-md-inline-block mt-1">ARSIP / DOKUMEN</span>
+            </div>
         </div>
     </div>
 
-    <section class="py-5">
+    <section style="background: var(--paper); padding: 72px 0;">
         <div class="container">
 
-            <div class="row g-4 justify-content-center">
+            <div style="border-top: 1.5px solid var(--ink); margin-bottom: 0;">
                 @forelse ($dokumens as $dokumen)
                     @php
                         $extension = pathinfo($dokumen->file, PATHINFO_EXTENSION);
-                        $icon = 'bi-file-earmark-text';
-                        if (in_array($extension, ['pdf'])) {
-                            $icon = 'bi-file-earmark-pdf';
-                        } elseif (in_array($extension, ['doc', 'docx'])) {
-                            $icon = 'bi-file-earmark-word';
-                        } elseif (in_array($extension, ['xls', 'xlsx'])) {
-                            $icon = 'bi-file-earmark-excel';
-                        }
+                        $isPdf = $extension === 'pdf';
+                        $isDoc = in_array($extension, ['doc', 'docx']);
                     @endphp
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card card-dokumen card-base h-100">
-                            <div class="card-body p-4">
-                                <div class="d-flex align-items-start mb-3 gap-3">
-                                    <div class="file-icon flex-shrink-0">
-                                        <i class="bi {{ $icon }} fs-2"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-1" style="color: var(--primary-maroon); font-size: 0.95rem; line-height: 1.4;">
-                                            {{ $dokumen->judul }}
-                                        </h5>
-                                        <div class="small text-muted">
-                                            <i class="bi bi-clock me-1 opacity-75"></i>{{ $dokumen->created_at->format('d M Y') }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @if ($dokumen->deskripsi)
-                                    <p class="text-muted small mb-4" style="line-height: 1.65; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                                        {{ $dokumen->deskripsi }}
-                                    </p>
-                                @else
-                                    <p class="text-muted small mb-4 fst-italic">Tidak ada deskripsi.</p>
-                                @endif
-
-                                <div class="d-flex gap-2 mt-auto">
-                                    @if ($extension === 'pdf')
-                                        <a href="{{ asset('storage/' . $dokumen->file) }}" target="_blank"
-                                            class="btn btn-outline-maroon btn-sm w-50 rounded-pill fw-semibold">
-                                            <i class="bi bi-eye me-1"></i> Preview
-                                        </a>
-                                    @endif
-                                    <a href="{{ asset('storage/' . $dokumen->file) }}" download
-                                        class="btn btn-maroon btn-sm {{ $extension === 'pdf' ? 'w-50' : 'w-100' }} rounded-pill fw-semibold">
-                                        <i class="bi bi-download me-1"></i> Unduh
-                                    </a>
-                                </div>
+                    <div style="display: grid; grid-template-columns: 56px 1fr auto; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--rule-soft); align-items: center;">
+                        <div style="width: 48px; height: 60px; background: {{ $isPdf ? 'var(--maroon-soft)' : 'rgba(91,122,74,0.08)' }}; border: 1px solid var(--rule); display: grid; place-items: center; color: {{ $isPdf ? 'var(--maroon)' : 'var(--leaf)' }}; flex-shrink: 0; position: relative;">
+                            <i class="bi bi-file-earmark-{{ $isPdf ? 'pdf' : ($isDoc ? 'word' : 'text') }}" style="font-size: 1.3rem;"></i>
+                            <span class="mono" style="position: absolute; bottom: 4px; font-size: 0.5rem; letter-spacing: 0.1em; font-weight: 700;">{{ strtoupper($extension) }}</span>
+                        </div>
+                        <div>
+                            <h5 class="h-card mb-1" style="font-size: 0.95rem; color: var(--ink); line-height: 1.35;">{{ $dokumen->judul }}</h5>
+                            @if ($dokumen->deskripsi)
+                                <p style="color: var(--muted); font-size: 0.82rem; margin-bottom: 4px; line-height: 1.55;">{{ \Illuminate\Support\Str::limit($dokumen->deskripsi, 120) }}</p>
+                            @endif
+                            <div class="mono" style="font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2);">
+                                <i class="bi bi-calendar3 me-1"></i>{{ $dokumen->created_at->format('d M Y') }}
                             </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                            @if ($isPdf)
+                                <a href="{{ asset('storage/' . $dokumen->file) }}" target="_blank" class="btn btn-outline-maroon btn-sm">
+                                    <i class="bi bi-eye me-1"></i> Lihat
+                                </a>
+                            @endif
+                            <a href="{{ asset('storage/' . $dokumen->file) }}" download class="btn btn-maroon btn-sm">
+                                <i class="bi bi-download me-1"></i> Unduh
+                            </a>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12 py-5 text-center">
-                        <i class="bi bi-folder-x display-4 text-muted d-block mb-3" style="opacity:0.4;"></i>
-                        <p class="text-muted">Belum ada dokumen yang tersedia untuk diunduh.</p>
+                    <div style="text-align: center; padding: 60px 0; color: var(--muted);">
+                        <i class="bi bi-folder-x" style="font-size: 3rem; display: block; margin-bottom: 16px; opacity: 0.3;"></i>
+                        <p class="mb-0" style="font-size: 0.9rem;">Belum ada dokumen yang tersedia untuk diunduh.</p>
                     </div>
                 @endforelse
             </div>
 
             @if ($dokumens->hasPages())
-                <div class="mt-5 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <div class="text-muted small">
-                        Menampilkan {{ $dokumens->firstItem() }}–{{ $dokumens->lastItem() }}
+                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2 pt-3">
+                    <div class="mono" style="font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">
+                        Menampilkan {{ $dokumens->firstItem() }}&ndash;{{ $dokumens->lastItem() }}
                         dari {{ $dokumens->total() }} dokumen
                     </div>
                     <nav class="custom-pagination">

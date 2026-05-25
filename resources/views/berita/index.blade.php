@@ -10,79 +10,67 @@
 
 {{-- Page Hero --}}
 <div class="page-hero">
-    <div class="container">
-        <nav aria-label="breadcrumb" class="mb-2">
-            <ol class="breadcrumb small mb-0">
-                <li class="breadcrumb-item">
+    <div class="page-hero-inner">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="page-hero crumb mb-4" style="background: none; padding: 0; border: none;">
                     <a href="{{ route('beranda') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Berita Kampus</li>
-            </ol>
-        </nav>
-        <h1>Berita Kampus</h1>
-        <p class="hero-subtitle">Kumpulan kegiatan dan informasi terbaru seputar STBA Pontianak.</p>
+                    <span class="sep">/</span>
+                    <span>Berita Kampus</span>
+                </div>
+                <h1>Jurnal kampus &mdash; kabar dari <em>ruang belajar</em> kami.</h1>
+                <p class="hero-subtitle">Catatan kegiatan, prestasi, dan informasi terbaru dari sivitas akademika STBA Pontianak.</p>
+            </div>
+            <span class="page-hero-mark d-none d-md-inline-block mt-1">ARSIP / BERITA</span>
+        </div>
     </div>
 </div>
 
-<div id="berita-page">
+<div id="berita-page" style="background: var(--paper);">
     <div class="container py-5">
-        <div class="mx-auto" style="max-width: 900px;">
-            @forelse ($beritas as $berita)
-                <div class="card card-berita mb-4 border-0 shadow-sm rounded-3 overflow-hidden">
-                    <div class="row g-0">
-                        {{-- Gambar --}}
-                        <div class="col-md-4">
-                            @if ($berita->gambar)
-                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
-                                    class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 220px;">
-                            @else
-                                <div class="bg-light w-100 h-100 d-flex align-items-center justify-content-center"
-                                    style="min-height: 220px; color: #adb5bd;">
-                                    <i class="bi bi-newspaper" style="font-size: 2.5rem;"></i>
-                                </div>
-                            @endif
-                        </div>
-
-                        {{-- Konten --}}
-                        <div class="col-md-8">
-                            <div class="card-body px-4 py-4 d-flex flex-column h-100">
-                                <div class="text-muted small mb-2">
-                                    <i class="bi bi-calendar3 me-1"></i>
-                                    {{ $berita->tanggal->translatedFormat('d F Y') }}
-                                </div>
-                                <h2 class="h5 fw-bold mb-2" style="color: var(--primary-maroon);">
-                                    <a href="{{ route('berita.show', $berita->id) }}"
-                                        class="text-decoration-none text-reset stretched-link">
-                                        {{ \Illuminate\Support\Str::limit($berita->judul, 80) }}
-                                    </a>
-                                </h2>
-                                <p class="text-muted mb-0 small" style="line-height: 1.6;">
-                                    {{ \Illuminate\Support\Str::limit(strip_tags($berita->isi), 130) }}
-                                </p>
-                            </div>
-                        </div>
+        @forelse ($beritas as $berita)
+            <a href="{{ route('berita.show', $berita->id) }}" class="d-block text-decoration-none mb-0"
+               style="display: grid !important; grid-template-columns: 280px 1fr; gap: 0; border-bottom: 1px solid var(--rule-soft); padding: 32px 0;">
+                <div style="overflow: hidden;">
+                    @if ($berita->gambar)
+                        <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
+                            style="width: 100%; height: 200px; object-fit: cover; display: block; border: 1px solid var(--rule-soft);">
+                    @else
+                        <div class="ph" style="height: 200px; width: 100%;"></div>
+                    @endif
+                </div>
+                <div style="padding: 8px 0 8px 36px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="mono mb-2" style="font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);">
+                        <i class="bi bi-calendar3 me-1 opacity-75"></i>{{ $berita->tanggal->translatedFormat('d F Y') }}
                     </div>
+                    <h2 class="h-card mb-2" style="font-size: 1.15rem; color: var(--ink); line-height: 1.35;">
+                        {{ \Illuminate\Support\Str::limit($berita->judul, 90) }}
+                    </h2>
+                    <p style="color: var(--muted); font-size: 0.875rem; line-height: 1.65; margin-bottom: 16px;">
+                        {{ \Illuminate\Support\Str::limit(strip_tags($berita->isi), 150) }}
+                    </p>
+                    <span class="link-more">Baca selengkapnya <span class="arr">&#8594;</span></span>
                 </div>
+            </a>
 
-            @empty
-                <div class="py-5 text-center text-muted">
-                    <i class="bi bi-newspaper display-4 d-block mb-3" style="color: #dee2e6;"></i>
-                    <p class="mb-0">Belum ada berita yang tersedia.</p>
-                </div>
-            @endforelse
+        @empty
+            <div class="py-5 text-center" style="color: var(--muted);">
+                <i class="bi bi-newspaper" style="font-size: 3rem; display: block; margin-bottom: 16px; opacity: 0.3;"></i>
+                <p class="mb-0">Belum ada berita yang tersedia.</p>
+            </div>
+        @endforelse
 
-            @if ($beritas->hasPages())
-                <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <div class="text-muted small">
-                        Menampilkan {{ $beritas->firstItem() }}–{{ $beritas->lastItem() }}
-                        dari {{ $beritas->total() }} berita
-                    </div>
-                    <nav class="custom-pagination">
-                        {{ $beritas->links('pagination::simple-bootstrap-5') }}
-                    </nav>
+        @if ($beritas->hasPages())
+            <div class="mt-4 d-flex justify-content-between align-items-center flex-wrap gap-2 pt-3">
+                <div class="mono" style="font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">
+                    Menampilkan {{ $beritas->firstItem() }}&ndash;{{ $beritas->lastItem() }}
+                    dari {{ $beritas->total() }} berita
                 </div>
-            @endif
-        </div>
+                <nav class="custom-pagination">
+                    {{ $beritas->links('pagination::simple-bootstrap-5') }}
+                </nav>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

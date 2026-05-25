@@ -1,13 +1,18 @@
 /* ── Event pages ───────────────────────────────────────────────── */
 
-#event-page .card-event h5 {
-    font-family: 'Playfair Display', serif;
+#event-page article {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-#event-page .card-event img {
+#event-page article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(26,22,20,0.09);
+}
+
+#event-page article img {
     transition: transform 0.3s ease;
 }
 
-#event-page .card-event:hover img {
+#event-page article:hover img {
     transform: scale(1.03);
 }

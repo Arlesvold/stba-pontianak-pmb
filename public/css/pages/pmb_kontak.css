@@ -1,17 +1,2 @@
 /* ── Kontak page ───────────────────────────────────────────────── */
-
-#pmb-kontak .card-kontak h5 {
-    font-family: 'Playfair Display', serif;
-}
-
-#pmb-kontak .kontak-icon {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: var(--primary-maroon);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* No page-specific overrides needed — layout handled inline */

@@ -1,21 +1,9 @@
 /* ── Dokumen page ──────────────────────────────────────────────── */
 
-#dokumen-page .card-dokumen h5 {
-    font-family: 'Playfair Display', serif;
+#dokumen-page [style*="border-top: 1.5px solid var(--ink)"] > div {
+    transition: background-color 0.15s ease;
 }
 
-#dokumen-page .file-icon {
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background-color: rgba(123, 30, 48, 0.08);
-    color: var(--primary-maroon);
-    transition: background-color 0.2s ease;
-}
-
-#dokumen-page .card-dokumen:hover .file-icon {
-    background-color: rgba(123, 30, 48, 0.14);
+#dokumen-page [style*="border-top: 1.5px solid var(--ink)"] > div:hover {
+    background-color: var(--paper-2);
 }

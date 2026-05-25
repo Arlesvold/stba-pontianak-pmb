@@ -4,82 +4,67 @@
 
 @section('content')
 
-{{-- Page Hero --}}
-<div class="page-hero">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb small mb-0">
-                <li class="breadcrumb-item">
-                    <a href="{{ route('beranda') }}">Beranda</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ route('berita.index') }}">Berita Kampus</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Detail Berita</li>
-            </ol>
-        </nav>
-    </div>
-</div>
+{{-- Article header --}}
+<section style="background: var(--paper-2); border-bottom: 1px solid var(--rule);">
+    <div class="wrap-narrow" style="padding-top: 52px; padding-bottom: 44px;">
+        <div class="crumb mb-5">
+            <a href="{{ route('beranda') }}">Beranda</a>
+            <span class="sep">/</span>
+            <a href="{{ route('berita.index') }}">Berita Kampus</a>
+            <span class="sep">/</span>
+            <span>Detail Berita</span>
+        </div>
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <span class="tag-pill mb-4" style="display: inline-block;">Berita Kampus</span>
 
-            <article class="bg-white rounded-3 shadow-sm overflow-hidden mb-5">
-                @if ($berita->gambar)
-                    <img src="{{ asset('storage/' . $berita->gambar) }}" class="w-100" alt="{{ $berita->judul }}"
-                        style="max-height: 460px; object-fit: cover;">
-                @else
-                    <div class="bg-light d-flex align-items-center justify-content-center"
-                        style="height: 260px; color: #adb5bd;">
-                        <i class="bi bi-newspaper" style="font-size: 4rem;"></i>
-                    </div>
-                @endif
+        <h1 style="font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 4vw, 3rem); color: var(--ink); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px;">
+            {{ $berita->judul }}
+        </h1>
 
-                <div class="p-4 p-md-5">
-                    <div class="d-flex flex-wrap align-items-center mb-3 gap-2 text-muted small">
-                        <span class="badge rounded-pill px-3 py-2 fw-semibold"
-                            style="background-color: rgba(123,30,48,0.08); color: var(--primary-maroon);">
-                            Berita Kampus
-                        </span>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-calendar3 me-1"></i>
-                            {{ $berita->tanggal->translatedFormat('d F Y') }}
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-clock me-1"></i>
-                            Diperbarui {{ $berita->updated_at->diffForHumans() }}
-                        </div>
-                    </div>
-
-                    <h1 class="fw-bold mb-4" style="color: var(--primary-maroon); line-height: 1.4; font-size: 1.6rem;">
-                        {{ $berita->judul }}
-                    </h1>
-
-                    <hr class="mb-4">
-
-                    <div class="news-content" style="line-height: 1.85; font-size: 1.02rem; text-align: justify;">
-                        {!! $berita->isi !!}
-                    </div>
-                </div>
-            </article>
-
-            <div class="text-center">
-                <a href="{{ route('berita.index') }}" class="btn btn-outline-maroon px-4 py-2 rounded-pill">
-                    <i class="bi bi-arrow-left me-2"></i> Kembali ke Daftar Berita
-                </a>
+        <div style="display: flex; align-items: center; gap: 20px; font-size: 0.82rem; color: var(--muted); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-calendar3"></i>
+                <span class="mono" style="letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem;">{{ $berita->tanggal->translatedFormat('d F Y') }}</span>
             </div>
-
+            <div style="width: 1px; height: 16px; background: var(--rule);"></div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-clock"></i>
+                <span>{{ $berita->updated_at->diffForHumans() }}</span>
+            </div>
         </div>
     </div>
-</div>
+</section>
+
+{{-- Cover image --}}
+@if ($berita->gambar)
+    <section style="background: var(--paper); padding-top: 40px;">
+        <div class="wrap-narrow">
+            <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
+                style="width: 100%; max-height: 480px; object-fit: cover; display: block; border: 1px solid var(--rule-soft);">
+        </div>
+    </section>
+@endif
+
+{{-- Article body --}}
+<section style="background: var(--paper); padding: 56px 0 80px;">
+    <div class="wrap-narrow">
+        <div class="news-content" style="font-size: 1.02rem; line-height: 1.85; color: var(--ink-2); max-width: 720px;">
+            {!! $berita->isi !!}
+        </div>
+
+        <div style="margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule);">
+            <a href="{{ route('berita.index') }}" class="link-more">
+                <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Berita
+            </a>
+        </div>
+    </div>
+</section>
 
 <style>
-    .news-content img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 0.5rem;
-        margin: 1.5rem 0;
-    }
+    .news-content img { max-width: 100%; height: auto; margin: 1.5rem 0; border: 1px solid var(--rule-soft); }
+    .news-content h2, .news-content h3 { font-family: var(--font-display); color: var(--ink); margin-top: 2rem; }
+    .news-content p { margin-bottom: 1.25rem; }
+    .news-content a { color: var(--maroon); }
+    .news-content blockquote { border-left: 3px solid var(--maroon); padding: 24px 24px 24px 28px; background: var(--paper-warm); margin: 32px 0; font-style: italic; font-family: var(--font-display); font-size: 1.1rem; }
 </style>
 @endsection

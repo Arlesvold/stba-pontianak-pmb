@@ -1,13 +1,10 @@
 /* ── Staf page ─────────────────────────────────────────────────── */
 
-#staf-page .card-staf img {
-    transition: transform 0.3s ease;
+#staf-page [style*="border: 1px solid var(--rule-soft)"] {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-#staf-page .card-staf:hover img {
-    transform: scale(1.03);
-}
-
-#staf-page .card-staf .card-title {
-    font-family: 'Playfair Display', serif;
+#staf-page [style*="border: 1px solid var(--rule-soft)"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(26,22,20,0.08);
 }

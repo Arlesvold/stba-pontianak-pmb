@@ -1,38 +1,41 @@
-/* ── Homepage: pmb/index.blade.php ─────────────────────────────── */
+/* ── Homepage ─────────────────────────────────────────────── */
 
-/* Prodi card arrow reveal on hover */
-#pmb-page .card-prodi .prodi-cta {
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+/* Prodi card hover */
+.prodi-card-link {
+    transition: background-color 0.18s ease;
 }
 
-#pmb-page .card-prodi:hover .prodi-cta {
-    opacity: 1;
-    transform: translateY(0);
+.prodi-card-link:hover {
+    background-color: var(--paper-2) !important;
 }
 
-/* CTA button */
-#pmb-page .cta-btn {
-    color: var(--primary-maroon);
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
-    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+.prodi-card-link:hover .link-more {
+    color: var(--maroon-deep);
 }
 
-#pmb-page .cta-btn:hover {
-    background-color: var(--primary-maroon);
-    color: #ffffff;
-    border-color: var(--primary-maroon);
-    box-shadow: 0 4px 16px rgba(123, 30, 48, 0.35);
+.prodi-card-link:hover .arr {
+    transform: translateX(4px);
+    display: inline-block;
 }
 
-/* Agenda date box accent */
-#pmb-page .agenda-date-box {
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+/* Staff card hover */
+.staf-card-link {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: block;
+    text-decoration: none;
 }
 
-#pmb-page .card-agenda:hover .agenda-date-box {
-    background-color: rgba(123, 30, 48, 0.06);
-    border-color: rgba(123, 30, 48, 0.35) !important;
+.staf-card-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(26,22,20,0.09);
+}
+
+/* Event card hover */
+.event-card-link {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.event-card-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(26,22,20,0.09);
 }

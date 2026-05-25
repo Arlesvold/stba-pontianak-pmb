@@ -14,11 +14,30 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://www.google.com">
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <style>
+        :root {
+            --paper: #faf5ec; --paper-2: #f3e9d4; --paper-warm: #fdfaf3;
+            --ink: #1a1614; --ink-2: #3a322c; --muted: #7a6e62;
+            --maroon: #7b1e30; --maroon-deep: #5a1423; --maroon-soft: rgba(123,30,48,0.08); --maroon-tint: rgba(123,30,48,0.15);
+            --gold-soft: #d6b66a; --rule: #d9c9a8; --rule-soft: #e6d9b9;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+            --primary-maroon: #7b1e30;
+        }
+        body { font-family: var(--font-body); background: var(--paper); }
+        h1, h2, h3, h4, h5 { font-family: var(--font-display); }
+        .btn-maroon { background: var(--maroon); border-color: var(--maroon); color: var(--paper); border-radius: 0; font-family: var(--font-body); font-weight: 600; }
+        .btn-maroon:hover { background: var(--maroon-deep); border-color: var(--maroon-deep); color: var(--paper); }
+        .form-control, .input-group-text { border-color: var(--rule); border-radius: 0 !important; font-family: var(--font-body); }
+        .form-control:focus { border-color: var(--maroon); box-shadow: 0 0 0 2px var(--maroon-soft); }
+        .left-panel { background: var(--paper) !important; }
+    </style>
 </head>
 
 <body>

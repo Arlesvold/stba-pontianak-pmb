@@ -11,13 +11,25 @@
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-maroon: #7b1e30;
+            --paper: #faf5ec;
+            --ink: #1a1614;
+            --ink-2: #3a322c;
+            --muted: #7a6e62;
+            --rule: #d9c9a8;
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
         }
 
         body {
-            font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+            font-family: var(--font-body);
             overflow-x: hidden;
         }
 

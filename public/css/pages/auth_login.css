@@ -1,30 +1,22 @@
-:root {
-    --primary-maroon: #7b1e30;
-}
-
-body {
-    font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
-}
-
 .auth-container {
     min-height: 100vh;
 }
 
-.left-panel {
-    background-color: #ffffff;
-}
-
 .link-back {
-    color: var(--primary-maroon);
-    font-weight: 700;
-    transition: all 0.25s ease;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted, #7a6e62);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s ease;
 }
 
 .link-back:hover {
-    color: var(--primary-maroon);
-    letter-spacing: 0.5px;
-    font-weight: 700;
+    color: var(--maroon, #7b1e30);
 }
 
 .right-panel {
@@ -35,54 +27,23 @@ body {
 }
 
 .form-control {
-    border-radius: 8px;
     padding: 12px 16px;
-    border: 1px solid #dee2e6;
+    border: 1px solid var(--rule, #d9c9a8);
+    border-radius: 0;
+    background: var(--paper, #faf5ec);
+    font-family: var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
 
 .form-control:focus {
-    border-color: var(--primary-maroon);
-    box-shadow: 0 0 0 0.25rem rgba(123, 30, 48, 0.15);
-}
-
-.btn-maroon {
-    background-color: #7b1e30;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    width: 100%;
-}
-
-.btn-maroon:hover {
-    background-color: #5a1423;
-    color: white;
+    border-color: var(--maroon, #7b1e30);
+    box-shadow: 0 0 0 2px var(--maroon-soft, rgba(123,30,48,0.08));
+    background: var(--paper, #faf5ec);
 }
 
 .input-group-text {
-    background: transparent;
+    background: var(--paper, #faf5ec);
     border-left: none;
+    border-color: var(--rule, #d9c9a8);
     cursor: pointer;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes pulseText {
-    0%,
-    100% {
-        opacity: 0.6;
-    }
-
-    50% {
-        opacity: 1;
-    }
+    border-radius: 0;
 }
