@@ -28,7 +28,6 @@ body {
 }
 
 .right-panel {
-    background-image: url("/images/hero1.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

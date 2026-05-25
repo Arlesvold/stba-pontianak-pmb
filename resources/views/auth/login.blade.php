@@ -110,7 +110,14 @@
             </div>
 
             <!-- Right Panel: Image -->
-            <div class="col-lg-7 d-none d-lg-block right-panel">
+            @php
+                $loginImg = cache()->remember('login_image', 3600, fn () =>
+                    \App\Models\Setting::where('key', 'login_image')->value('value')
+                );
+                $loginBg = $loginImg ? asset('storage/' . $loginImg) : asset('images/hero1.webp');
+            @endphp
+            <div class="col-lg-7 d-none d-lg-block right-panel"
+                style="background-image: url('{{ $loginBg }}');">
             </div>
         </div>
     </div>

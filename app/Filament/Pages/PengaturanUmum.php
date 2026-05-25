@@ -30,7 +30,7 @@ class PengaturanUmum extends Page
 
     public function mount(): void
     {
-        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image'];
+        $keys = ['wa_admin', 'hero_badge_label', 'hero_tahun_akademik', 'hero_title', 'hero_subtitle', 'hero_image', 'cta_title', 'cta_subtitle', 'cta_image', 'login_image'];
         $settings = Setting::whereIn('key', $keys)->pluck('value', 'key');
 
         $this->form->fill([
@@ -43,6 +43,7 @@ class PengaturanUmum extends Page
             'cta_title'           => $settings->get('cta_title', ''),
             'cta_subtitle'        => $settings->get('cta_subtitle', ''),
             'cta_image'           => $settings->get('cta_image') ?: null,
+            'login_image'         => $settings->get('login_image') ?: null,
         ]);
     }
 
@@ -99,6 +100,20 @@ class PengaturanUmum extends Page
                             ->columnSpanFull(),
                     ]),
 
+                Section::make('Gambar Halaman Login')
+                    ->description('Gambar yang tampil di panel kanan halaman login PMB.')
+                    ->schema([
+                        FileUpload::make('login_image')
+                            ->label('Gambar Login')
+                            ->image()
+                            ->imageEditor()
+                            ->disk('public')
+                            ->directory('settings')
+                            ->visibility('public')
+                            ->helperText('Format WebP atau JPG disarankan. Jika kosong, gambar default digunakan.')
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Konten CTA Pendaftaran')
                     ->description('Gambar latar dan teks pada banner ajakan mendaftar di tengah halaman beranda.')
                     ->schema([
@@ -140,11 +155,13 @@ class PengaturanUmum extends Page
         }
 
         // image settings — only update if a new file was uploaded (non-empty)
-        foreach (['hero_image', 'cta_image'] as $key) {
+        foreach (['hero_image', 'cta_image', 'login_image'] as $key) {
             if (!empty($data[$key])) {
                 Setting::updateOrCreate(['key' => $key], ['value' => $data[$key]]);
             }
         }
+
+        cache()->forget('login_image');
 
         cache()->forget('wa_admin');
         cache()->forget('hero_settings');
