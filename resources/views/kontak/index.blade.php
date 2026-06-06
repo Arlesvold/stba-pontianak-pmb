@@ -39,13 +39,14 @@
                         <h3 class="h-display mb-4" style="font-size: 1.5rem; color: var(--paper);">STBA Pontianak</h3>
                         <p style="color: rgba(250,245,236,0.72); line-height: 1.75; font-size: 0.9rem; margin-bottom: 24px;">
                             Jl. Gajahmada No. 38<br>
+                            Jl. Imam Bonjol No. 82-88<br>
                             Benua Melayu Darat, Kec. Pontianak Selatan<br>
                             Kota Pontianak &mdash; Kalimantan Barat 78121
                         </p>
                         <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.875rem;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <i class="bi bi-telephone-fill" style="color: var(--gold-soft);"></i>
-                                <span style="color: rgba(250,245,236,0.85);">0858-2238-5552</span>
+                                <span style="color: rgba(250,245,236,0.85);">0856-5726-5132</span>
                             </div>
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <i class="bi bi-envelope-fill" style="color: var(--gold-soft);"></i>
@@ -135,7 +136,7 @@
         var marker = L.marker([lat, lng]).addTo(map);
         marker.bindPopup(
             '<b style="font-family: serif; font-size: 13px;">STBA Pontianak</b>' +
-            '<br><span style="font-size: 11px; color: #666;">Jl. Gajahmada No. 38, Pontianak</span>'
+            '<br><span style="font-size: 11px; color: #666;">Jl. Gajahmada No. 38 / Jl. Imam Bonjol No. 82-88, Pontianak</span>'
         ).openPopup();
     })();
 </script>

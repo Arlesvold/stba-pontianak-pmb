@@ -916,11 +916,11 @@
                         <h6 class="footer-heading">Alamat &amp; Kontak</h6>
                         <div class="footer-contact-item">
                             <i class="bi bi-geo-alt-fill"></i>
-                            <span>Jl. Gajahmada No. 38, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak, Kalimantan Barat</span>
+                            <span>Jl. Gajahmada No. 38 / Jl. Imam Bonjol No. 82-88, Benua Melayu Darat, Kec. Pontianak Selatan, Kota Pontianak, Kalimantan Barat</span>
                         </div>
                         <div class="footer-contact-item">
                             <i class="bi bi-telephone-fill"></i>
-                            <span>0858-2238-5552</span>
+                            <span>0856-5726-5132</span>
                         </div>
                         <div class="footer-contact-item">
                             <i class="bi bi-envelope-fill"></i>
